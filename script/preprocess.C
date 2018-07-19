@@ -1,7 +1,14 @@
+#include "range.h"
+
+bool nTagged(vector<float> *nTag_e, vector<float> *nTag_dt, size_t start, size_t end);
+int findRange(double *range, int n_range, double npe);
+
+const double nTag_dt_cut = 800;
+
 void preprocess(){
 	TChain *chain = new TChain("Heli");
 
-	chain->Add("../p17b/data_heli/run1000.root");
+	chain->Add("../p17b/data/heli.root");
 	
 	TFile *f_out = new TFile("./data/proced.root","RECREATE");
 
@@ -32,10 +39,13 @@ void preprocess(){
 	chain->SetBranchAddress("nTag_e",&nTag_e);
 	chain->SetBranchAddress("nTag_dt",&nTag_dt);
 
-	double range[3] = {3e3,1.5e5,3e5};
 	
-	double _dtlSH[3];
-	double _dtlSH_tag[3];
+	double _dtlSH[n_range];
+	double _dtlSH_tag[n_range];
+	double _dtlSH_atag[n_range];
+	
+	int _dtlSH_tag_n[n_range];
+
 
 	f_out->cd();
 
@@ -46,41 +56,58 @@ void preprocess(){
 	tr_out->Branch("ed",&ed);
 	tr_out->Branch("dt",&dt);
 	tr_out->Branch("dist",&dist);
-	tr_out->Branch("dtlSH_0",&_dtlSH[0]);	
-	tr_out->Branch("dtlSH_1",&_dtlSH[1]);	
-	tr_out->Branch("dtlSH_2",&_dtlSH[2]);	
-	tr_out->Branch("dtlSH_0_tag",&_dtlSH_tag[0]);	
-	tr_out->Branch("dtlSH_1_tag",&_dtlSH_tag[1]);	
-	tr_out->Branch("dtlSH_2_tag",&_dtlSH_tag[2]);	
-
+	for(size_t i=0;i<n_range;++i){
+		char buf[255];
+		sprintf(buf,"dtlSH_%d",i);
+		tr_out->Branch(buf,&_dtlSH[i]);
+		sprintf(buf,"dtlSH_%d_tag",i);
+		tr_out->Branch(buf,&_dtlSH_tag[i]);
+		sprintf(buf,"dtlSH_%d_tag_n",i);
+		tr_out->Branch(buf,&_dtlSH_tag_n[i]);
+		sprintf(buf,"dtlSH_%d_atag",i);
+		tr_out->Branch(buf,&_dtlSH_atag[i]);
+	}
 	float distCut = 1000;
 
 	for(size_t i=0;i<entries;++i){
-		cout << "\r" << i << "/" << entries << flush;
+		if(i%(entries/10000)==0){
+			printf("\r%d/%d(%.3f%%)",i,entries,float(i*100)/entries);
+			fflush(stdout);
+		}
+
 		chain->GetEntry(i);
 		
 		if(dist>distCut) continue;
 
 		size_t muons = dtlSH->size();
 
-		for(int j=0;j<3;++j){
+		for(int j=0;j<n_range;++j){
 			_dtlSH[j] = -1;
 			_dtlSH_tag[j] = -1;
+			_dtlSH_tag_n[j] = -1;
+			_dtlSH_atag[j] = -1;
 		}	
 
 		size_t n_idx_0 = 0;
 
 		for(size_t mu = 0;mu < muons; ++mu){
 		
-			if( (*dtlSH)[mu] < 0 ){cout << " " << muons - mu << endl; break;}
+			if( (*dtlSH)[mu] < 0 ) break;
 
 			bool tagged = nTagged(nTag_e, nTag_dt, n_idx_0, n_idx_0 + (*nTag_n)[mu]);
 
-			int r_idx = findRange(range,3,(*nPESum)[mu]);
+			int r_idx = findRange(range,n_range,(*nPESum)[mu]);
 
 			_dtlSH[r_idx] = (*dtlSH)[mu];
-					
-			_dtlSH_tag[r_idx] = (*dtlSH)[mu];
+			
+			if(tagged){
+				_dtlSH_tag[r_idx] = (*dtlSH)[mu];
+				_dtlSH_tag_n[r_idx] = (*nTag_n)[mu];
+			}else{
+				_dtlSH_atag[r_idx] = (*dtlSH)[mu];
+			}
+			
+			n_idx_0 += (*nTag_n)[mu];
 
 		}
 
@@ -94,12 +121,14 @@ void preprocess(){
 bool nTagged(vector<float> *nTag_e, vector<float> *nTag_dt, size_t start, size_t end){
 	
 	bool tagged = false;
-	for(size_t i=start; i<end && !tagged && (*nTag_dt)[i] < 200.0 ;++i){
+
+	for(size_t i=start; i<end && !tagged && (*nTag_dt)[i] < nTag_dt_cut ;++i){
 
 		bool nTag_e_cut = (*nTag_e)[i] > 1.8;
 		bool nTag_dt_cut = (*nTag_dt)[i] > 20.0;
 
 		tagged = nTag_e_cut && nTag_dt_cut;
+		//tagged = (*nTag_dt)[i] > 10;
 	}
 	
 	return tagged;
