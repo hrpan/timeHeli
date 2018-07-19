@@ -7,7 +7,7 @@ const double tau_he = 171.68;
 const double tau_b12 = 29.142;
 const double tau_b12_err = 0.0288;
 
-const double minimizer_args[2] = { 10000, 0.1};
+const double minimizer_args[2] = { 100000, 0.1};
 
 //const double fitMin = 10;
 //const double fitMax = 5000;
@@ -15,27 +15,22 @@ const double minimizer_args[2] = { 10000, 0.1};
 const int npars = 9;
 
 const char *par_names[npars] = {
-	"r_mu_tag",
-	"r_mu_atag",
-	"N_Li",
-	"N_DC",
-	"EPS_Li",
-	"N_Bo",
-	"EPS_Bo",
-	"tau_Li",
-	"tau_Bo"
+	"r_mu_tag", "r_mu_atag",
+	"N_Li", "N_DC", "EPS_Li", 
+	"N_Bo", "EPS_Bo", 
+	"tau_Li", "tau_Bo"
 }; 
 
+const bool result_print[npars] = {
+	true, true, true,
+	true, true, true,
+	true, false, false
+};
+
 const bool latex_print[npars] = {
-	false,
-	false,
-	true,
-	false,
-	true,
-	false,
-	false,
-	false,
-	false
+	false, false, true,
+	false, true, false,
+	false, false, false
 };
 
 const int npars_single = 6;
@@ -57,121 +52,12 @@ double pull(double x, double mean, double err){
 
 }
 
-double _f(double x, double *par){
-	double n_li9 = par[0];
-	double n_dc = par[1];
-	double r_mu = par[2];
-	double n_b12 = par[3];
-	double t_li9 = par[4];
-	double t_b12 = par[5];
-
-	double _dc = n_dc * r_mu * exp( - r_mu * x );
-	double _lambda_li9 = r_mu + 1 / t_li9;
-	double _li9 = n_li9 * _lambda_li9 * exp( - _lambda_li9 * x );
-	double _lambda_b12 = r_mu + 2 / t_b12;
-	double _b12 = n_b12 * _lambda_b12 * exp( - _lambda_b12 * x );
-
-	return _dc + _li9 + _b12;
-
-}
-
-double binnedLL(TH1 *h, double *par, double x1, double x2){
-
-	int bins = h->GetNbinsX();
-
-	double ll = 0;
-
-	for(int b=0; b<bins; ++b){
-		
-		double x = h->GetBinCenter(b);
-
-		if( x > x1 && x < x2 ){
-			double __f = _f(x, par);
-
-			ll -= ( h->GetBinContent(b) * log(__f) - __f );
-
-		}
-
-	}
-
-	return ll;
-
-}
-
-double* ana_grad(double x, double *par){
-//[2]:mu rate
-//[1]:n_dc
-//[0]:n_li9
-//[3]:n_b12
-//[4]:t_li9
-//[5]:t_b12
-
-	double grad[6];
-	double n_li9 = par[0];
-	double n_dc = par[1];
-	double r_mu = par[2];
-	double n_b12 = par[3];
-	double t_li9 = par[4];
-	double t_b12 = par[5];
-
-	double _lambda_li9 = r_mu + 1 / t_li9;
-	double _lambda_b12 = r_mu + 2 / t_b12;
-	grad[0] = _lambda_li9 * exp( - _lambda_li9 * x );
-
-	grad[1] = r_mu * exp( - r_mu * x );
-
-	grad[2] = n_dc * exp( - r_mu * x ) * ( 1 - r_mu * x ) + n_li9 * exp( - _lambda_li9 * x ) * ( 1 - _lambda_li9 * x ) + n_b12 * exp ( - _lambda_b12 * x ) * ( 1 - _lambda_b12 * x );
-
-	grad[3] = _lambda_b12 * exp( - _lambda_b12 * x );
-
-	grad[4] = n_li9 * ( _lambda_li9 * x - 1 ) * exp( - _lambda_li9 * x ) / ( t_li9 * t_li9 );
-	
-	grad[5] = n_b12 * ( _lambda_b12 * x - 1 ) * exp( - _lambda_b12 * x ) / ( t_b12 * t_b12 );
-
-	return grad;
-}
-
-double* binned_grad(TH1 *h, double *par, double x1, double x2){
-
-	int bins = h->GetNbinsX();
-
-	double grad[npars];
-
-	for(int i=0; i<npars; ++i)
-		grad[i] = 0;
-
-	for(int b=0; b<bins; ++b){
-		
-		double x = h->GetBinCenter(b);
-
-		if( x > x1 && x < x2 ){
-
-			double __f = _f(x, par);
-
-			double _tmp = h->GetBinContent(b) / __f - 1;
-
-			double *_g = ana_grad(x, par);
-
-			for(int i=0; i<npars; ++i)
-				grad[i] -= _g[i] * _tmp;
-
-		}
-
-	}
-
-//	for(int i=0;i<npars;++i)
-//		cout << grad[i] << endl;
-
-	return grad;
-
-
-}
-
 void printResults(double results[3][n_range][npars][2]){
 	char buf[512];
 	sprintf(buf, "%4s %20s", "site", "range");
 	for(int i=0;i<npars;++i){
-		sprintf(buf, "%s %17s", buf, par_names[i]);
+		if(result_print[i])
+			sprintf(buf, "%s %17s", buf, par_names[i]);
 	}
 	printf("%s\n", buf);	
 	for(int i=0;i<3;++i){
@@ -180,7 +66,8 @@ void printResults(double results[3][n_range][npars][2]){
 			sprintf(buf, "%4d %10.2e%10.2e", i+1, range[j], j==n_range-1? -1:range[j+1]);
 
 			for(int k=0;k<npars;++k){
-				sprintf(buf, "%s %8.2e/%8.2e", buf, results[i][j][k][0], results[i][j][k][1]);
+				if(result_print[k])
+					sprintf(buf, "%s %8.2e/%8.2e", buf, results[i][j][k][0], results[i][j][k][1]);
 			}
 			printf("%s\n",buf);
 		}
@@ -201,7 +88,7 @@ void printLatexTable(double results[3][n_range][npars][2]){
 			
 			printf("\\\\ \n");
 		}
-		printf("\\hline");
+		printf("\\hline \n");
 	}
 
 }
@@ -255,59 +142,6 @@ void wrap(int &npar, double *g, double &result, double *par, int flag){
 	
 }
 
-void wrap_ana(int &npar, double *g, double &result, double *par, int flag){
-
-	double eps_0 = par[4];
-	double eps_1 = par[6];
-
-	double par_0[npars_single];
-	par_0[0] = par[2];
-	par_0[1] = par[3];
-	par_0[2] = par[0] + par[1];
-	par_0[3] = par[5];	
-	par_0[4] = par[7];
-	par_0[5] = par[8];
-
-	double par_1[npars_single];
-	par_1[0] = eps_0 * par[2];
-	par_1[1] = par[3] + (1-eps_0) * par[2] + (1-eps_1) * par[5];
-	par_1[2] = par[0];
-	par_1[3] = eps_1 * par[5];	
-	par_1[4] = par[7];
-	par_1[5] = par[8];
-
-	double par_2[npars_single];
-	par_2[0] = (1-eps_0) * par[2];
-	par_2[1] = par[3] + eps_0 * par[2] + eps_1 * par[5];
-	par_2[2] = par[1];
-	par_2[3] = (1-eps_1) * par[5];
-	par_2[4] = par[7];
-	par_2[5] = par[8];
-
-
-	double x1 = 100;
-	double x2 = 5000;
-	result = binnedLL(h1, par_0, x1, x2) + binnedLL(h2, par_1, x1, x2) + binnedLL(h3, par_2, x1, x2); 
-	if( flag == 2 ){
-
-		double *grad_0 = binned_grad(h1, par_0, x1, x2);
-		double *grad_1 = binned_grad(h2, par_1, x1, x2);
-		double *grad_2 = binned_grad(h3, par_2, x1, x2);
-
-
-		g[0] = grad_0[2] + grad_1[2];
-		g[1] = grad_0[2] + grad_2[2];
-		g[2] = grad_0[0] + eps_0 * grad_1[0] + ( 1 - eps_0 ) * grad_1[1] + ( 1 - eps_0 ) * grad_2[0] + eps_0 * grad_2[1];
-		g[3] = grad_0[1] + grad_1[1] + grad_2[1];
-		g[4] = grad_1[0] * par[2] - grad_1[1] * par[2] - grad_2[0] * par[2] + grad_2[1] * par[2];
-		g[5] = grad_0[3] + grad_1[1] * ( 1 - eps_1 ) + grad_1[3] * eps_1 + grad_2[1] * eps_1 + grad_2[3] * ( 1 - eps_1 );
-		g[6] = - grad_1[1] * par[5] + grad_1[3] * par[5] + grad_2[1] * par[5] - grad_2[3] * par[5];
-		g[7] = grad_0[4] + grad_1[4] + grad_2[4];
-		g[8] = grad_0[5] + grad_1[5] + grad_2[5];
-
-	}
-	
-}
 
 void fillPars(double *par, TF1 *f_0, TF1 *f_1, TF1 *f_2){
 
@@ -371,6 +205,7 @@ struct Config{
 	double fitMin;
 	double fitMax;
 
+	int fix_lifetime;
 	int fix_B12;
 
 	int bound_eps_0;
@@ -393,37 +228,47 @@ void parseInputs(Config &cfg){
 
 	cin >> cfg.bound_eps_1;
 	cout << "Bound B12 tagging efficiency: " << cfg.bound_eps_1 << endl;
+
+	cin >> cfg.fix_lifetime;
+	cout << "Fix isotope lifetimes: " << cfg.fix_lifetime << endl;
 }
 
 void fitterParInit(int site, TFitter &minuit, Config &cfg){
-	const double r_mu_step = 1e-5;
+	const double r_mu_init = site<4? 1e-4:1e-5;
 	const double eps_init = 0.5;
 	const double eps_step = 0.1;
 
-	double nb_init = site<4? 1e4:1e2;
+	double nb_init = site<4? 1e4:1e3;
 	double ns_init = site<4? 1e6:1e4;
 
 	double step_ratio = 0.1;
 
-	minuit.SetParameter(0,"R_mu_tag",1e-3,r_mu_step,0,0.1);
-	minuit.SetParameter(1,"R_mu_atag",1e-3,r_mu_step,0,0.1);
+	minuit.SetParameter(0,"R_mu_tag",r_mu_init,r_mu_init*step_ratio,0,0.1);
+	minuit.SetParameter(1,"R_mu_atag",r_mu_init,r_mu_init*step_ratio,0,0.1);
 //	minuit.SetParameter(2,"NB",1e3,1,0,1e5);
 
 	minuit.SetParameter(2,"NB", nb_init, nb_init*step_ratio,0,0);
 //	minuit.SetParameter(3,"NS",1e6,1,0,1e7);
-	minuit.SetParameter(3,"NS", ns_init, ns_init*step_ratio,0,0);
+	minuit.SetParameter(3,"NS", ns_init, ns_init*step_ratio,1e3,1e7);
 	if(cfg.bound_eps_0)
 		minuit.SetParameter(4,"eps",eps_init,eps_step,0,1);
 	else
 		minuit.SetParameter(4,"eps",eps_init,eps_step,0,0);
+
+	if(cfg.fix_lifetime){
+		minuit.SetParameter(7,"tau_Li",tau_li,0,0,0);
+		minuit.FixParameter(7);
+	}else{
+		minuit.SetParameter(7,"tau_Li",tau_li,1e-3,0,0);
+	}
 
 	if(cfg.fix_B12){
 		minuit.SetParameter(5,"NB2",0,0,0,0);
 		minuit.FixParameter(5);
 		minuit.SetParameter(6,"eps2",0,0,0,0);
 		minuit.FixParameter(6);
-		minuit.SetParameter(8,"tau_B12",tau_b12,1e-3,0,0);
-		//minuit.FixParameter(8);
+		minuit.SetParameter(8,"tau_B12",tau_b12,0,0,0);
+		minuit.FixParameter(8);
 	}else{
 		//minuit.SetParameter(5,"NB2",1e3,1,0,1e5);
 		minuit.SetParameter(5,"NB2", nb_init, nb_init*step_ratio,0,0);
@@ -432,23 +277,22 @@ void fitterParInit(int site, TFitter &minuit, Config &cfg){
 		else
 			minuit.SetParameter(6,"eps2",eps_init,eps_step,0,0);
 		minuit.SetParameter(8,"tau_B12",tau_b12,1e-3,0,0);
+		if(cfg.fix_lifetime)
+			minuit.FixParameter(8);
 	}
 
-	minuit.SetParameter(7,"tau_Li",tau_li,1e-3,0,0);
-	//minuit.FixParameter(7);
 }
 
 void fix_and_release(TFitter &minuit, Config &cfg){
 
+	minuit.SetParameter(2,"NB",0,1e3,0,0);
+	minuit.FixParameter(2);
 	minuit.FixParameter(4);
-	if(!cfg.fix_B12)
-		minuit.FixParameter(6);
 
 	minuit.ExecuteCommand("MINIMIZE", minimizer_args, 2);
 
+	minuit.ReleaseParameter(2);
 	minuit.ReleaseParameter(4);
-	if(!cfg.fix_B12)
-		minuit.ReleaseParameter(6);
 	
 	minuit.ExecuteCommand("MINIMIZE", minimizer_args, 2);
 
@@ -490,8 +334,6 @@ void combinedFit(){
 	minuit.ExecuteCommand("SET ERRORDEF",&p0,1);
 	//p0 = 1e-14;
 	//minuit.ExecuteCommand("SET EPSMACHINE",&p0,1);
-	//p0 = 1;
-	//minuit.ExecuteCommand("SET GRADIENT",&p0,1);
 	for(int site=0;site<3;++site){
 		for(int range=0;range<n_range;++range){
 
@@ -524,9 +366,9 @@ void combinedFit(){
 			minuit.SetFCN(wrap);
 			fitterParInit(site, minuit, cfg);
 		
-			minuit.ExecuteCommand("SIMPLEX", minimizer_args, 2);
-			minuit.ExecuteCommand("MINIMIZE", minimizer_args, 2);
-			//fix_and_release(minuit, cfg);	
+			//minuit.ExecuteCommand("SIMPLEX", minimizer_args, 2);
+			//int fit_status = minuit.ExecuteCommand("MINIMIZE", minimizer_args, 2);
+			fix_and_release(minuit, cfg);	
 			//minuit.ExecuteCommand("HESSE", minimizer_args, 1);
 			//minuit.ExecuteCommand("MINOS", minimizer_args, 1);
 			double _pars[npars];
