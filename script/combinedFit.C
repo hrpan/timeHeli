@@ -1,49 +1,76 @@
 #include "range.h"
-const double tau_li = 256.366;
-const double tau_li_err = 0.866;
+const double tau_li9 = 256.366;
+const double tau_li9_err = 0.866;
 
-const double tau_he = 171.68;
+const double tau_he8 = 171.68;
 
 const double tau_b12 = 29.142;
 const double tau_b12_err = 0.0288;
 
-const double minimizer_args[2] = { 100000, 0.1};
-
+const double minimizer_args[2] = { 100000, 1e-6};
 //const double fitMin = 10;
 //const double fitMax = 5000;
 
-const int npars = 9;
+const int npars = 12;
 
 const char *par_names[npars] = {
-	"r_mu_tag", "r_mu_atag",
-	"N_Li", "N_DC", "EPS_Li", 
-	"N_Bo", "EPS_Bo", 
-	"tau_Li", "tau_Bo"
+	"r_mu_tag", "r_mu_atag", "N_DC",
+	"N_Li", "EPS_Li", "tau_Li",
+	"N_Bo", "EPS_Bo", "tau_Bo",
+	"N_He", "EPS_He", "tau_He"
 }; 
+
+const double par_init[npars][3] = {
+	{ 1e-4, 0, 0 },
+	{ 1e-4, 0, 1 },
+	{ 1e6, 0, 0 },
+	{ 1e3, 0, 1e6 },
+	{ 0.5, 0, 1 },
+	{ tau_li9, 0, 0 },
+	{ 1e3, 0, 1e6 },
+	{ 0.5, 0, 1 },
+	{ tau_b12, 0, 0 },
+	{ 1e3, 0, 1e6 },
+	{ 0.5, 0, 1 },
+	{ tau_he8, 0, 0 },
+};
 
 const bool result_print[npars] = {
 	true, true, true,
-	true, true, true,
-	true, false, false
+	true, true, false,
+	true, true, false,
+	true, true, false
 };
 
 const bool latex_print[npars] = {
-	false, false, true,
-	false, true, false,
-	false, false, false
+	false, false, false,
+	true, true, false,
+	true, true, false,
+	true, true, false
 };
 
-const int npars_single = 6;
-//[2]:mu rate
+const int npars_single = 8;
+//[0]:mu rate
 //[1]:n_dc
-//[0]:n_li9
-//[3]:n_b12
-//[4]:t_li9
+//[2]:n_li9
+//[3]:t_li9
+//[4]:n_b12
 //[5]:t_b12
+//[6]:n_he8
+//[7]:t_he8
+
+const char *_pdfs[4] = {
+	"[1] * [0] * exp(-[0] * x )",
+	"[2] * ([0] + 1 / [3]) * exp(-([0] + 1 / [3]) * x )",
+	"[4] * ([0] + 1 / [5]) * exp(-([0] + 2 / [5]) * x )",
+	"[6] * ([0] + 1 / [7]) * exp(-([0] + 1 / [7]) * x )"
+};
+/*
 const char _f_dc[255] = "[1] * [2] * exp(-[2] * x )";
 const char _f_li[255] = "[0] * ([2] + 1 / [4]) * exp(-([2] + 1 / [4]) * x )";
 const char _f_bo[255] = "[3] * ([2] + 2 / [5] ) * exp(-([2] + 2 / [5] ) * x )";
-
+const char _f_he[255] = "[6] * ([2] + 1 / [7]) * exp(-([2] + 1 / [7]) * x )";
+*/
 double pull(double x, double mean, double err){
 
 	double diff = x - mean;
@@ -108,70 +135,116 @@ TH1 *h2;
 TH1 *h3;
 
 void wrap(int &npar, double *g, double &result, double *par, int flag){
+/*const char *par_names[npars] = {
+	"r_mu_tag", "r_mu_atag", "N_DC",
+	"N_Li", "EPS_Li", "tau_Li",
+	"N_Bo", "EPS_Bo", "tau_Bo",
+	"N_He", "EPS_He", "tau_He"
+};*/ 
+	double r_mu_tag = par[0];
+	double r_mu_atag = par[1];
+	double n_dc = par[2];
+	double n_li = par[3];
+	double eps_li = par[4];
+	double tau_li = par[5];
+	double n_bo = par[6];
+	double eps_bo = par[7];
+	double tau_bo = par[8];
+	double n_he = par[9];
+	double eps_he = par[10];
+	double tau_he = par[11];
 
-	double eps_0 = par[4];
-	double eps_1 = par[6];
+	//[0]:mu rate
+	//[1]:n_dc
+	//[2]:n_li9
+	//[3]:t_li9
+	//[4]:n_b12
+	//[5]:t_b12
+	//[6]:n_he8
+	//[7]:t_he8
+
 
 	double par_0[npars_single];
-	par_0[0] = par[2];
-	par_0[1] = par[3];
-	par_0[2] = par[0] + par[1];
-	par_0[3] = par[5];	
-	par_0[4] = par[7];
-	par_0[5] = par[8];
+	par_0[0] = r_mu_tag + r_mu_atag;
+	par_0[1] = n_dc;
+	par_0[2] = n_li;
+	par_0[3] = tau_li;	
+	par_0[4] = n_bo;
+	par_0[5] = tau_bo;
+	par_0[6] = n_he;
+	par_0[7] = tau_he;
 
 	double par_1[npars_single];
-	par_1[0] = eps_0 * par[2];
-	par_1[1] = par[3] + (1-eps_0) * par[2] + (1-eps_1) * par[5];
-	par_1[2] = par[0];
-	par_1[3] = eps_1 * par[5];	
-	par_1[4] = par[7];
-	par_1[5] = par[8];
+	par_1[0] = r_mu_tag;
+	par_1[1] = n_dc + (1-eps_li) * n_li + (1-eps_bo) * n_bo + (1-eps_he) * n_he;
+	par_1[2] = eps_li * n_li;
+	par_1[3] = tau_li;	
+	par_1[4] = eps_bo * n_bo;
+	par_1[5] = tau_bo;
+	par_1[6] = eps_he * n_he;
+	par_1[7] = tau_he;
 
 	double par_2[npars_single];
-	par_2[0] = (1-eps_0) * par[2];
-	par_2[1] = par[3] + eps_0 * par[2] + eps_1 * par[5];
-	par_2[2] = par[1];
-	par_2[3] = (1-eps_1) * par[5];
-	par_2[4] = par[7];
-	par_2[5] = par[8];
+	par_2[0] = r_mu_atag;
+	par_2[1] = n_dc + eps_li * n_li + eps_bo * n_bo + eps_he * n_he;
+	par_2[2] = (1-eps_li) * n_li;
+	par_2[3] = tau_li;
+	par_2[4] = (1-eps_bo) * n_bo;
+	par_2[5] = tau_bo;
+	par_2[6] = (1-eps_he) * n_he;
+	par_2[7] = tau_he;
 
-	double pull_term = pull(par[7], tau_li, tau_li_err) + pull(par[8], tau_b12, tau_b12_err);
+//	double pull_term = pull(par[7], tau_li, tau_li_err) + pull(par[8], tau_b12, tau_b12_err);
+	double pull_term = 0;
 
 	result = (*fPNLL_1)(par_0) + (*fPNLL_2)(par_1) + (*fPNLL_3)(par_2) + pull_term;
-	
 }
 
 
 void fillPars(double *par, TF1 *f_0, TF1 *f_1, TF1 *f_2){
+	double r_mu_tag = par[0];
+	double r_mu_atag = par[1];
+	double n_dc = par[2];
+	double n_li = par[3];
+	double eps_li = par[4];
+	double tau_li = par[5];
+	double n_bo = par[6];
+	double eps_bo = par[7];
+	double tau_bo = par[8];
+	double n_he = par[9];
+	double eps_he = par[10];
+	double tau_he = par[11];
 
-	double eps_0 = par[4];
-	double eps_1 = par[6];
 
 	double par_0[npars_single];
-	par_0[0] = par[2];
-	par_0[1] = par[3];
-	par_0[2] = par[0] + par[1];
-	par_0[3] = par[5];	
-	par_0[4] = par[7];
-	par_0[5] = par[8];
+	par_0[0] = r_mu_tag + r_mu_atag;
+	par_0[1] = n_dc;
+	par_0[2] = n_li;
+	par_0[3] = tau_li;	
+	par_0[4] = n_bo;
+	par_0[5] = tau_bo;
+	par_0[6] = n_he;
+	par_0[7] = tau_he;
 
 	double par_1[npars_single];
-	par_1[0] = eps_0 * par[2];
-	par_1[1] = par[3] + (1-eps_0) * par[2] + (1-eps_1) * par[5];
-	par_1[2] = par[0];
-	par_1[3] = eps_1 * par[5];	
-	par_1[4] = par[7];
-	par_1[5] = par[8];
+	par_1[0] = r_mu_tag;
+	par_1[1] = n_dc + (1-eps_li) * n_li + (1-eps_bo) * n_bo + (1-eps_he) * n_he;
+	par_1[2] = eps_li * n_li;
+	par_1[3] = tau_li;	
+	par_1[4] = eps_bo * n_bo;
+	par_1[5] = tau_bo;
+	par_1[6] = eps_he * n_he;
+	par_1[7] = tau_he;
 
 	double par_2[npars_single];
-	par_2[0] = (1-eps_0) * par[2];
-	par_2[1] = par[3] + eps_0 * par[2] + eps_1 * par[5];
-	par_2[2] = par[1];
-	par_2[3] = (1-eps_1) * par[5];
-	par_2[4] = par[7];
-	par_2[5] = par[8];
-
+	par_2[0] = r_mu_atag;
+	par_2[1] = n_dc + eps_li * n_li + eps_bo * n_bo + eps_he * n_he;
+	par_2[2] = (1-eps_li) * n_li;
+	par_2[3] = tau_li;
+	par_2[4] = (1-eps_bo) * n_bo;
+	par_2[5] = tau_bo;
+	par_2[6] = (1-eps_he) * n_he;
+	par_2[7] = tau_he;
 
 	f_0->SetParameters(par_0);
 
@@ -207,9 +280,9 @@ struct Config{
 
 	int fix_lifetime;
 	int fix_B12;
+	int fix_He8;
 
-	int bound_eps_0;
-	int bound_eps_1;
+	int bound_eps;
 };
 
 void parseInputs(Config &cfg){
@@ -223,78 +296,64 @@ void parseInputs(Config &cfg){
 	cin >> cfg.fix_B12;
 	cout << "fix B12: " << cfg.fix_B12 << endl;
 
-	cin >> cfg.bound_eps_0;
-	cout << "Bound Li9 tagging efficiency: " << cfg.bound_eps_0 << endl;
+	cin >> cfg.fix_He8;
+	cout << "fix He8: " << cfg.fix_He8 << endl; 
 
-	cin >> cfg.bound_eps_1;
-	cout << "Bound B12 tagging efficiency: " << cfg.bound_eps_1 << endl;
+	cin >> cfg.bound_eps;
+	cout << "Bound tagging efficiencies: " << cfg.bound_eps << endl;
 
 	cin >> cfg.fix_lifetime;
 	cout << "Fix isotope lifetimes: " << cfg.fix_lifetime << endl;
 }
 
 void fitterParInit(int site, TFitter &minuit, Config &cfg){
-	const double r_mu_init = site<4? 1e-4:1e-5;
-	const double eps_init = 0.5;
-	const double eps_step = 0.1;
 
-	double nb_init = site<4? 1e4:1e3;
-	double ns_init = site<4? 1e6:1e4;
+	double step_ratio = 0.01;
 
-	double step_ratio = 0.1;
+	for(int i=0;i<npars;++i){
+		if(cfg.fix_lifetime == 1 && strstr(par_names[i],"tau") != NULL){
+			minuit.SetParameter(i,par_names[i],par_init[i][0],0,0,0);
+			minuit.FixParameter(i);
+		}else if( (cfg.fix_B12 == 1 && strstr(par_names[i],"Bo") != NULL) ||
+				  (cfg.fix_He8 == 1 && strstr(par_names[i],"He") != NULL) ){
+			minuit.SetParameter(i,par_names[i],0,0,0,0);
+			minuit.FixParameter(i);
+		}else if(cfg.bound_eps == 0 && strstr(par_names[i],"EPS") != NULL){
+			minuit.SetParameter(i,par_names[i],par_init[i][0], par_init[i][0]*step_ratio,0,0);
+		}else{
+			minuit.SetParameter(i,par_names[i],par_init[i][0], par_init[i][0]*step_ratio,par_init[i][1],par_init[i][2]);
+		}
 
-	minuit.SetParameter(0,"R_mu_tag",r_mu_init,r_mu_init*step_ratio,0,0.1);
-	minuit.SetParameter(1,"R_mu_atag",r_mu_init,r_mu_init*step_ratio,0,0.1);
-//	minuit.SetParameter(2,"NB",1e3,1,0,1e5);
-
-	minuit.SetParameter(2,"NB", nb_init, nb_init*step_ratio,0,0);
-//	minuit.SetParameter(3,"NS",1e6,1,0,1e7);
-	minuit.SetParameter(3,"NS", ns_init, ns_init*step_ratio,1e3,1e7);
-	if(cfg.bound_eps_0)
-		minuit.SetParameter(4,"eps",eps_init,eps_step,0,1);
-	else
-		minuit.SetParameter(4,"eps",eps_init,eps_step,0,0);
-
-	if(cfg.fix_lifetime){
-		minuit.SetParameter(7,"tau_Li",tau_li,0,0,0);
-		minuit.FixParameter(7);
-	}else{
-		minuit.SetParameter(7,"tau_Li",tau_li,1e-3,0,0);
 	}
-
-	if(cfg.fix_B12){
-		minuit.SetParameter(5,"NB2",0,0,0,0);
-		minuit.FixParameter(5);
-		minuit.SetParameter(6,"eps2",0,0,0,0);
-		minuit.FixParameter(6);
-		minuit.SetParameter(8,"tau_B12",tau_b12,0,0,0);
-		minuit.FixParameter(8);
-	}else{
-		//minuit.SetParameter(5,"NB2",1e3,1,0,1e5);
-		minuit.SetParameter(5,"NB2", nb_init, nb_init*step_ratio,0,0);
-		if(cfg.bound_eps_1)
-			minuit.SetParameter(6,"eps2",eps_init,eps_step,0,1);
-		else
-			minuit.SetParameter(6,"eps2",eps_init,eps_step,0,0);
-		minuit.SetParameter(8,"tau_B12",tau_b12,1e-3,0,0);
-		if(cfg.fix_lifetime)
-			minuit.FixParameter(8);
-	}
-
 }
 
 void fix_and_release(TFitter &minuit, Config &cfg){
 
-	minuit.SetParameter(2,"NB",0,1e3,0,0);
+	double _tmp[2] = {3, 0};
+	minuit.ExecuteCommand("SET PARAMETER", _tmp, 2);
 	minuit.FixParameter(2);
 	minuit.FixParameter(4);
+
+	if(!cfg.fix_B12){
+		_tmp[0] = 6;
+		minuit.ExecuteCommand("SET PARAMETER", _tmp, 2);
+		minuit.FixParameter(5);
+		minuit.FixParameter(6);
+	}	
 
 	minuit.ExecuteCommand("MINIMIZE", minimizer_args, 2);
 
 	minuit.ReleaseParameter(2);
 	minuit.ReleaseParameter(4);
-	
 	minuit.ExecuteCommand("MINIMIZE", minimizer_args, 2);
+
+	if(!cfg.fix_B12){
+		minuit.ReleaseParameter(5);
+		minuit.ReleaseParameter(6);
+		minuit.ExecuteCommand("MINIMIZE", minimizer_args, 2);
+	}
+	
+	minuit.ExecuteCommand("MINOS", minimizer_args, 1);
 
 
 }
@@ -307,7 +366,12 @@ void combinedFit(){
 
 	gStyle->SetOptFit(1);
 	char _f_sum[512];
-	sprintf(_f_sum,"%s+%s+%s",_f_dc,_f_li,_f_bo);
+	for(int i=0;i<4;++i)
+		if(i==0)
+			sprintf(_f_sum,"%s",_pdfs[i]);
+		else
+			sprintf(_f_sum,"%s+%s",_f_sum,_pdfs[i]);
+//	sprintf(_f_sum,"%s+%s+%s+%s",_f_dc,_f_li,_f_bo,_f_he);
 	
 	func1 = new TF1("func1",_f_sum,0,5000);
 	func2 = new TF1("func2",_f_sum,0,5000);
@@ -325,15 +389,14 @@ void combinedFit(){
 	rangeD.SetRange(cfg.fitMin, cfg.fitMax);
 
 	TFitter minuit(npars);
-	//minuit.SetFitMethod("loglikelilhood");
-	double p0 = 0;
+	double p0 = 1;
 	minuit.ExecuteCommand("SET PRINTOUT",&p0,1);
 	p0 = 2;
 	minuit.ExecuteCommand("SET STRATEGY",&p0,1);
 	p0 = 0.5;
 	minuit.ExecuteCommand("SET ERRORDEF",&p0,1);
-	//p0 = 1e-14;
-	//minuit.ExecuteCommand("SET EPSMACHINE",&p0,1);
+	p0 = 1e-16;
+	minuit.ExecuteCommand("SET EPSMACHINE",&p0,1);
 	for(int site=0;site<3;++site){
 		for(int range=0;range<n_range;++range){
 
@@ -366,11 +429,11 @@ void combinedFit(){
 			minuit.SetFCN(wrap);
 			fitterParInit(site, minuit, cfg);
 		
-			//minuit.ExecuteCommand("SIMPLEX", minimizer_args, 2);
-			//int fit_status = minuit.ExecuteCommand("MINIMIZE", minimizer_args, 2);
-			fix_and_release(minuit, cfg);	
-			//minuit.ExecuteCommand("HESSE", minimizer_args, 1);
-			//minuit.ExecuteCommand("MINOS", minimizer_args, 1);
+			minuit.ExecuteCommand("SIMPLEX", minimizer_args, 2);
+			minuit.ExecuteCommand("MINIMIZE", minimizer_args, 2);
+			minuit.ExecuteCommand("MINOS", minimizer_args, 1);
+			//fix_and_release(minuit, cfg);
+	
 			double _pars[npars];
 			for(int _i=0;_i<npars;++_i){
 				_pars[_i] = minuit.GetParameter(_i);
