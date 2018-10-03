@@ -1,4 +1,7 @@
 #include "range.h"
+
+const size_t max_bins = 100000;
+
 const double tau_li9 = 256.366;
 const double tau_li9_err = 0.866;
 
@@ -7,9 +10,13 @@ const double tau_he8 = 171.68;
 const double tau_b12 = 29.142;
 const double tau_b12_err = 0.0288;
 
-const double minimizer_args[2] = { 100000, 1e-6};
-//const double fitMin = 10;
-//const double fitMax = 5000;
+const double simplex_args[2] = {1000000, 0.1};
+const double minimizer_args[2] = {1000000, 0.1};
+const double minos_args[1] = {1000000};
+const double improve_args[1] = {1000000};
+const double seek_args[2] = {1000, 1.0};
+double fitMin = 10;
+double fitMax = 5000;
 
 const int npars = 12;
 
@@ -21,16 +28,16 @@ const char *par_names[npars] = {
 }; 
 
 const double par_init[npars][3] = {
-	{ 1e-4, 0, 0 },
 	{ 1e-4, 0, 1 },
-	{ 1e6, 0, 0 },
-	{ 1e3, 0, 1e6 },
+	{ 1e-4, 0, 1 },
+	{ 1e5, 0, 0 },
+	{ 1e3, 0, 0 },
 	{ 0.5, 0, 1 },
 	{ tau_li9, 0, 0 },
-	{ 1e3, 0, 1e6 },
+	{ 1e3, 0, 1e5 },
 	{ 0.5, 0, 1 },
 	{ tau_b12, 0, 0 },
-	{ 1e3, 0, 1e6 },
+	{ 1e3, 0, 1e5 },
 	{ 0.5, 0, 1 },
 	{ tau_he8, 0, 0 },
 };
@@ -71,12 +78,56 @@ const char _f_li[255] = "[0] * ([2] + 1 / [4]) * exp(-([2] + 1 / [4]) * x )";
 const char _f_bo[255] = "[3] * ([2] + 2 / [5] ) * exp(-([2] + 2 / [5] ) * x )";
 const char _f_he[255] = "[6] * ([2] + 1 / [7]) * exp(-([2] + 1 / [7]) * x )";
 */
+
+double r_mu_measured[3][n_range][3] = {0};
+
+double eps_pull[3][2] = {0};
+
+bool enable_eps_pull = false;
+
 double pull(double x, double mean, double err){
 
 	double diff = x - mean;
 
-	return diff * diff / ( err * err);
+	return diff * diff / (2 * err * err);
 
+}
+
+double min(double a, double b){
+	if(a > b)
+		return b;
+	else 
+		return a;
+}
+
+double max(double a, double b){
+	if(a > b)
+		return a;
+	else
+		return b;
+}
+
+double sigmoid(double x){
+	if(x > 0)
+		return 1 / ( 1 + exp(-x));
+	else{
+		double _tmp = exp(x);
+		return _tmp / ( 1 + _tmp );
+	}
+}
+
+double neumaierSum( double *vec, size_t size ){
+	double sum = vec[0];
+	double c = 0;
+	for(size_t i=1;i<size;++i){
+		double t = sum + vec[i];
+		if( fabs(sum) >= fabs(vec[i]) )
+			c += (sum - t) + vec[i];
+		else
+			c += (vec[i] - t) + sum;
+		sum = t;
+	}
+	return sum + c;
 }
 
 void printResults(double results[3][n_range][npars][2]){
@@ -94,7 +145,7 @@ void printResults(double results[3][n_range][npars][2]){
 
 			for(int k=0;k<npars;++k){
 				if(result_print[k])
-					sprintf(buf, "%s %8.2e/%8.2e", buf, results[i][j][k][0], results[i][j][k][1]);
+					sprintf(buf, "%s %8.2e/%8.2e", buf, fabs(results[i][j][k][0]), results[i][j][k][1]);
 			}
 			printf("%s\n",buf);
 		}
@@ -111,7 +162,7 @@ void printLatexTable(double results[3][n_range][npars][2]){
 				printf("%4d & [%10.1e,%10.1e] ",i+1,range[j],range[j+1]);
 			for(int k=0;k<npars;++k)
 				if(latex_print[k])
-					printf("& $%10.2f\\pm%10.2f$ ",results[i][j][k][0],results[i][j][k][1]);
+					printf("& $%10.2f\\pm%10.2f$ ",fabs(results[i][j][k][0]),results[i][j][k][1]);
 			
 			printf("\\\\ \n");
 		}
@@ -134,6 +185,99 @@ TH1 *h1;
 TH1 *h2;
 TH1 *h3;
 
+double h_cache[3][max_bins];
+
+void wrap_test(int &npar, double *g, double &result, double *par, int flag){
+/*const char *par_names[npars] = {
+	"r_mu_tag", "r_mu_atag", "N_DC",
+	"N_Li", "EPS_Li", "tau_Li",
+	"N_Bo", "EPS_Bo", "tau_Bo",
+	"N_He", "EPS_He", "tau_He"
+};*/ 
+	double r_mu_tag = par[0];
+	double r_mu_atag = par[1];
+	double n_dc = fabs(par[2]);
+	double n_li = fabs(par[3]);
+	double eps_li = par[4];
+	double tau_li = par[5];
+	double n_bo = fabs(par[6]);
+	double eps_bo = par[7];
+	double tau_bo = par[8];
+	double n_he = fabs(par[9]);
+	double eps_he = par[10];
+	double tau_he = par[11];
+
+	//[0]:mu rate
+	//[1]:n_dc
+	//[2]:n_li9
+	//[3]:t_li9
+	//[4]:n_b12
+	//[5]:t_b12
+	//[6]:n_he8
+	//[7]:t_he8
+
+
+	double par_0[npars_single];
+	par_0[0] = r_mu_tag + r_mu_atag;
+	par_0[1] = n_dc;
+	par_0[2] = n_li;
+	par_0[3] = tau_li;	
+	par_0[4] = n_bo;
+	par_0[5] = tau_bo;
+	par_0[6] = n_he;
+	par_0[7] = tau_he;
+
+	double par_1[npars_single];
+	par_1[0] = r_mu_tag;
+	par_1[1] = n_dc + (1-eps_li) * n_li + (1-eps_bo) * n_bo + (1-eps_he) * n_he;
+	par_1[2] = eps_li * n_li;
+	par_1[3] = tau_li;	
+	par_1[4] = eps_bo * n_bo;
+	par_1[5] = tau_bo;
+	par_1[6] = eps_he * n_he;
+	par_1[7] = tau_he;
+
+	double par_2[npars_single];
+	par_2[0] = r_mu_atag;
+	par_2[1] = n_dc + eps_li * n_li + eps_bo * n_bo + eps_he * n_he;
+	par_2[2] = (1-eps_li) * n_li;
+	par_2[3] = tau_li;
+	par_2[4] = (1-eps_bo) * n_bo;
+	par_2[5] = tau_bo;
+	par_2[6] = (1-eps_he) * n_he;
+	par_2[7] = tau_he;
+
+	func1->SetParameters(par_0);
+
+	func2->SetParameters(par_1);
+
+	func3->SetParameters(par_2);	
+
+	result = 0;
+	static double cache[max_bins];
+	for(int i=0;i<h1->GetNbinsX();++i){
+		cache[i] = 0;
+		double x = h1->GetBinCenter(i);
+		if(x<fitMin) continue;
+		else if(x>fitMax) break;
+		double _f0 = func1->Eval(x);
+		double _f1 = func2->Eval(x);
+		double _f2 = func3->Eval(x);
+
+		//double _cache0 = h_cache[0][i] == 0? _f0 : _f0 - h_cache[0][i] * log(_f0) + TMath::LnGamma(h_cache[0][i]+1);
+		//double _cache1 = h_cache[1][i] == 0? _f1 : _f1 - h_cache[1][i] * log(_f1) + TMath::LnGamma(h_cache[1][i]+1);
+		//double _cache2 = h_cache[2][i] == 0? _f2 : _f2 - h_cache[2][i] * log(_f2) + TMath::LnGamma(h_cache[2][i]+1);
+		double _cache0 = h_cache[0][i] == 0? _f0 : _f0 - h_cache[0][i] * log(_f0);
+		double _cache1 = h_cache[1][i] == 0? _f1 : _f1 - h_cache[1][i] * log(_f1);
+		double _cache2 = h_cache[2][i] == 0? _f2 : _f2 - h_cache[2][i] * log(_f2);
+
+
+		cache[i] = _cache0 + _cache1 + _cache2;
+	}
+	result = neumaierSum(cache,h1->GetNbinsX());
+}
+
+
 void wrap(int &npar, double *g, double &result, double *par, int flag){
 /*const char *par_names[npars] = {
 	"r_mu_tag", "r_mu_atag", "N_DC",
@@ -143,14 +287,14 @@ void wrap(int &npar, double *g, double &result, double *par, int flag){
 };*/ 
 	double r_mu_tag = par[0];
 	double r_mu_atag = par[1];
-	double n_dc = par[2];
-	double n_li = par[3];
+	double n_dc = fabs(par[2]);
+	double n_li = fabs(par[3]);
 	double eps_li = par[4];
 	double tau_li = par[5];
-	double n_bo = par[6];
+	double n_bo = fabs(par[6]);
 	double eps_bo = par[7];
 	double tau_bo = par[8];
-	double n_he = par[9];
+	double n_he = fabs(par[9]);
 	double eps_he = par[10];
 	double tau_he = par[11];
 
@@ -195,8 +339,19 @@ void wrap(int &npar, double *g, double &result, double *par, int flag){
 	par_2[7] = tau_he;
 
 //	double pull_term = pull(par[7], tau_li, tau_li_err) + pull(par[8], tau_b12, tau_b12_err);
-	double pull_term = 0;
 
+	double pull_term = 0;
+	if(enable_eps_pull){
+		pull_term += pull(eps_li, eps_pull[0][0], eps_pull[0][1]);
+		if(eps_pull[1][1] > 0)
+			pull_term += pull(eps_bo, eps_pull[1][0], eps_pull[1][1]);
+		if(eps_pull[2][1] > 0)
+			pull_term += pull(eps_he, eps_pull[2][0], eps_pull[2][1]);
+	}
+//	double pull_term = pull(eps_li, 0.5, 0.5) + pull(eps_bo, 0.5, 0.5) + pull(eps_he, 0.5, 0.5);
+	//for(int i=0;i<npars_single;++i)
+	//	printf("%2d: %10e %10e %10e\n",i,par_0[i],par_1[i],par_2[i]);
+	//cout << (*fPNLL_1)(par_0) << " " << (*fPNLL_2)(par_1) << " " << (*fPNLL_3)(par_2) << endl;
 	result = (*fPNLL_1)(par_0) + (*fPNLL_2)(par_1) + (*fPNLL_3)(par_2) + pull_term;
 }
 
@@ -255,20 +410,20 @@ void fillPars(double *par, TF1 *f_0, TF1 *f_1, TF1 *f_2){
 }
 
 void plotHists(int site, int range, TH1 *h1, TF1 *f1, TH1 *h2, TF1 *f2, TH1 *h3, TF1 *f3){
-	
+	char *dir = "./plots/cfits";
 	char buf[255];
-
-	sprintf(buf, "./plots/cfit_%d_%d_0.png", site, range);
+	
+	sprintf(buf, "%s/cfit_%d_%d_0.png", dir, site, range);
 	h1->Draw("E1");
 	f1->Draw("same");
 	gPad->SetLogy();
 	gPad->SetLogx();
 	c1->SaveAs(buf);
-	sprintf(buf, "./plots/cfit_%d_%d_1.png", site, range);
+	sprintf(buf, "%s/cfit_%d_%d_1.png", dir, site, range);
 	h2->Draw("E1");
 	f2->Draw("same");
 	c1->SaveAs(buf);
-	sprintf(buf, "./plots/cfit_%d_%d_2.png", site, range);
+	sprintf(buf, "%s/cfit_%d_%d_2.png", dir, site, range);
 	h3->Draw("E1");
 	f3->Draw("same");
 	c1->SaveAs(buf);
@@ -279,19 +434,24 @@ struct Config{
 	double fitMax;
 
 	int fix_lifetime;
+	int fix_rmu;
 	int fix_B12;
 	int fix_He8;
 
 	int bound_eps;
+
+	int use_eps_pull;
 };
 
 void parseInputs(Config &cfg){
 
 	cin >> cfg.fitMin;
 	cout << "fitMin: " << cfg.fitMin << endl;
+	fitMin = cfg.fitMin;
 
 	cin >> cfg.fitMax;
 	cout << "fitMax: " << cfg.fitMax << endl;
+	fitMax = cfg.fitMax;	
 
 	cin >> cfg.fix_B12;
 	cout << "fix B12: " << cfg.fix_B12 << endl;
@@ -304,13 +464,34 @@ void parseInputs(Config &cfg){
 
 	cin >> cfg.fix_lifetime;
 	cout << "Fix isotope lifetimes: " << cfg.fix_lifetime << endl;
+
+	cin >> cfg.fix_rmu;
+	cout << "Fix muon rates: " << cfg.fix_rmu << endl;
+
+	cin >> cfg.use_eps_pull;
+	cout << "Use efficiency pulls: " << cfg.use_eps_pull << endl;
 }
 
-void fitterParInit(int site, TFitter &minuit, Config &cfg){
+void fitterParInit(int site, int range, TFitter &minuit, Config &cfg){
 
-	double step_ratio = 0.01;
+	double step_ratio = 1e-2;
 
-	for(int i=0;i<npars;++i){
+	if(cfg.fix_rmu == 0){
+		minuit.SetParameter(0, par_names[0], r_mu_measured[site][range][1], r_mu_measured[site][range][1] * step_ratio, 0, 0.1 );
+		minuit.SetParameter(1, par_names[1], r_mu_measured[site][range][2], r_mu_measured[site][range][2] * step_ratio, 0, 0.1 );
+	}else{
+		minuit.SetParameter(0, par_names[0], r_mu_measured[site][range][1], 0, 0, 0 );
+		minuit.FixParameter(0);
+		minuit.SetParameter(1, par_names[1], r_mu_measured[site][range][2], 0, 0, 0 );
+		minuit.FixParameter(1);
+	}
+
+	minuit.SetParameter(2, par_names[2], h1->GetEntries(), h1->GetEntries() * step_ratio, 0, 0);
+	minuit.SetParameter(3, par_names[3], 0.01 * h1->GetEntries(), 0.01 * h1->GetEntries() * step_ratio, 0, 1e5);
+	//minuit.SetParameter(4, par_names[4], 1, 0, 0, 0);
+	//minuit.FixParameter(4);
+
+	for(int i=4;i<npars;++i){
 		if(cfg.fix_lifetime == 1 && strstr(par_names[i],"tau") != NULL){
 			minuit.SetParameter(i,par_names[i],par_init[i][0],0,0,0);
 			minuit.FixParameter(i);
@@ -358,10 +539,22 @@ void fix_and_release(TFitter &minuit, Config &cfg){
 
 }
 
+void getMuRates(){
+	ifstream ifile("murates");
+	for(int s=0;s<3;++s){
+		for(int r=0;r<n_range;++r){
+			for(int t=0;t<3;++t){
+				ifile >> r_mu_measured[s][r][t];
+			}			
+		}
+	}	
+
+}
+
 void combinedFit(){
 
 	Config cfg;
-
+	getMuRates();
 	parseInputs(cfg);
 
 	gStyle->SetOptFit(1);
@@ -378,8 +571,8 @@ void combinedFit(){
 	func3 = new TF1("func3",_f_sum,0,5000);
 
 	ROOT::Math::WrappedMultiTF1 wf1(*func1,1);
-	ROOT::Math::WrappedMultiTF1 wf3(*func2,1);
-	ROOT::Math::WrappedMultiTF1 wf2(*func3,1);
+	ROOT::Math::WrappedMultiTF1 wf2(*func2,1);
+	ROOT::Math::WrappedMultiTF1 wf3(*func3,1);
 	
 	double results[3][n_range][npars][2];
 	
@@ -395,62 +588,99 @@ void combinedFit(){
 	minuit.ExecuteCommand("SET STRATEGY",&p0,1);
 	p0 = 0.5;
 	minuit.ExecuteCommand("SET ERRORDEF",&p0,1);
-	p0 = 1e-16;
-	minuit.ExecuteCommand("SET EPSMACHINE",&p0,1);
+	//p0 = 1e-16;
+	//minuit.ExecuteCommand("SET EPSMACHINE",&p0,1);
+	double eps_measured[3][3][2];
+	double eps_minmax[3][2] = {
+		{1, 0},
+		{1, 0},
+		{1, 0}
+	};
+	enable_eps_pull = false;
 	for(int site=0;site<3;++site){
-		for(int range=0;range<n_range;++range){
+		do_fit(site, n_range - 1, minuit, cfg, wf1, wf2, wf3, opt, rangeD, results);
+		eps_measured[site][0][0] = minuit.GetParameter(4);
+		eps_measured[site][0][1] = minuit.GetParError(4);
+		eps_measured[site][1][0] = minuit.GetParameter(7);
+		eps_measured[site][1][1] = minuit.GetParError(7);
+		eps_measured[site][2][0] = minuit.GetParameter(10);
+		eps_measured[site][2][1] = minuit.GetParError(10);
+		for(int iso=0;iso<3;++iso){
+			eps_minmax[iso][0] = min(eps_minmax[iso][0], eps_measured[site][iso][0]);
+			eps_minmax[iso][1] = max(eps_minmax[iso][1], eps_measured[site][iso][0]);
+			eps_pull[iso][0] += eps_measured[site][iso][0] / 3;
+			eps_pull[iso][1] += eps_measured[site][iso][1] * eps_measured[site][iso][1] / 9;
+		}
+	}
+	for(int iso=0;iso<3;++iso){
+		double __tmp = eps_minmax[iso][1] - eps_minmax[iso][0];
+		eps_pull[iso][1] += __tmp * __tmp;
+		eps_pull[iso][1] = sqrt(eps_pull[iso][1]);
+	}
 
+	enable_eps_pull = (cfg.use_eps_pull == 1);
 
-			char buf[255];
-			sprintf(buf,"./hists/EH%d_dtlSH_%d.root",site+1,range);
-			TFile *f1 = new TFile(buf,"READ");
-			h1 = (TH1*)f1->Get("h");
-			ROOT::Fit::BinData data1(opt,rangeD);
-			ROOT::Fit::FillData(data1, h1);
-			ROOT::Fit::PoissonLLFunction PNLL1(data1,wf1);
-			fPNLL_1 = &PNLL1;
-
-			sprintf(buf,"./hists/EH%d_dtlSH_%d_tag.root",site+1,range);
-			TFile *f2 = new TFile(buf,"READ");
-			h2 = (TH1*)f2->Get("h");
-			ROOT::Fit::BinData data2(opt,rangeD);
-			ROOT::Fit::FillData(data2, h2);
-			ROOT::Fit::PoissonLLFunction PNLL2(data2,wf2);
-			fPNLL_2 = &PNLL2;
-
-			sprintf(buf,"./hists/EH%d_dtlSH_%d_atag.root",site+1,range);
-			TFile *f3 = new TFile(buf,"READ");
-			h3 = (TH1*)f3->Get("h");
-			ROOT::Fit::BinData data3(opt,rangeD);
-			ROOT::Fit::FillData(data3, h3);
-			ROOT::Fit::PoissonLLFunction PNLL3(data3,wf3);
-			fPNLL_3 = &PNLL3;
-
-			minuit.SetFCN(wrap);
-			fitterParInit(site, minuit, cfg);
-		
-			minuit.ExecuteCommand("SIMPLEX", minimizer_args, 2);
-			minuit.ExecuteCommand("MINIMIZE", minimizer_args, 2);
-			minuit.ExecuteCommand("MINOS", minimizer_args, 1);
-			//fix_and_release(minuit, cfg);
-	
-			double _pars[npars];
-			for(int _i=0;_i<npars;++_i){
-				_pars[_i] = minuit.GetParameter(_i);
-			}
-			fillPars(_pars, func1, func2, func3);
-
-			plotHists(site, range, h1, func1, h2, func2, h3, func3);
-
-			for(int _i=0;_i<npars;++_i){
-				results[site][range][_i][0] = minuit.GetParameter(_i);
-				results[site][range][_i][1] = minuit.GetParError(_i);
-			}
-		
+	for(int site=0;site<3;++site){
+		for(int range=0;range<n_range-1;++range){
+			do_fit(site, range, minuit, cfg, wf1, wf2, wf3, opt, rangeD, results);
 		}
 	}
 	printLatexTable(results);
+	for(int iso=0;iso<3;++iso)
+		printf("iso%d pull: %10.3f %10.3f\n", iso, eps_pull[iso][0], eps_pull[iso][1]);
 	printResults(results);
 }
 
+void do_fit(int site, int range, TFitter &minuit, Config &cfg, ROOT::Math::WrappedMultiTF1 &wf1, ROOT::Math::WrappedMultiTF1 &wf2, ROOT::Math::WrappedMultiTF1 &wf3, ROOT::Fit::DataOptions &opt, ROOT::Fit::DataRange &rangeD, double results[3][n_range][npars][2]){
 
+	char buf[255];
+	sprintf(buf,"./hists/EH%d_dtlSH_%d.root",site+1,range);
+	TFile *f1 = new TFile(buf,"READ");
+	h1 = (TH1*)f1->Get("h");
+	ROOT::Fit::BinData data1(opt,rangeD);
+	ROOT::Fit::FillData(data1, h1);
+	ROOT::Fit::PoissonLLFunction PNLL1(data1,wf1);
+	fPNLL_1 = &PNLL1;
+
+	sprintf(buf,"./hists/EH%d_dtlSH_%d_tag.root",site+1,range);
+	TFile *f2 = new TFile(buf,"READ");
+	h2 = (TH1*)f2->Get("h");
+	ROOT::Fit::BinData data2(opt,rangeD);
+	ROOT::Fit::FillData(data2, h2);
+	ROOT::Fit::PoissonLLFunction PNLL2(data2,wf2);
+	fPNLL_2 = &PNLL2;
+
+	sprintf(buf,"./hists/EH%d_dtlSH_%d_atag.root",site+1,range);
+	TFile *f3 = new TFile(buf,"READ");
+	h3 = (TH1*)f3->Get("h");
+	ROOT::Fit::BinData data3(opt,rangeD);
+	ROOT::Fit::FillData(data3, h3);
+	ROOT::Fit::PoissonLLFunction PNLL3(data3,wf3);
+	fPNLL_3 = &PNLL3;
+
+	for(size_t _bin = 0;_bin<h1->GetNbinsX();++_bin){
+		h_cache[0][_bin] = h1->GetBinContent(_bin);
+		h_cache[1][_bin] = h2->GetBinContent(_bin);
+		h_cache[2][_bin] = h3->GetBinContent(_bin);
+	}
+	minuit.SetFCN(wrap);
+	fitterParInit(site, range, minuit, cfg);
+
+	minuit.ExecuteCommand("SIMPLEX", simplex_args, 2);
+	minuit.ExecuteCommand("MINIMIZE", minimizer_args, 2);
+	minuit.ExecuteCommand("MINOS", minos_args, 1);
+	//fix_and_release(minuit, cfg);
+	//
+	double _pars[npars];
+	for(int _i=0;_i<npars;++_i){
+		_pars[_i] = minuit.GetParameter(_i);
+	}
+	fillPars(_pars, func1, func2, func3);
+
+	plotHists(site, range, h1, func1, h2, func2, h3, func3);
+	
+	for(int _i=0;_i<npars;++_i){
+		results[site][range][_i][0] = minuit.GetParameter(_i);
+		results[site][range][_i][1] = minuit.GetParError(_i);
+	}
+}
