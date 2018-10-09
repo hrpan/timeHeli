@@ -134,23 +134,7 @@ TF1 *func[3];
 
 TH1 *h[3];
 
-void wrap(int &npar, double *g, double &result, double *par, int flag){
-
-/*const char *par_names[npars] = {
-	"r_mu_tag", "r_mu_atag", "N_DC",
-	"N_Li/He", "EPS_Li/He", "ratio_Li/He", "tau_Li", "tau_He",
-	"N_Bo", "EPS_Bo", "tau_Bo",
-};*/ 
-//[0]:mu rate
-//[1]:n_dc
-//[2]:n_li9he8
-//[3]:t_li9
-//[4]:t_he9
-//[5]:ratio_lihe
-//[6]:n_b12
-//[7]:t_b12
-
-
+void parTrans(double *par, double _par[3][npars_single]){
 	double r_mu_tag = par[0];
 	double r_mu_atag = par[1];
 	double n_dc = fabs(par[2]);
@@ -186,8 +170,13 @@ void wrap(int &npar, double *g, double &result, double *par, int flag){
 	_par[2][1] = n_dc + eps_lihe * n_lihe + eps_bo * n_bo;
 	_par[2][2] = (1-eps_lihe) * n_lihe;
 	_par[2][6] = (1-eps_bo) * n_bo;
+}
 
-//	double pull_term = pull(par[7], tau_li, tau_li_err) + pull(par[8], tau_b12, tau_b12_err);
+void wrap(int &npar, double *g, double &result, double *par, int flag){
+
+	double _par[3][npars_single];
+
+	parTrans(par, _par);
 
 	double pull_term = 0;
 	if(enable_eps_pull){
@@ -195,7 +184,6 @@ void wrap(int &npar, double *g, double &result, double *par, int flag){
 		if(eps_pull[1][1] > 0)
 			pull_term += pull(eps_bo, eps_pull[1][0], eps_pull[1][1]);
 	}
-//	double pull_term = pull(eps_li, 0.5, 0.5) + pull(eps_bo, 0.5, 0.5) + pull(eps_he, 0.5, 0.5);
 	//for(int i=0;i<npars_single;++i)
 	//	printf("%2d: %10e %10e %10e\n",i,par_0[i],par_1[i],par_2[i]);
 	//cout << (*fPNLL_1)(par_0) << " " << (*fPNLL_2)(par_1) << " " << (*fPNLL_3)(par_2) << endl;
@@ -208,41 +196,9 @@ void wrap(int &npar, double *g, double &result, double *par, int flag){
 
 void fillPars(double *par, TF1 *f[3]){
 
-	double r_mu_tag = par[0];
-	double r_mu_atag = par[1];
-	double n_dc = fabs(par[2]);
-	double n_lihe = fabs(par[3]);
-	double eps_lihe = par[4];
-	double ratio_lihe = par[5];
-	double tau_li = par[6];
-	double tau_he = par[7];
-	double n_bo = fabs(par[8]);
-	double eps_bo = par[9];
-	double tau_bo = par[10];
-
 	double _par[3][npars_single];
 
-	for(int i = 0; i < 3; ++i){
-		_par[i][3] = tau_li;
-		_par[i][4] = tau_he;
-		_par[i][5] = ratio_lihe;
-		_par[i][7] = tau_bo;
-	}
-
-	_par[0][0] = r_mu_tag + r_mu_atag;
-	_par[0][1] = n_dc;
-	_par[0][2] = n_lihe;
-	_par[0][6] = n_bo;
-
-	_par[1][0] = r_mu_tag;
-	_par[1][1] = n_dc + (1-eps_lihe) * n_lihe + (1-eps_bo) * n_bo;
-	_par[1][2] = eps_lihe * n_lihe;
-	_par[1][6] = eps_bo * n_bo;
-
-	_par[2][0] = r_mu_atag;
-	_par[2][1] = n_dc + eps_lihe * n_lihe + eps_bo * n_bo;
-	_par[2][2] = (1-eps_lihe) * n_lihe;
-	_par[2][6] = (1-eps_bo) * n_bo;
+	parTrans(par, _par);
 
 	for(int i=0;i<3;++i)
 		f[i]->SetParameters(_par[i]);
