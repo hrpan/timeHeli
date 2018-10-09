@@ -1,14 +1,16 @@
 #include "range.h"
 
+bool isIsolated(vector<double> *dtlSH, size_t mu, int r_idx, int r_shower);
 bool nTagged(vector<float> *nTag_e, vector<float> *nTag_dt, size_t start, size_t end);
 int findRange(double *range, int n_range, double npe);
 
-const double nTag_e_min = 1.8;
-const double nTag_dt_min = 20;
-const double nTag_dt_max = 400;
-const double mmv_dt_cut = 500;
-const double iso_dt_cut = 0.5;
-const float distCut = 1000;
+const double maxT = 5000; //ms
+
+const double nTag_e_min = 1.8; //mev
+const double nTag_dt_min = 20; //us
+const double nTag_dt_max = 200; //us
+const double iso_dt_cut = 0.2; //ms
+const float distCut = 500; //mm
 
 void preprocess(){
 	TChain *chain = new TChain("Heli");
@@ -86,6 +88,7 @@ void preprocess(){
 		tr_out->Branch(buf,&_dtlSH_tag_n[i]);
 	}
 
+	int r_shower = findRange(range, n_range, 4e5);
 	for(size_t i=0;i<entries;++i){
 		if(i%(entries/10000)==0){
 			printf("\r%d/%d(%.3f%%)",i,entries,float(i*100)/entries);
@@ -93,9 +96,9 @@ void preprocess(){
 		}
 
 		chain->GetEntry(i);
-		
+		//if(ed<6) continue;
 		if(dist>distCut) continue;
-
+		
 		size_t muons = dtlSH->size();
 
 		double _dtlSH_all[n_range];
@@ -123,27 +126,8 @@ void preprocess(){
 			int r_idx = findRange(range,n_range,(*nPESum)[mu]);
 
 			_dtlSH_all[r_idx] = (*dtlSH)[mu];
-			bool pass = true;
-			/*
-			for(int r_tmp = r_idx+1; r_tmp < n_range && pass; ++r_tmp)
-				if(r_tmp == r_idx) 
-					continue;
-				else if(_dtlSH_all[r_tmp] > 0)
-					pass = (_dtlSH_all[r_tmp] - (*dtlSH)[mu]) > mmv_dt_cut;
-				else if(_dtlSH_all[r_tmp] < 0)
-					pass = (*dtlSH)[mu] < 5000 - mmv_dt_cut;
-			*/
-			if( mu > 0 )
-				pass = (*dtlSH)[mu-1] - (*dtlSH)[mu] > iso_dt_cut;
-			else 
-				pass = (*dtlSH)[mu] < 5000 - iso_dt_cut;
 
-			if( mu + 1 < muons )
-				pass = pass && ( (*dtlSH)[mu] - (*dtlSH)[mu+1] > iso_dt_cut );
-			else
-				pass = pass && ( (*dtlSH)[mu] > iso_dt_cut );
-
-			if(!pass) continue;
+			if(!isIsolated(dtlSH, mu, r_idx, r_shower)) continue;
 
 			if(_dtlSH[0][r_idx] > 0)
 				_dtlSH_sdt[0][r_idx] = _dtlSH[0][r_idx] - (*dtlSH)[mu];
@@ -191,6 +175,28 @@ void preprocess(){
 	TNamed(meta, meta).Write("Metadata");
 	
 	f_out->Close();
+}
+
+bool isIsolated(vector<double> *dtlSH, size_t mu, int r_idx, int r_shower){
+	if(r_idx < r_shower){
+		bool pass;
+		
+		if(mu > 0)
+			pass = (*dtlSH)[mu-1] - (*dtlSH)[mu] > iso_dt_cut;
+		else 
+			pass = (*dtlSH)[mu] < maxT - iso_dt_cut;
+
+		if(!pass) return false;
+
+		if(mu + 1 < dtlSH->size())
+			pass = (*dtlSH)[mu] - (*dtlSH)[mu+1] > iso_dt_cut;
+		else
+			pass = (*dtlSH)[mu] > iso_dt_cut;
+
+		if(!pass) return false;
+	}
+
+	return true;
 }
 
 bool nTagged(vector<float> *nTag_e, vector<float> *nTag_dt, size_t start, size_t end){
