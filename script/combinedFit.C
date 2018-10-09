@@ -1,4 +1,7 @@
+#include "util.C"
 #include "range.h"
+
+const char* hists_prefix = "./hists_unified_iso";
 
 const size_t max_bins = 100000;
 
@@ -82,51 +85,6 @@ double eps_pull[3][2] = {0};
 
 bool enable_eps_pull = false;
 
-double pull(double x, double mean, double err){
-
-	double diff = x - mean;
-
-	return diff * diff / (2 * err * err);
-
-}
-
-double min(double a, double b){
-	if(a > b)
-		return b;
-	else 
-		return a;
-}
-
-double max(double a, double b){
-	if(a > b)
-		return a;
-	else
-		return b;
-}
-
-double sigmoid(double x){
-	if(x > 0)
-		return 1 / ( 1 + exp(-x));
-	else{
-		double _tmp = exp(x);
-		return _tmp / ( 1 + _tmp );
-	}
-}
-
-double neumaierSum( double *vec, size_t size ){
-	double sum = vec[0];
-	double c = 0;
-	for(size_t i=1;i<size;++i){
-		double t = sum + vec[i];
-		if( fabs(sum) >= fabs(vec[i]) )
-			c += (sum - t) + vec[i];
-		else
-			c += (vec[i] - t) + sum;
-		sum = t;
-	}
-	return sum + c;
-}
-
 void printResults(double results[3][n_range][npars][2]){
 	char buf[512];
 	sprintf(buf, "%4s %20s", "site", "range");
@@ -175,99 +133,6 @@ ROOT::Math::IMultiGenFunction *fPNLL[3];
 TF1 *func[3];
 
 TH1 *h[3];
-
-double h_cache[3][max_bins];
-
-void wrap_test(int &npar, double *g, double &result, double *par, int flag){
-/*const char *par_names[npars] = {
-	"r_mu_tag", "r_mu_atag", "N_DC",
-	"N_Li", "EPS_Li", "tau_Li",
-	"N_Bo", "EPS_Bo", "tau_Bo",
-	"N_He", "EPS_He", "tau_He"
-};*/ 
-	double r_mu_tag = par[0];
-	double r_mu_atag = par[1];
-	double n_dc = fabs(par[2]);
-	double n_li = fabs(par[3]);
-	double eps_li = par[4];
-	double tau_li = par[5];
-	double n_bo = fabs(par[6]);
-	double eps_bo = par[7];
-	double tau_bo = par[8];
-	double n_he = fabs(par[9]);
-	double eps_he = par[10];
-	double tau_he = par[11];
-
-	//[0]:mu rate
-	//[1]:n_dc
-	//[2]:n_li9
-	//[3]:t_li9
-	//[4]:n_b12
-	//[5]:t_b12
-	//[6]:n_he8
-	//[7]:t_he8
-
-
-	double par_0[npars_single];
-	par_0[0] = r_mu_tag + r_mu_atag;
-	par_0[1] = n_dc;
-	par_0[2] = n_li;
-	par_0[3] = tau_li;	
-	par_0[4] = n_bo;
-	par_0[5] = tau_bo;
-	par_0[6] = n_he;
-	par_0[7] = tau_he;
-
-	double par_1[npars_single];
-	par_1[0] = r_mu_tag;
-	par_1[1] = n_dc + (1-eps_li) * n_li + (1-eps_bo) * n_bo + (1-eps_he) * n_he;
-	par_1[2] = eps_li * n_li;
-	par_1[3] = tau_li;	
-	par_1[4] = eps_bo * n_bo;
-	par_1[5] = tau_bo;
-	par_1[6] = eps_he * n_he;
-	par_1[7] = tau_he;
-
-	double par_2[npars_single];
-	par_2[0] = r_mu_atag;
-	par_2[1] = n_dc + eps_li * n_li + eps_bo * n_bo + eps_he * n_he;
-	par_2[2] = (1-eps_li) * n_li;
-	par_2[3] = tau_li;
-	par_2[4] = (1-eps_bo) * n_bo;
-	par_2[5] = tau_bo;
-	par_2[6] = (1-eps_he) * n_he;
-	par_2[7] = tau_he;
-
-	func1->SetParameters(par_0);
-
-	func2->SetParameters(par_1);
-
-	func3->SetParameters(par_2);	
-
-	result = 0;
-	static double cache[max_bins];
-	for(int i=0;i<h1->GetNbinsX();++i){
-		cache[i] = 0;
-		double x = h1->GetBinCenter(i);
-		if(x<fitMin) continue;
-		else if(x>fitMax) break;
-		double _f0 = func1->Eval(x);
-		double _f1 = func2->Eval(x);
-		double _f2 = func3->Eval(x);
-
-		//double _cache0 = h_cache[0][i] == 0? _f0 : _f0 - h_cache[0][i] * log(_f0) + TMath::LnGamma(h_cache[0][i]+1);
-		//double _cache1 = h_cache[1][i] == 0? _f1 : _f1 - h_cache[1][i] * log(_f1) + TMath::LnGamma(h_cache[1][i]+1);
-		//double _cache2 = h_cache[2][i] == 0? _f2 : _f2 - h_cache[2][i] * log(_f2) + TMath::LnGamma(h_cache[2][i]+1);
-		double _cache0 = h_cache[0][i] == 0? _f0 : _f0 - h_cache[0][i] * log(_f0);
-		double _cache1 = h_cache[1][i] == 0? _f1 : _f1 - h_cache[1][i] * log(_f1);
-		double _cache2 = h_cache[2][i] == 0? _f2 : _f2 - h_cache[2][i] * log(_f2);
-
-
-		cache[i] = _cache0 + _cache1 + _cache2;
-	}
-	result = neumaierSum(cache,h1->GetNbinsX());
-}
-
 
 void wrap(int &npar, double *g, double &result, double *par, int flag){
 
@@ -611,7 +476,7 @@ void combinedFit(){
 void do_fit(int site, int range, TFitter &minuit, Config &cfg, ROOT::Math::WrappedMultiTF1 *wf[3], ROOT::Fit::DataOptions &opt, ROOT::Fit::DataRange &rangeD, double results[3][n_range][npars][2]){
 
 	char buf[255];
-	sprintf(buf,"./hists/EH%d_dtlSH_%d.root",site+1,range);
+	sprintf(buf, "%s/EH%d_dtlSH_%d.root", hists_prefix, site+1, range);
 	TFile *f1 = new TFile(buf,"READ");
 	h[0] = (TH1*)f1->Get("h");
 	ROOT::Fit::BinData data1(opt,rangeD);
@@ -619,7 +484,7 @@ void do_fit(int site, int range, TFitter &minuit, Config &cfg, ROOT::Math::Wrapp
 	ROOT::Fit::PoissonLLFunction PNLL1(data1,*wf[0]);
 	fPNLL[0] = &PNLL1;
 
-	sprintf(buf,"./hists/EH%d_dtlSH_%d_tag.root",site+1,range);
+	sprintf(buf, "%s/EH%d_dtlSH_%d_tag.root", hists_prefix, site + 1, range);
 	TFile *f2 = new TFile(buf,"READ");
 	h[1] = (TH1*)f2->Get("h");
 	ROOT::Fit::BinData data2(opt,rangeD);
@@ -627,7 +492,7 @@ void do_fit(int site, int range, TFitter &minuit, Config &cfg, ROOT::Math::Wrapp
 	ROOT::Fit::PoissonLLFunction PNLL2(data2,*wf[1]);
 	fPNLL[1] = &PNLL2;
 
-	sprintf(buf,"./hists/EH%d_dtlSH_%d_atag.root",site+1,range);
+	sprintf(buf, "%s/EH%d_dtlSH_%d_atag.root", hists_prefix, site + 1, range);
 	TFile *f3 = new TFile(buf,"READ");
 	h[2] = (TH1*)f3->Get("h");
 	ROOT::Fit::BinData data3(opt,rangeD);
@@ -635,10 +500,6 @@ void do_fit(int site, int range, TFitter &minuit, Config &cfg, ROOT::Math::Wrapp
 	ROOT::Fit::PoissonLLFunction PNLL3(data3,*wf[2]);
 	fPNLL[2] = &PNLL3;
 
-	for(size_t _bin = 0;_bin<h[0]->GetNbinsX();++_bin){
-		for(int _i = 0; _i < 3; ++_i)
-			h_cache[_i][_bin] = h[_i]->GetBinContent(_bin);
-	}
 	minuit.SetFCN(wrap);
 	fitterParInit(site, range, minuit, cfg);
 
