@@ -81,7 +81,7 @@ const char _f_he[255] = "[6] * ([2] + 1 / [7]) * exp(-([2] + 1 / [7]) * x )";
 
 double r_mu_measured[3][n_range][3] = {0};
 
-double eps_pull[3][2] = {0};
+double eps_pull[2][2] = {0};
 
 bool enable_eps_pull = false;
 
@@ -180,6 +180,7 @@ void wrap(int &npar, double *g, double &result, double *par, int flag){
 
 	double pull_term = 0;
 	if(enable_eps_pull){
+		//cout << par[4] << " " << eps_pull[0][0] << " " << eps_pull[0][1] << " " << pull(par[4], eps_pull[0][0], eps_pull[0][1]) << endl; 
 		pull_term += pull(par[4], eps_pull[0][0], eps_pull[0][1]);
 		if(eps_pull[1][1] > 0)
 			pull_term += pull(par[9], eps_pull[1][0], eps_pull[1][1]);
@@ -283,19 +284,20 @@ void fitterParInit(int site, int range, TFitter &minuit, Config &cfg){
 	}
 
 	double _entries = h[0]->GetEntries();
-
+	
+	
 	minuit.SetParameter(2, par_names[2], _entries, _entries * step_ratio, 0, 0);
-
-	minuit.SetParameter(3, par_names[3], 0.01 * _entries, 0.01 * _entries * step_ratio, 0, 0);
+	double bkg_ratio = 1e-2;
+	minuit.SetParameter(3, par_names[3], bkg_ratio * _entries, bkg_ratio * _entries * step_ratio, 0, 0);
 
 	for(int i=4;i<npars;++i){
-		if(cfg.fix_lifetime == 1 && strstr(par_names[i],"tau") != NULL){
+		if(cfg.fix_lifetime == 1 && strstr(par_names[i], "tau") != NULL){
 			minuit.SetParameter(i, par_names[i], par_init[i][0], 0, 0, 0);
 			minuit.FixParameter(i);
-		}else if( (cfg.fix_B12 == 1 && strstr(par_names[i],"Bo") != NULL) ){
+		}else if( (cfg.fix_B12 == 1 && strstr(par_names[i], "Bo") != NULL) ){
 			minuit.SetParameter(i, par_names[i], 0, 0, 0, 0);
 			minuit.FixParameter(i);
-		}else if( (cfg.fix_He8 == 1 && strstr(par_names[i],"ratio") != NULL) ){
+		}else if( (cfg.fix_He8 == 1 && strstr(par_names[i], "ratio") != NULL) ){
 			minuit.SetParameter(i, par_names[i], 1, 0, 0, 0);
 			minuit.FixParameter(i);
 		}else if(strstr(par_names[i],"EPS") != NULL){
@@ -310,47 +312,16 @@ void fitterParInit(int site, int range, TFitter &minuit, Config &cfg){
 			
 			if(enable_eps_pull)
 				if(strstr(par_names[i], "Li") != NULL)
-					minuit.SetParameter(i, par_names[i], eps_pull[0][0], eps_pull[0][1], _lb, _ub);
+					minuit.SetParameter(i, par_names[i], eps_pull[0][0], eps_pull[0][1] * step_ratio, _lb, _ub);
 				else
-					minuit.SetParameter(i, par_names[i], eps_pull[1][0], eps_pull[1][1], _lb, _ub);
+					minuit.SetParameter(i, par_names[i], eps_pull[1][0], eps_pull[1][1] * step_ratio, _lb, _ub);
 			else
 				minuit.SetParameter(i, par_names[i], par_init[i][0], par_init[i][0] * step_ratio, _lb, _ub);
 		}else{
-			minuit.SetParameter(i,par_names[i],par_init[i][0], par_init[i][0]*step_ratio,par_init[i][1],par_init[i][2]);
+			minuit.SetParameter(i, par_names[i], par_init[i][0], par_init[i][0] * step_ratio, par_init[i][1], par_init[i][2]);
 		}
 
 	}
-}
-
-void fix_and_release(TFitter &minuit, Config &cfg){
-
-	double _tmp[2] = {3, 0};
-	minuit.ExecuteCommand("SET PARAMETER", _tmp, 2);
-	minuit.FixParameter(2);
-	minuit.FixParameter(4);
-
-	if(!cfg.fix_B12){
-		_tmp[0] = 6;
-		minuit.ExecuteCommand("SET PARAMETER", _tmp, 2);
-		minuit.FixParameter(5);
-		minuit.FixParameter(6);
-	}	
-
-	minuit.ExecuteCommand("MINIMIZE", minimizer_args, 2);
-
-	minuit.ReleaseParameter(2);
-	minuit.ReleaseParameter(4);
-	minuit.ExecuteCommand("MINIMIZE", minimizer_args, 2);
-
-	if(!cfg.fix_B12){
-		minuit.ReleaseParameter(5);
-		minuit.ReleaseParameter(6);
-		minuit.ExecuteCommand("MINIMIZE", minimizer_args, 2);
-	}
-	
-	minuit.ExecuteCommand("MINOS", minimizer_args, 1);
-
-
 }
 
 void getMuRates(){
@@ -474,11 +445,8 @@ void do_fit(int site, int range, TFitter &minuit, Config &cfg, ROOT::Math::Wrapp
 	minuit.SetFCN(wrap);
 	fitterParInit(site, range, minuit, cfg);
 
-	minuit.ExecuteCommand("SIMPLEX", simplex_args, 2);
-	minuit.ExecuteCommand("MINIMIZE", minimizer_args, 2);
-	minuit.ExecuteCommand("MINOS", minos_args, 1);
-	//fix_and_release(minuit, cfg);
-	//
+	fit_procedure(minuit);
+
 	double _pars[npars];
 	for(int _i=0;_i<npars;++_i){
 		_pars[_i] = minuit.GetParameter(_i);
@@ -491,4 +459,24 @@ void do_fit(int site, int range, TFitter &minuit, Config &cfg, ROOT::Math::Wrapp
 	plotHists(site, range, h, func);
 	
 	
+}
+
+void fit_procedure(TFitter &minuit){
+	/*const char *par_names[npars] = {
+		"r_mu_tag", "r_mu_atag", "N_DC",
+		"N_Li/He", "EPS_Li/He", "ratio_Li/He", "tau_Li", "tau_He",
+		"N_Bo", "EPS_Bo", "tau_Bo",
+	}; */
+
+	minuit.FixParameter(4);
+	minuit.FixParameter(5);
+	minuit.ExecuteCommand("MINIMIZE", minimizer_args, 2);
+
+	minuit.ReleaseParameter(4);
+	minuit.ExecuteCommand("MINIMIZE", minimizer_args, 2);
+
+	minuit.ReleaseParameter(5);
+	minuit.ExecuteCommand("MINIMIZE", minimizer_args, 2);
+
+	minuit.ExecuteCommand("MINOS", minos_args, 1);
 }
