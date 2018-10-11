@@ -1,7 +1,7 @@
 #include "util.C"
 #include "range.h"
 
-const char* hists_prefix = "./hists_unified_iso";
+const char *hists_prefix = "./hists_gd_off";
 
 const size_t max_bins = 100000;
 
@@ -180,9 +180,9 @@ void wrap(int &npar, double *g, double &result, double *par, int flag){
 
 	double pull_term = 0;
 	if(enable_eps_pull){
-		pull_term += pull(eps_lihe, eps_pull[0][0], eps_pull[0][1]);
+		pull_term += pull(par[4], eps_pull[0][0], eps_pull[0][1]);
 		if(eps_pull[1][1] > 0)
-			pull_term += pull(eps_bo, eps_pull[1][0], eps_pull[1][1]);
+			pull_term += pull(par[9], eps_pull[1][0], eps_pull[1][1]);
 	}
 	//for(int i=0;i<npars_single;++i)
 	//	printf("%2d: %10e %10e %10e\n",i,par_0[i],par_1[i],par_2[i]);
@@ -290,16 +290,31 @@ void fitterParInit(int site, int range, TFitter &minuit, Config &cfg){
 
 	for(int i=4;i<npars;++i){
 		if(cfg.fix_lifetime == 1 && strstr(par_names[i],"tau") != NULL){
-			minuit.SetParameter(i,par_names[i],par_init[i][0],0,0,0);
+			minuit.SetParameter(i, par_names[i], par_init[i][0], 0, 0, 0);
 			minuit.FixParameter(i);
 		}else if( (cfg.fix_B12 == 1 && strstr(par_names[i],"Bo") != NULL) ){
-			minuit.SetParameter(i,par_names[i],0,0,0,0);
+			minuit.SetParameter(i, par_names[i], 0, 0, 0, 0);
 			minuit.FixParameter(i);
 		}else if( (cfg.fix_He8 == 1 && strstr(par_names[i],"ratio") != NULL) ){
-			minuit.SetParameter(i,par_names[i], 1, 0, 0, 0);
+			minuit.SetParameter(i, par_names[i], 1, 0, 0, 0);
 			minuit.FixParameter(i);
-		}else if(cfg.bound_eps == 0 && strstr(par_names[i],"EPS") != NULL){
-			minuit.SetParameter(i,par_names[i],par_init[i][0], par_init[i][0]*step_ratio,0,0);
+		}else if(strstr(par_names[i],"EPS") != NULL){
+			double _ub, _lb;
+			if(cfg.bound_eps == 0){
+				_ub = 0;
+				_lb = 0;
+			}else{
+				_ub = par_init[i][2];
+				_lb = par_init[i][1];
+			}
+			
+			if(enable_eps_pull)
+				if(strstr(par_names[i], "Li") != NULL)
+					minuit.SetParameter(i, par_names[i], eps_pull[0][0], eps_pull[0][1], _lb, _ub);
+				else
+					minuit.SetParameter(i, par_names[i], eps_pull[1][0], eps_pull[1][1], _lb, _ub);
+			else
+				minuit.SetParameter(i, par_names[i], par_init[i][0], par_init[i][0] * step_ratio, _lb, _ub);
 		}else{
 			minuit.SetParameter(i,par_names[i],par_init[i][0], par_init[i][0]*step_ratio,par_init[i][1],par_init[i][2]);
 		}
@@ -363,8 +378,7 @@ void combinedFit(){
 			sprintf(_f_sum,"%s",_pdfs[i]);
 		else
 			sprintf(_f_sum,"%s+%s",_f_sum,_pdfs[i]);
-//	sprintf(_f_sum,"%s+%s+%s+%s",_f_dc,_f_li,_f_bo,_f_he);
-//
+
 	cout << "INITIALIZING FUNCTION WRAPPERS" << endl;
 	char buf[255];	
 	ROOT::Math::WrappedMultiTF1 *wf[3];
@@ -423,6 +437,7 @@ void combinedFit(){
 			do_fit(site, range, minuit, cfg, wf, opt, rangeD, results);
 		}
 	}
+
 	printLatexTable(results);
 	for(int iso=0;iso<2;++iso)
 		printf("iso%d pull: %10.3f %10.3f\n", iso, eps_pull[iso][0], eps_pull[iso][1]);
@@ -467,13 +482,13 @@ void do_fit(int site, int range, TFitter &minuit, Config &cfg, ROOT::Math::Wrapp
 	double _pars[npars];
 	for(int _i=0;_i<npars;++_i){
 		_pars[_i] = minuit.GetParameter(_i);
+		results[site][range][_i][0] = minuit.GetParameter(_i);
+		results[site][range][_i][1] = minuit.GetParError(_i);
 	}
+
 	fillPars(_pars, func);
 
 	plotHists(site, range, h, func);
 	
-	for(int _i=0;_i<npars;++_i){
-		results[site][range][_i][0] = minuit.GetParameter(_i);
-		results[site][range][_i][1] = minuit.GetParError(_i);
-	}
+	
 }
