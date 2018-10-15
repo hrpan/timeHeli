@@ -1,9 +1,7 @@
 #include "util.C"
 #include "range.h"
 
-const char *hists_prefix = "./hists_gd_off";
-
-const size_t max_bins = 100000;
+const char *hists_prefix = "./hists_gd_iso";
 
 const double tau_li9 = 256.366;
 const double tau_li9_err = 0.866;
@@ -391,19 +389,27 @@ void combinedFit(){
 		for(int iso=0;iso<2;++iso){
 			eps_minmax[iso][0] = min(eps_minmax[iso][0], eps_measured[site][iso][0]);
 			eps_minmax[iso][1] = max(eps_minmax[iso][1], eps_measured[site][iso][0]);
-			eps_pull[iso][0] += eps_measured[site][iso][0] / 3;
-			eps_pull[iso][1] += eps_measured[site][iso][1] * eps_measured[site][iso][1] / 9;
+			//eps_pull[iso][0] += eps_measured[site][iso][0] / 3;
+			//eps_pull[iso][1] += eps_measured[site][iso][1] * eps_measured[site][iso][1] / 9;
 		}
 	}
+	/*
 	for(int iso=0;iso<2;++iso){
 		double __tmp = eps_minmax[iso][1] - eps_minmax[iso][0];
 		eps_pull[iso][1] += __tmp * __tmp;
 		eps_pull[iso][1] = sqrt(eps_pull[iso][1]);
 	}
-
+	*/
 	enable_eps_pull = (cfg.use_eps_pull == 1);
 
 	for(int site=0;site<3;++site){
+		if(enable_eps_pull){
+			for(int iso=0;iso<2;++iso){
+				eps_pull[iso][0] = eps_measured[site][iso][0];
+				double __tmp = eps_minmax[iso][1] - eps_minmax[iso][0];
+				eps_pull[iso][1] = sqrt(eps_measured[site][iso][1] * eps_measured[site][iso][1] + __tmp * __tmp);
+			}
+		}
 		for(int range=0;range<n_range-1;++range){
 			do_fit(site, range, minuit, cfg, wf, opt, rangeD, results);
 		}
