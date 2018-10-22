@@ -1,7 +1,7 @@
 #include "util.C"
 #include "range.h"
 
-const char *hists_prefix = "./hists_gd_iso";
+const char *hists_prefix = "./hists";
 
 const double tau_li9 = 256.366;
 const double tau_li9_err = 0.866;
@@ -19,8 +19,14 @@ const double seek_args[2] = {1000, 1.0};
 double fitMin = 10;
 double fitMax = 5000;
 
-const int npars = 11;
-
+const int npars = 6 * n_range + 2;
+/*
+ * r_mu_tag, r_mu_atag : 2 * n_range
+ * eps_bo, eps_lihe : 2 * n_range
+ * n_lihe, n_bo : 2 * n_range
+ * ratio_lihe : 1 
+ * n_dc : 1
+ */
 const char *par_names[npars] = {
 	"r_mu_tag", "r_mu_atag", "N_DC",
 	"N_Li/He", "EPS_Li/He", "ratio_Li/He", "tau_Li", "tau_He",
@@ -126,53 +132,69 @@ void printLatexTable(double results[3][n_range][npars][2]){
 
 char *fitOptions = "LM";
 
-ROOT::Math::IMultiGenFunction *fPNLL[3];
+ROOT::Math::IMultiGenFunction *fPNLL[n_range][3];
 
-TF1 *func[3];
+TF1 *func[n_range][3];
 
-TH1 *h[3];
+TH1 *h[n_range][3];
 
-void parTrans(double *par, double _par[3][npars_single]){
-	double r_mu_tag = par[0];
-	double r_mu_atag = par[1];
-	double n_dc = fabs(par[2]);
-	double n_lihe = fabs(par[3]);
-	double eps_lihe = par[4];
-	double ratio_lihe = par[5];
-	double tau_li = par[6];
-	double tau_he = par[7];
-	double n_bo = fabs(par[8]);
-	double eps_bo = par[9];
-	double tau_bo = par[10];
+void parTrans(double *par, double _par[n_range][3][npars_single]){
+	double r_mu_tag[n_range];
+	double r_mu_atag[n_range];
+	double n_lihe[n_range];
+	double eps_lihe[n_range];
+	double n_bo[n_range];
+	double eps_bo[n_range];
+	double n_dc;
+	double ratio_lihe;
 
-	double _par[3][npars_single];
-
-	for(int i = 0; i < 3; ++i){
-		_par[i][3] = tau_li;
-		_par[i][4] = tau_he;
-		_par[i][5] = ratio_lihe;
-		_par[i][7] = tau_bo;
+	int p_idx = 0;
+	for(int i = 0; i < n_range; ++i){
+		r_mu_tag[i] = par[p_idx++];
+		r_mu_atag[i] = par[p_idx++];
+		n_lihe[i] = fabs(par[p_idx++]);
+		eps_lihe[i] = par[p_idx++];
+		n_bo[i] = fabs(par[p_idx++]);
+		eps_bo[i] = par[p_idx++];
 	}
+	n_dc = fabs(par[p_idx++]);
+	r_lihe = par[p_idx++];
 
-	_par[0][0] = r_mu_tag + r_mu_atag;
-	_par[0][1] = n_dc;
-	_par[0][2] = n_lihe;
-	_par[0][6] = n_bo;
-
-	_par[1][0] = r_mu_tag;
-	_par[1][1] = n_dc + (1-eps_lihe) * n_lihe + (1-eps_bo) * n_bo;
-	_par[1][2] = eps_lihe * n_lihe;
-	_par[1][6] = eps_bo * n_bo;
-
-	_par[2][0] = r_mu_atag;
-	_par[2][1] = n_dc + eps_lihe * n_lihe + eps_bo * n_bo;
-	_par[2][2] = (1-eps_lihe) * n_lihe;
-	_par[2][6] = (1-eps_bo) * n_bo;
+	for(int i=0;i<n_range;++i){
+		double n_dc_fake = 0;
+		for(int j=0;j<n_range;++j){
+			if(i==j) continue;
+			n_dc_fake += n_lihe[j] + n_bo[j];
+		}
+		for(int j=0;j<3;++j){
+			if(j==0){
+				_par[i][j][0] = r_mu_tag + r_mu_atag;
+				_par[i][j][1] = n_dc + n_dc_fake;
+				_par[i][j][2] = n_lihe[i];
+				_par[i][j][6] = n_bo[i];
+			}else if(j==1){
+				_par[i][j][0] = r_mu_tag;
+				_par[i][j][1] = n_dc + n_dc_fake + ( 1 - eps_lihe[i] ) * n_lihe[i] + ( 1 - eps_bo[i] ) * n_bo[i];
+				_par[i][j][2] = eps_lihe[i] * n_lihe[i];
+				_par[i][j][6] = eps_bo[i] * n_bo[i];
+			}else{
+				_par[i][j][0] = r_mu_atag;
+				_par[i][j][1] = n_dc + n_dc_fake + eps_lihe[i] * n_lihe[i] + eps_bo[i] * n_bo[i];
+				_par[i][j][2] = ( 1 - eps_lihe[i] ) * n_lihe[i];
+				_par[i][j][6] = ( 1 - eps_bo[i] ) * n_bo[i];
+				
+			}
+			_par[i][j][3] = tau_li9;
+			_par[i][j][4] = tau_he8;
+			_par[i][j][5] = r_lihe;
+			_par[i][j][7] = tau_b12;
+		}
+	}
 }
 
 void wrap(int &npar, double *g, double &result, double *par, int flag){
 
-	double _par[3][npars_single];
+	double _par[n_range][3][npars_single];
 
 	parTrans(par, _par);
 
@@ -193,18 +215,19 @@ void wrap(int &npar, double *g, double &result, double *par, int flag){
 }
 
 
-void fillPars(double *par, TF1 *f[3]){
+void fillPars(double *par, TF1 *f[n_range][3]){
 
-	double _par[3][npars_single];
+	double _par[n_range][3][npars_single];
 
 	parTrans(par, _par);
 
-	for(int i=0;i<3;++i)
-		f[i]->SetParameters(_par[i]);
+	for(int i=0;i<n_range;++i)
+		for(int j=0;j<3;++j)
+			f[i][j]->SetParameters(_par[i][j]);
 
 }
 
-void plotHists(int site, int range, TH1 *h[3], TF1 *f[3]){
+void plotHists(int site, TH1 *h[n_range][3], TF1 *f[n_range][3]){
 	char *dir = "./plots/cfits";
 	char buf[255];
 	
@@ -212,7 +235,6 @@ void plotHists(int site, int range, TH1 *h[3], TF1 *f[3]){
 		sprintf(buf, "%s/cfit_%d_%d_%d.png", dir, site, range, i);
 		h[i]->Draw("E1");
 		f[i]->Draw("same");
-		gPad->SetLogy();
 		gPad->SetLogx();
 		c1->SaveAs(buf);
 	}
@@ -272,8 +294,9 @@ void fitterParInit(int site, int range, TFitter &minuit, Config &cfg){
 	double step_ratio = 1e-2;
 
 	if(cfg.fix_rmu == 0){
-		minuit.SetParameter(0, par_names[0], r_mu_measured[site][range][1], r_mu_measured[site][range][1] * step_ratio, 0, 0.1 );
-		minuit.SetParameter(1, par_names[1], r_mu_measured[site][range][2], r_mu_measured[site][range][2] * step_ratio, 0, 0.1 );
+		double rmu_init = 1e-4;
+		minuit.SetParameter(0, par_names[0], rmu_init, rmu_init * step_ratio, 0, 0.1 );
+		minuit.SetParameter(1, par_names[1], rmu_init, rmu_init * step_ratio, 0, 0.1 );
 	}else{
 		minuit.SetParameter(0, par_names[0], r_mu_measured[site][range][1], 0, 0, 0 );
 		minuit.FixParameter(0);
@@ -298,23 +321,10 @@ void fitterParInit(int site, int range, TFitter &minuit, Config &cfg){
 		}else if( (cfg.fix_He8 == 1 && strstr(par_names[i], "ratio") != NULL) ){
 			minuit.SetParameter(i, par_names[i], 1, 0, 0, 0);
 			minuit.FixParameter(i);
-		}else if(strstr(par_names[i],"EPS") != NULL){
-			double _ub, _lb;
-			if(cfg.bound_eps == 0){
-				_ub = 0;
-				_lb = 0;
-			}else{
-				_ub = par_init[i][2];
-				_lb = par_init[i][1];
-			}
-			
-			if(enable_eps_pull)
-				if(strstr(par_names[i], "Li") != NULL)
-					minuit.SetParameter(i, par_names[i], eps_pull[0][0], eps_pull[0][1] * step_ratio, _lb, _ub);
-				else
-					minuit.SetParameter(i, par_names[i], eps_pull[1][0], eps_pull[1][1] * step_ratio, _lb, _ub);
-			else
-				minuit.SetParameter(i, par_names[i], par_init[i][0], par_init[i][0] * step_ratio, _lb, _ub);
+		}else if( (cfg.bound_eps == 0 && strstr(par_names[i],"EPS") != NULL) ){
+			minuit.SetParameter(i, par_names[i], par_init[i][0], par_init[i][0] * step_ratio, 0, 0);
+		}else if( (strstr(par_names[i], "ratio") != NULL) ){
+			minuit.SetParameter(i, par_names[i], 0.95, 0, 0, 0);
 		}else{
 			minuit.SetParameter(i, par_names[i], par_init[i][0], par_init[i][0] * step_ratio, par_init[i][1], par_init[i][2]);
 		}
@@ -322,22 +332,9 @@ void fitterParInit(int site, int range, TFitter &minuit, Config &cfg){
 	}
 }
 
-void getMuRates(){
-	ifstream ifile("murates");
-	for(int s=0;s<3;++s){
-		for(int r=0;r<n_range;++r){
-			for(int t=0;t<3;++t){
-				ifile >> r_mu_measured[s][r][t];
-			}			
-		}
-	}	
-
-}
-
 void combinedFit(){
 
 	Config cfg;
-	getMuRates();
 	parseInputs(cfg);
 
 	gStyle->SetOptFit(1);
@@ -350,14 +347,15 @@ void combinedFit(){
 
 	cout << "INITIALIZING FUNCTION WRAPPERS" << endl;
 	char buf[255];	
-	ROOT::Math::WrappedMultiTF1 *wf[3];
-	for(int i=0;i<3;++i){
-		sprintf(buf,"func%d",i);
-		func[i] = new TF1(buf, _f_sum, 0, 5000);
-		wf[i] = new ROOT::Math::WrappedMultiTF1(*func[i], 1);
+	ROOT::Math::WrappedMultiTF1 *wf[n_range][3];
+	for(int r=0;r<n_range;++r){
+		for(int i=0;i<3;++i){
+			sprintf(buf,"func%d_%d",r,i);
+			func[r][i] = new TF1(buf, _f_sum, 0, 5000);
+			wf[r][i] = new ROOT::Math::WrappedMultiTF1(*func[r][i], 1);
+		}
 	}
-	
-	double results[3][n_range][npars][2];
+	double results[3][npars][2];
 	
 	ROOT::Fit::DataOptions opt;
 	opt.fUseEmpty = true;
@@ -424,31 +422,23 @@ void combinedFit(){
 void do_fit(int site, int range, TFitter &minuit, Config &cfg, ROOT::Math::WrappedMultiTF1 *wf[3], ROOT::Fit::DataOptions &opt, ROOT::Fit::DataRange &rangeD, double results[3][n_range][npars][2]){
 
 	char buf[255];
-	sprintf(buf, "%s/EH%d_dtlSH_%d.root", hists_prefix, site+1, range);
-	TFile *f1 = new TFile(buf,"READ");
-	h[0] = (TH1*)f1->Get("h");
-	ROOT::Fit::BinData data1(opt,rangeD);
-	ROOT::Fit::FillData(data1, h[0]);
-	ROOT::Fit::PoissonLLFunction PNLL1(data1,*wf[0]);
-	fPNLL[0] = &PNLL1;
 
-	sprintf(buf, "%s/EH%d_dtlSH_%d_tag.root", hists_prefix, site + 1, range);
-	TFile *f2 = new TFile(buf,"READ");
-	h[1] = (TH1*)f2->Get("h");
-	ROOT::Fit::BinData data2(opt,rangeD);
-	ROOT::Fit::FillData(data2, h[1]);
-	ROOT::Fit::PoissonLLFunction PNLL2(data2,*wf[1]);
-	fPNLL[1] = &PNLL2;
+	char *_suffix[3] = { "", "_tag", "_atag" };
 
-	sprintf(buf, "%s/EH%d_dtlSH_%d_atag.root", hists_prefix, site + 1, range);
-	TFile *f3 = new TFile(buf,"READ");
-	h[2] = (TH1*)f3->Get("h");
-	ROOT::Fit::BinData data3(opt,rangeD);
-	ROOT::Fit::FillData(data3, h[2]);
-	ROOT::Fit::PoissonLLFunction PNLL3(data3,*wf[2]);
-	fPNLL[2] = &PNLL3;
+	ROOT::Fit::BinData *data[n_range][3];
+	for(int r=0;r<n_range;++r){
+		for(int s=0;s<3;++s){
+			sprintf(buf,"%s/EH%d_dtlSH_%d%s.root", hists_prefix, site+1, r, _suffix[s]);
+			TFile *f = new TFile(buf, "READ");
+			h[r][s] = (TH1*) f->Get("h");
+			data[r][s] = new ROOT::Fit::BinData(opt, rangeD);
+			ROOT::Fit::FillData(*data[r][s], h[r][s]);
+			fPNLL[r][s] = new ROOT::Fit::PoissonLikelihoodFCN<ROOT::Math::IBaseFunctionMultiDim>(*data[r][s], *wf[r][s]);	
+		}
+	}
 
 	minuit.SetFCN(wrap);
+
 	fitterParInit(site, range, minuit, cfg);
 
 	fit_procedure(minuit);
@@ -481,8 +471,8 @@ void fit_procedure(TFitter &minuit){
 	minuit.ReleaseParameter(4);
 	minuit.ExecuteCommand("MINIMIZE", minimizer_args, 2);
 
-	minuit.ReleaseParameter(5);
-	minuit.ExecuteCommand("MINIMIZE", minimizer_args, 2);
+	//minuit.ReleaseParameter(5);
+	//minuit.ExecuteCommand("MINIMIZE", minimizer_args, 2);
 
 	minuit.ExecuteCommand("MINOS", minos_args, 1);
 }
