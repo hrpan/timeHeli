@@ -129,11 +129,6 @@ void preprocess(){
 
 			int r_idx = findRange(range,n_range,(*nPESum)[mu]);
 			
-			if((*nPESum)[mu] <= 3e5 && r_idx == 4){
-				printf("%d %.4e\n", r_idx, (*nPESum)[mu] );
-				cout << endl;
-				getchar();
-			}
 			if(!isIsolated(dtlSH, mu, r_idx, r_shower)) continue;
 
 			if(_dtlSH[0][r_idx] > 0)
@@ -227,7 +222,7 @@ int findRange(double *range, int n_range, double npe){
 	int idx = n_range - 1;
 
 	for(int i=0;i<n_range-1;++i){
-		if( npe < range[i+1] && npe > range[i]){
+		if( npe < range[i+1] && npe >= range[i]){
 			idx = i;
 			break;
 		}
