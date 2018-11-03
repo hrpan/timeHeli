@@ -6,10 +6,12 @@ int findRange(double *range, int n_range, double npe);
 
 const double maxT = 5000; //ms
 
+const bool gd_only = true;
+
 const double nTag_e_min = 1.8; //mev
 const double nTag_dt_min = 20; //us
-const double nTag_dt_max = 200; //us
-const double iso_dt_cut = 0.2; //ms
+const double nTag_dt_max = 400; //us
+const double iso_dt_cut = 1.0; //ms
 const float distCut = 500; //mm
 
 void preprocess(){
@@ -96,12 +98,15 @@ void preprocess(){
 		}
 
 		chain->GetEntry(i);
-		//if(ed<6) continue;
-		if(dist>distCut) continue;
-		
-		size_t muons = dtlSH->size();
+		if(gd_only){
+			if(ed < 6 || dt > 200)
+				continue;
+		}else{
+			if(dist > distCut)
+				continue;
+		}
 
-		double _dtlSH_all[n_range];
+		size_t muons = dtlSH->size();
 		for(size_t j=0;j<n_range;++j){
 			for(size_t k=0;k<3;++k){
 				_dtlSH[k][j] = -1;
@@ -110,7 +115,6 @@ void preprocess(){
 				_dtlSH_nPESum[k][j] = -1;
 				_nSH[k][j] = 0;
 			}
-			_dtlSH_all[j] = -1;
 			_dtlSH_tag_n[j] = -1;
 		}	
 
@@ -124,9 +128,12 @@ void preprocess(){
 			n_idx_0 += (*nTag_n)[mu];
 
 			int r_idx = findRange(range,n_range,(*nPESum)[mu]);
-
-			_dtlSH_all[r_idx] = (*dtlSH)[mu];
-
+			
+			if((*nPESum)[mu] <= 3e5 && r_idx == 4){
+				printf("%d %.4e\n", r_idx, (*nPESum)[mu] );
+				cout << endl;
+				getchar();
+			}
 			if(!isIsolated(dtlSH, mu, r_idx, r_shower)) continue;
 
 			if(_dtlSH[0][r_idx] > 0)
@@ -204,11 +211,11 @@ bool nTagged(vector<float> *nTag_e, vector<float> *nTag_dt, size_t start, size_t
 	bool tagged = false;
 
 	for(size_t i=start; i<end && !tagged && (*nTag_dt)[i] < nTag_dt_max ;++i){
+		if( (*nTag_dt)[i] < nTag_dt_min ) continue;
+		//bool _e_cut = (*nTag_e)[i] > nTag_e_min;
+		//bool _dt_cut = (*nTag_dt)[i] > nTag_dt_min;
 
-		bool _e_cut = (*nTag_e)[i] > nTag_e_min;
-		bool _dt_cut = (*nTag_dt)[i] > nTag_dt_min;
-
-		tagged = _e_cut && _dt_cut;
+		tagged = (*nTag_e)[i] > nTag_e_min;
 		//tagged = (*nTag_dt)[i] > 10;
 	}
 	
