@@ -12,6 +12,8 @@ const double tau_he8 = 171.68;
 const double tau_b12 = 29.142;
 const double tau_b12_err = 0.0288;
 
+const double tau_n12 = 15.9;
+
 double fitMin = 1.5;
 double fitMax = 5000;
 
@@ -20,7 +22,7 @@ const bool use_tagging = false;
 
 char par_names[npars_max][255]; 
 
-const int npars_single = 8;
+const int npars_single = 10;
 //[0]:mu rate
 //[1]:n_dc
 //[2]:n_li9he8
@@ -29,11 +31,13 @@ const int npars_single = 8;
 //[5]:ratio_lihe
 //[6]:n_b12
 //[7]:t_b12
+//[8]:t_n12
+//[9]:r_b12n12
 const int n_pdfs = 3;
 const char *_pdfs[n_pdfs] = {
-	"[1] * [0] * exp(-[0] * x )",
+	"[6] * ([9] * ([0] + 1 / [7]) * exp(-([0] + 1 / [7]) * x ) + (1 - [9]) * ([0] + 1 / [8]) * exp(-([0] + 1 / [8]) * x) )",
 	"[2] * ([5] * ([0] + 1 / [3]) * exp(-([0] + 1 / [3]) * x ) + (1 - [5]) * ([0] + 1 / [4]) * exp(-([0] + 1 / [4]) * x) )",
-	"[6] * ([0] + 2 / [7]) * exp(-([0] + 2 / [7]) * x )",
+	"[1] * [0] * exp(-[0] * x )",
 };
 
 void printResults(double results[3][npars_max][2]){
@@ -55,7 +59,7 @@ ROOT::Math::WrappedMultiTF1 *wf[n_range][3][slice_types][slice_max];
 TF1 *func[n_range][3][slice_types][slice_max];
 TH1 *h[n_range][3][slice_types][slice_max];
 
-double _par[n_range][2][slice_types][slice_max][npars_single];
+double _par[n_range][3][slice_types][slice_max][npars_single];
 
 void parTrans(const double *par){
 
@@ -67,15 +71,14 @@ void parTrans(const double *par){
 	double n_lihe[n_range];
 	double n_bo[n_range];
 	double eps_t_lihe[n_range];
-	//double _eps_lihe[eps_slices];
-	//double eps_bo[n_range];
-	double eps_t_bo;
+	double eps_t_bo[n_range];
 	double eps_s_dc[slice_types][slice_max];
 	double eps_s_lihe[slice_types][slice_max];
 	double eps_s_bo[slice_types][slice_max];
 	//double eps_bo;
 	double n_dc;
 	double r_lihe;
+	double r_boni;
 
 	int p_idx = 0;
 	for(int r = 0; r < n_range; ++r){
@@ -85,14 +88,13 @@ void parTrans(const double *par){
 			n_lihe[r] = par[p_idx++] * scale;
 			eps_t_lihe[r] = par[p_idx++];
 			n_bo[r] = par[p_idx++] * scale;
+			eps_t_bo[r] = par[p_idx++];
 		}else{
 			r_mu[r] = par[p_idx++];
 			n_lihe[r] = par[p_idx++] * scale;
 			n_bo[r] = par[p_idx++] * scale;
 		}
 	}
-	if(use_tagging)
-		eps_t_bo = par[p_idx++];
 
 	for(int _type=0;_type < slice_types; ++_type){
 		eps_s_dc[_type][0] = 1;
@@ -116,6 +118,7 @@ void parTrans(const double *par){
 		}
 	}
 	r_lihe = par[p_idx++];
+	r_boni = par[p_idx++];
 	n_dc = par[p_idx++] * scale;
 
 	for(int r=0; r<n_range; ++r){
@@ -148,22 +151,24 @@ void parTrans(const double *par){
 					}else if(t==1){
 						_par[r][t][_type][s][0] = r_mu_tag[r];
 						_par[r][t][_type][s][1] = _n_dc + _n_dc_fake  
-							+ ( 1 - eps_t_lihe[r] ) * _n_lihe  
-							+ ( 1 - eps_t_bo ) * _n_bo; 
+							+ (( 1 - eps_t_lihe[r] ) * _n_lihe + ( 1 - eps_t_bo[r] ) * _n_bo); 
 						_par[r][t][_type][s][2] = eps_t_lihe[r] * _n_lihe;
-						_par[r][t][_type][s][6] = eps_t_bo * _n_bo;
+						_par[r][t][_type][s][6] = eps_t_bo[r] * _n_bo;
 					}else{
 						_par[r][t][_type][s][0] = r_mu_atag[r];
 						_par[r][t][_type][s][1] = _n_dc + _n_dc_fake
-							+ (eps_t_lihe[r] * n_lihe[r]) 
-							+ (eps_t_bo * n_bo[r]) ;
+							+ ((eps_t_lihe[r] * _n_lihe) + (eps_t_bo[r] * _n_bo));
 						_par[r][t][_type][s][2] = ( 1 - eps_t_lihe[r] ) * _n_lihe;
-						_par[r][t][_type][s][6] = ( 1 - eps_t_bo ) * _n_bo;
+						_par[r][t][_type][s][6] = ( 1 - eps_t_bo[r] ) * _n_bo;
 					}
 					_par[r][t][_type][s][3] = tau_li9;
 					_par[r][t][_type][s][4] = tau_he8;
 					_par[r][t][_type][s][5] = r_lihe;
+					//_par[r][t][_type][s][7] = tau_b12;
 					_par[r][t][_type][s][7] = tau_b12;
+					_par[r][t][_type][s][8] = tau_n12;
+					_par[r][t][_type][s][9] = r_boni;
+					
 	/*	
 					cout << i << " " << j << " " << k << " ";
 					for(int l=0;l<npars_single;++l)
@@ -185,16 +190,13 @@ double likelihood(const double *par){
 	parTrans(par);
 	
 	double result = 0;
-	vector<double> _nlls(n_range * 3 * slice_types * slice_max);
 	int idx = 0;
 	for(int r = 0; r < n_range; ++r){
 		for(int t = 0; t < 3; ++t){
+			if(use_tagging && t==0) continue;
 			for(int type = 0; type < slice_types; ++type){
 				for(int s = 0; s < slices[type]; ++s){
 					double _tmp = (*fPNLL[r][t][type][s])(_par[r][t][type][s]);
-					//if(r==3)
-					//	cout << r << " " << s << " " << e << " " << _tmp << endl;
-					_nlls[ idx++ ] = _tmp;
 					result += _tmp;
 				}//slice
 			}//slice type
@@ -202,9 +204,7 @@ double likelihood(const double *par){
 		}//tag
 	}//range
 	
-	double safesum = neumaierSum(&_nlls[0], _nlls.size());
-	//cout << result << " " << safesum << " " << result - safesum << endl;
-	return safesum;
+	return result;
 }
 
 
@@ -250,18 +250,18 @@ void plotHists(int site, double *par){
 void initialize_minimizer(int site, ROOT::Math::Minimizer *minim){
 	cout << "INITIALIZING MINIMIZER" << endl;
 	minim->SetErrorDef(0.5);
-	minim->SetTolerance(0.01);
-	minim->SetPrintLevel(2);
-	minim->SetPrecision(1e-16);
+	minim->SetTolerance(1e-1);
+	minim->SetPrintLevel(1);
+	//minim->SetPrecision(1e-16);
 	minim->SetStrategy(2);
 	minim->SetMaxFunctionCalls(1000000);
 	minim->SetMaxIterations(1000000);
 
 	double rmu_init;
 	double n_lihe_init = 1e3;
-	double n_bo_init = 1e2;
+	double n_bo_init = 1e3;
 	double eps_init = 0.5;
-	double r_lihe_init = 0.8;
+	double r_init = 0.5;
 
 	double step_ratio = 1e-1;
 	char buf[255];
@@ -278,26 +278,31 @@ void initialize_minimizer(int site, ROOT::Math::Minimizer *minim){
 
 			h[r][2][0][0]->Fit("expo","LQN0","", 300, 5000);
 			rmu_init = fabs(expo->GetParameter(1));
-			sprintf(buf, "rmu_atag_%d",r);
+			sprintf(buf, "rmu_atag_%d", r);
 			sprintf(par_names[p_idx], "%s", buf);
 			minim->SetVariable(p_idx++, buf, rmu_init, rmu_init * step_ratio);
 			printf(init_str, p_idx-1, par_names[p_idx-1], rmu_init, rmu_init * step_ratio);
 
-			sprintf(buf, "n_lihe_%d",i);
+			sprintf(buf, "n_lihe_%d", r);
 			sprintf(par_names[p_idx], "%s", buf);
-			minim->SetLowerLimitedVariable(p_idx++, buf, n_lihe_init, n_lihe_init * step_ratio , 0);
+			minim->SetLowerLimitedVariable(p_idx++, buf, n_lihe_init, n_lihe_init * step_ratio, 0);
+			//minim->SetVariable(p_idx++, buf, n_lihe_init, n_lihe_init * step_ratio);
 			printf(init_str, p_idx-1, par_names[p_idx-1], n_lihe_init, n_lihe_init * step_ratio);
-			//
-			sprintf(buf, "eps_tag_lihe_%d",i);
+
+			sprintf(buf, "eps_tag_lihe_%d", r);
 			sprintf(par_names[p_idx], "%s", buf);
 			minim->SetLimitedVariable(p_idx++, buf, eps_init, eps_init * step_ratio, 0, 1);
 			printf(init_str, p_idx-1, par_names[p_idx-1], eps_init, eps_init * step_ratio);
 
-			sprintf(buf, "n_bo_%d",i);
+			sprintf(buf, "n_bo_%d", r);
 			sprintf(par_names[p_idx], "%s", buf);
-			minim->SetLowerLimitedVariable(p_idx++, buf, n_bo_init, n_bo_init * step_ratio , 0);
+			minim->SetLowerLimitedVariable(p_idx++, buf, n_bo_init, n_bo_init * step_ratio, 0);
 			printf(init_str, p_idx-1, par_names[p_idx-1], n_bo_init, n_bo_init * step_ratio);
-			//minim->SetVariable(p_idx++, buf, n_lihe_init, n_lihe_init * step_ratio);
+			
+			sprintf(buf, "eps_tag_bo_%d", r);
+			sprintf(par_names[p_idx], "%s", buf);
+			minim->SetLimitedVariable(p_idx++, buf, eps_init, eps_init * step_ratio, 0, 1);
+			printf(init_str, p_idx-1, par_names[p_idx-1], eps_init, eps_init * step_ratio);
 
 		}else{
 			h[r][0][0][0]->Fit("expo","LQN0","", 300, 5000);
@@ -309,22 +314,17 @@ void initialize_minimizer(int site, ROOT::Math::Minimizer *minim){
 
 			sprintf(buf, "n_lihe_%d",r);
 			sprintf(par_names[p_idx], "%s", buf);
-			minim->SetLowerLimitedVariable(p_idx++, buf, n_lihe_init, n_lihe_init * step_ratio , 0);
+			minim->SetLowerLimitedVariable(p_idx++, buf, n_lihe_init, n_lihe_init * step_ratio, 0);
 			printf(init_str, p_idx-1, par_names[p_idx-1], n_lihe_init, n_lihe_init * step_ratio);
-			
+
 			sprintf(buf, "n_bo_%d",r);
 			sprintf(par_names[p_idx], "%s", buf);
-			minim->SetLowerLimitedVariable(p_idx++, buf, n_bo_init, n_bo_init * step_ratio , 0);
+			minim->SetLowerLimitedVariable(p_idx++, buf, n_bo_init, n_bo_init * step_ratio, 0);
 			printf(init_str, p_idx-1, par_names[p_idx-1], n_bo_init, n_bo_init * step_ratio);
 
 		}
 	}
-	if(use_tagging){
-		sprintf(buf, "eps_tag_bo", i);
-		sprintf(par_names[p_idx], "%s", buf);
-		minim->SetLimitedVariable(p_idx++, buf, eps_init, eps_init * step_ratio, 0, 1);
-		printf(init_str, p_idx-1, par_names[p_idx-1], eps_init, eps_init * step_ratio);
-	}
+
 	for(int type=0;type<slice_types;++type){
 		for(int s=0;s<slices[type]-1;++s){
 			eps_init = h[0][0][type][s+1]->GetEntries() / h[0][0][type][0]->GetEntries();
@@ -346,9 +346,14 @@ void initialize_minimizer(int site, ROOT::Math::Minimizer *minim){
 			printf(init_str, p_idx-1, par_names[p_idx-1], eps_init, eps_init * step_ratio);
 		}
 	}
+	
 	sprintf(par_names[p_idx], "r_lihe");
-	minim->SetLimitedVariable(p_idx++, "r_lihe", r_lihe_init, r_lihe_init * step_ratio, 0, 1);
-	printf(init_str, p_idx-1, par_names[p_idx-1], r_lihe_init, r_lihe_init * step_ratio);
+	minim->SetLimitedVariable(p_idx++, "r_lihe", r_init, r_init * step_ratio, 0, 1);
+	printf(init_str, p_idx-1, par_names[p_idx-1], r_init, r_init * step_ratio);
+
+	sprintf(par_names[p_idx], "r_boni");
+	minim->SetLimitedVariable(p_idx++, "r_boni", r_init, r_init * step_ratio, 0, 1);
+	printf(init_str, p_idx-1, par_names[p_idx-1], r_init, r_init * step_ratio);
 	
 	double n_dc_init = 0;
 	for(int s=0;s<slices[0];++s){
@@ -357,6 +362,7 @@ void initialize_minimizer(int site, ROOT::Math::Minimizer *minim){
 	sprintf(par_names[p_idx], "n_dc");
 	minim->SetVariable(p_idx++, "n_dc", n_dc_init, n_dc_init * step_ratio);
 	printf(init_str, p_idx-1, par_names[p_idx-1], n_dc_init, n_dc_init * step_ratio);
+
 
 	par_names[p_idx][0] = 0;
 }
@@ -371,7 +377,7 @@ void combinedFit(){
 			sprintf(_f_sum,"%s",_pdfs[i]);
 		else
 			sprintf(_f_sum,"%s+%s",_f_sum,_pdfs[i]);
-
+	cout << _f_sum << endl;
 	cout << "INITIALIZING FUNCTION WRAPPERS" << endl;
 	char buf[255];	
 	for(int r=0;r<n_range;++r){
@@ -426,36 +432,30 @@ void do_fit(int site, ROOT::Fit::DataOptions &opt, double results[3][npars_max][
 		slice_pars += slices[type] - 1;
 	slice_pars *= 3;
 	if(use_tagging)
-		npars = 5 * n_range + slice_pars + 1 + 2;
+		npars = 5 * n_range + slice_pars + 2;
 	else
-		npars = 3 * n_range + slice_pars + 1 + 1;
+		npars = 3 * n_range + slice_pars + 3;
 
 	ROOT::Math::Functor f_tmp(likelihood, npars);
 	ROOT::Minuit2::Minuit2Minimizer *minim = ROOT::Math::Factory::CreateMinimizer("Minuit2");
 	minim->SetFunction(f_tmp);
 	initialize_minimizer(site, minim);
-	
+
 	minim->Hesse();
 	minim->Minimize();
 	minim->Hesse();
-
+	
 	minim->PrintResults();
-/*	
-	double minos_errs[npars][2];	
-	int minos_status[npars];
+	/*
+	minim->SetPrintLevel(1);
 	for(int i=0;i<npars;++i){
 		double low, up;
-		minim->GetMinosError(i, low, up);
-		minos_errs[i][0] = low;
-		minos_errs[i][1] = up;	
-		minos_status[i] = minim->Status();	
+		if(strstr(par_names[i], "n_lihe") != NULL){
+			minim->GetMinosError(i, low, up);
+			cout << par_names[i] << " " << minim->X()[i] << " " << low << " " << up << endl;
+		}
 	}
-	minim->Hesse();
-	minim->PrintResults();
-	for(int i=0;i<npars;++i)
-		cout << par_names[i] << " " << minos_errs[i][0] << " " << minos_errs[i][1] << " " << minos_status[i] << endl;
-	plotHists(site, minim->X());
-*/
+	*/
 	double *x = minim->X();
 	double *x_err = minim->Errors();
 	for(int i=0;i<npars;++i){
@@ -464,75 +464,77 @@ void do_fit(int site, ROOT::Fit::DataOptions &opt, double results[3][npars_max][
 	}
 
 	plotHists(site, x);
-	plotSlice(site, x, x_err);
+	plotSlice(site, minim);
 
 }
 
-void plotSlice(int site, double *par, double *par_err){
-	//minim->SetLowerLimitedVariable(p_idx++, "n_dc", n_dc_init, n_dc_init * step_ratio, 0);
+void plotSlice(int site, ROOT::Math::Minimizer *minim){
+	double *par = minim->X();
+	double *par_err = minim->Errors();
+
+	const int ncomps = 3;
 	
 	int offset=0;
 	for(;offset<npars_max;++offset)
 		if(strstr(par_names[offset],"eps_s")!=NULL)	break;
-	cout << offset << " " << par_names[offset] << endl;
-	/*	
-	double _tmp[3][e_slices][2];
-	double _tmp_sum[3] = {1, 1, 1};
-	for(int i=0;i<3;++i){
-		_tmp[i][0][0] = 1;	
-		_tmp[i][0][1] = 0;
-		for(int j=0;j<e_slices;++j){
-			_tmp[i][j][0] = par[offset + 3 * j + i];
-			_tum_sum[i] += _tmp[i][j][0];
-		}
-	}
-	*/
+
 	for(int type=0;type<slice_types;++type){
-		vector<double> x, x_err, y[3], y_err[3];
-		
-		double y_sum[3];
+		double x[ncomps][slice_max], x_err[ncomps][slice_max];
+		double y[ncomps][slice_max], y_err[ncomps][slice_max];
+		double p[ncomps][slice_max], p_err[ncomps][slice_max];
+		double y_sum[ncomps], y_sum_err[ncomps];
 
-		for(int i=0;i<3;++i)
+		for(int i=0;i<ncomps;++i){
 			y_sum[i] = 0;
-
+			y_sum_err[i] = 0;
+		}
 		double _start = slice_range[type][0];
 		double _end = slice_range[type][1];
 		double _step = (_end-_start) / slices[type];
 
 		for(int s=0;s<slices[type];++s){
-			x.push_back(_start + _step * (s+0.5));
-			x_err.push_back(_step/2);
-			if(s==0){
-				for(int j=0;j<3;++j)
-					y[j].push_back(1);
-				
-			}else{
-				for(int j=0;j<3;++j)
-					y[j].push_back(par[offset + 3*(s-1) + j]);
+			
+			for(int j=0;j<ncomps;++j){
+				x[j][s] = _start + _step * (s+0.5) + j * 0.1 * _step;
+				if(s==0){
+					y[j][s] = 1;
+					y_err[j][s] = 0;
+				}else{
+					int idx = offset + ncomps * (s-1) + j;
+					y[j][s] = par[idx];
+					y_err[j][s] = par_err[idx];
+				}
+				y_sum[j] += y[j][s];
+				if(s>0)
+					for(int s1=0;s1<slices[type]-1;++s1)
+						y_sum_err[j] += minim->CovMatrix(offset + ncomps * (s-1) + j, offset + ncomps * s1 + j);
 			}
-			for(int j=0;j<3;++j)
-				y_sum[j] += y[j].back();
 		}
-		for(int i=0;i<3;++i)
-			for(int j=0;j<slices[type];++j)
-				y[i][j] /= y_sum[i];
+		
+		for(int i=0;i<ncomps;++i){
+			y_sum_err[i] = sqrt(y_sum_err[i]);
+			for(int j=0;j<slices[type];++j){
+				p[i][j] = y[i][j] / y_sum[i];
+				p_err[i][j] = sqrt( pow(y_err[i][j] / y_sum[i], 2) + pow(y[i][j] * y_sum_err[i] / pow(y_sum[i], 2), 2));
+			}
+		}
 
 		TMultiGraph *mg = new TMultiGraph();
-		TGraph *gr[3];
-		for(int i=0;i<3;++i){
-			gr[i] = new TGraphErrors(x.size(), &x[0], &y[i][0], &x_err[0], 0);
+		TGraph *gr[ncomps];
+		for(int i=0;i<ncomps;++i){
+			gr[i] = new TGraphErrors(slices[type], x[i], p[i], 0, p_err[i]);
 			gr[i]->SetMarkerStyle(20);
 			gr[i]->SetMarkerColor(i+2);
 			mg->Add(gr[i]);
 		}
 		mg->SetMinimum(0);
-		mg->Draw("APL");
+		mg->Draw("APC");
 		char buf[255];
 		char *dir = "./plots/cfits_slice";
 		sprintf(buf,"%s/cfit_%s_%d.png",dir,slice_vars[type],site);
 		gPad->SetLogx(0);
 		gPad->SetLogy(0);
 		c1->SaveAs(buf);
-		offset += 3 * (slices[type] - 1);
+		offset += ncomps * (slices[type] - 1);
 	}//type
 }
