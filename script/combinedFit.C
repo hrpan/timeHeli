@@ -19,7 +19,7 @@ double fitMin = 1.5;
 double fitMax = 5000;
 
 const int npars_max = 500;
-const bool use_tagging = true;
+const bool use_tagging = false;
 const bool fix_tau_short = false;
 
 char par_names[npars_max][255]; 
@@ -89,9 +89,11 @@ void parTrans(const double *par){
 	double r_mu_tag[n_range];
 	double r_mu_atag[n_range];
 	double n_lihe[n_range];
+	double n_lihe_tag[n_range];
+	double n_lihe_atag[n_range];
 	double n_bo[n_range];
-	double eps_t_lihe[n_range];
-	double eps_t_bo[n_range];
+	double n_bo_tag[n_range];
+	double n_bo_atag[n_range];
 	double eps_s_dc[slice_types][slice_max];
 	double eps_s_lihe[slice_types][slice_max];
 	double eps_s_bo[slice_types][slice_max];
@@ -105,10 +107,10 @@ void parTrans(const double *par){
 		if(use_tagging){
 			r_mu_tag[r] = par[p_idx++];
 			r_mu_atag[r] = par[p_idx++];
-			n_lihe[r] = fabs(par[p_idx++]) * scale * lt;
-			eps_t_lihe[r] = par[p_idx++];
-			n_bo[r] = fabs(par[p_idx++]) * scale * lt;
-			eps_t_bo[r] = par[p_idx++];
+			n_lihe_tag[r] = fabs(par[p_idx++]) * scale * lt;
+			n_lihe_atag[r] = fabs(par[p_idx++]) * scale * lt;
+			n_bo_tag[r] = fabs(par[p_idx++]) * scale * lt;
+			n_bo_atag[r] = fabs(par[p_idx++]) * scale * lt;
 		}else{
 			r_mu[r] = par[p_idx++];
 			n_lihe[r] = fabs(par[p_idx++]) * scale * lt;
@@ -146,8 +148,13 @@ void parTrans(const double *par){
 		double n_dc_fake_bo = 0;
 		for(int j=0; j<n_range; ++j){
 			if(r==j) continue;
-			n_dc_fake_lihe += n_lihe[j];
-			n_dc_fake_bo += n_bo[j];
+			if(use_tagging){
+				n_dc_fake_lihe += (n_lihe_tag[j] + n_lihe_atag[j]);
+				n_dc_fake_bo += (n_bo_tag[j] + n_bo_atag[j]);
+			}else{
+				n_dc_fake_lihe += n_lihe[j];
+				n_dc_fake_bo += n_bo[j];
+			}
 		}
 		for(int t=0; t<3; ++t){
 			for(int _type=0; _type<slice_types; ++_type){
@@ -160,6 +167,10 @@ void parTrans(const double *par){
 					double _n_dc_fake = n_dc_fake_lihe * _eps_s_lihe[s] + n_dc_fake_bo * _eps_s_bo[s];
 					double _n_lihe = n_lihe[r] * _eps_s_lihe[s];
 					double _n_bo = n_bo[r] * _eps_s_bo[s];
+					if(use_tagging){
+						_n_lihe = (n_lihe_tag[r] + n_lihe_atag[r]) * _eps_s_lihe[s];
+						_n_bo = (n_bo_tag[r] + n_bo_atag[r]) * _eps_s_bo[s];
+					}
 					if(t==0){
 						if(use_tagging)
 							_par[r][t][_type][s][0] = r_mu_tag[r] + r_mu_atag[r];
@@ -170,21 +181,22 @@ void parTrans(const double *par){
 						_par[r][t][_type][s][6] = _n_bo;
 					}else if(t==1){
 						_par[r][t][_type][s][0] = r_mu_tag[r];
-						_par[r][t][_type][s][1] = _n_dc + _n_dc_fake  
-							+ (( 1 - eps_t_lihe[r] ) * _n_lihe + ( 1 - eps_t_bo[r] ) * _n_bo); 
-						_par[r][t][_type][s][2] = eps_t_lihe[r] * _n_lihe;
-						_par[r][t][_type][s][6] = eps_t_bo[r] * _n_bo;
+						_par[r][t][_type][s][1] = _n_dc + _n_dc_fake 
+							+ _eps_s_lihe[s] * n_lihe_atag[r] 
+							+ _eps_s_bo[s] * n_bo_atag[r]; 
+						_par[r][t][_type][s][2] = _eps_s_lihe[s] * n_lihe_tag[r];
+						_par[r][t][_type][s][6] = _eps_s_bo[s] * n_bo_tag[r];
 					}else{
 						_par[r][t][_type][s][0] = r_mu_atag[r];
 						_par[r][t][_type][s][1] = _n_dc + _n_dc_fake
-							+ ((eps_t_lihe[r] * _n_lihe) + (eps_t_bo[r] * _n_bo));
-						_par[r][t][_type][s][2] = ( 1 - eps_t_lihe[r] ) * _n_lihe;
-						_par[r][t][_type][s][6] = ( 1 - eps_t_bo[r] ) * _n_bo;
+							+ _eps_s_lihe[s] * n_lihe_tag[r] 
+							+ _eps_s_bo[s] * n_bo_tag[r];
+						_par[r][t][_type][s][2] = _eps_s_lihe[s] * n_lihe_atag[r];
+						_par[r][t][_type][s][6] = _eps_s_bo[s] * n_bo_atag[r];
 					}
 					_par[r][t][_type][s][3] = tau_li9;
 					_par[r][t][_type][s][4] = tau_he8;
 					_par[r][t][_type][s][5] = r_lihe;
-					//_par[r][t][_type][s][7] = tau_b12;
 					_par[r][t][_type][s][7] = tau_short;
 									
 	/*	
@@ -223,7 +235,6 @@ double likelihood(const double *par){
 	}//range
 	return result;
 }
-
 
 void fillPars(double *par, TF1 *f[n_range][3][slice_types][slice_max]){
 
@@ -302,31 +313,29 @@ void initialize_minimizer(int site, ROOT::Math::Minimizer *minim, bool verbose){
 			if(verbose)
 				printf(init_str, p_idx-1, par_names[p_idx-1], rmu_init, rmu_init * step_ratio);
 
-			sprintf(buf, "n_lihe_%d", r);
+			sprintf(buf, "n_lihe_tag_%d", r);
 			sprintf(par_names[p_idx], "%s", buf);
-			//minim->SetLowerLimitedVariable(p_idx++, buf, n_lihe_init, n_lihe_init * step_ratio, 0);
 			minim->SetVariable(p_idx++, buf, n_lihe_init, n_lihe_init * step_ratio);
 			if(verbose)
 				printf(init_str, p_idx-1, par_names[p_idx-1], n_lihe_init, n_lihe_init * step_ratio);
-			
-			sprintf(buf, "eps_tag_lihe_%d", r);
+
+			sprintf(buf, "n_lihe_atag_%d", r);
 			sprintf(par_names[p_idx], "%s", buf);
-			minim->SetLimitedVariable(p_idx++, buf, eps_init, eps_init * step_ratio, 0, 1);
+			minim->SetVariable(p_idx++, buf, n_lihe_init, n_lihe_init * step_ratio);
 			if(verbose)
-				printf(init_str, p_idx-1, par_names[p_idx-1], eps_init, eps_init * step_ratio);
-			
-			sprintf(buf, "n_bo_%d", r);
+				printf(init_str, p_idx-1, par_names[p_idx-1], n_lihe_init, n_lihe_init * step_ratio);
+
+			sprintf(buf, "n_bo_tag_%d", r);
 			sprintf(par_names[p_idx], "%s", buf);
-			//minim->SetLowerLimitedVariable(p_idx++, buf, n_bo_init, n_bo_init * step_ratio, 0);
 			minim->SetVariable(p_idx++, buf, n_bo_init, n_bo_init * step_ratio);
 			if(verbose)
 				printf(init_str, p_idx-1, par_names[p_idx-1], n_bo_init, n_bo_init * step_ratio);
-			
-			sprintf(buf, "eps_tag_bo_%d", r);
+
+			sprintf(buf, "n_bo_atag_%d", r);
 			sprintf(par_names[p_idx], "%s", buf);
-			minim->SetLimitedVariable(p_idx++, buf, eps_init, eps_init * step_ratio, 0, 1);
+			minim->SetVariable(p_idx++, buf, n_bo_init, n_bo_init * step_ratio);
 			if(verbose)
-				printf(init_str, p_idx-1, par_names[p_idx-1], eps_init, eps_init * step_ratio);
+				printf(init_str, p_idx-1, par_names[p_idx-1], n_bo_init, n_bo_init * step_ratio);
 
 		}else{
 			h[r][0][0][0]->Fit("expo","LQN0","", 300, 5000);
@@ -486,7 +495,7 @@ void do_fit(int site, ROOT::Fit::DataOptions &opt, double results[3][npars_max][
 	ROOT::Math::Minimizer *minim = ROOT::Math::Factory::CreateMinimizer("Minuit2", "migrad");
 	ROOT::Math::Minimizer *minim_simplex = ROOT::Math::Factory::CreateMinimizer("Minuit2", "Simplex");
 	minim->SetFunction(f_tmp);
-	minim_simplex->SetFunction(f_tmp);
+	//minim_simplex->SetFunction(f_tmp);
 	initialize_minimizer(site, minim, true);
 	initialize_minimizer(site, minim_simplex, false);
 	
@@ -496,21 +505,10 @@ void do_fit(int site, ROOT::Fit::DataOptions &opt, double results[3][npars_max][
 		minim->Hesse();
 		minim->Minimize();
 	}
-	//minim->Hesse();
-	//minim->Minimize();
 	minim->Hesse();
 	cout << "COV STATUS: " << minim->CovMatrixStatus() << endl;
 	minim->PrintResults();
-	/*
-	minim->SetPrintLevel(1);
-	for(int i=0;i<npars;++i){
-		double low, up;
-		if(strstr(par_names[i], "n_lihe") != NULL || strstr(par_names[i], "eps_tag_lihe") != NULL){
-			minim->GetMinosError(i, low, up);
-			cout << par_names[i] << " " << minim->X()[i] << " " << low << " " << up << endl;
-		}
-	}
-	*/
+
 	double *x = minim->X();
 	double *x_err = minim->Errors();
 	for(int i=0;i<npars;++i){
@@ -523,20 +521,37 @@ void do_fit(int site, ROOT::Fit::DataOptions &opt, double results[3][npars_max][
 	daily_rates[site][0] = 0;
 	daily_rates[site][1] = 0;
 	for(int i=0;i<n_range;++i){
+		double _n = fabs(x[offset + i * step]);
+		if(use_tagging)
+			_n += fabs(x[offset + i * step + 1]);
 		if(i==n_range-1)
-			daily_rates[site][0] += 0.211 * fabs(x[offset + i * step]);
+			daily_rates[site][0] += 0.211 * _n;
 		else
-			daily_rates[site][0] += fabs(x[offset + i * step]);
-		for(int j=0;j<n_range;++j){
-			double _cov = minim->CovMatrix(offset + step * i, offset + step * j);
-			if(i==n_range-1)
-				_cov *= 0.211;
-			if(j==n_range-1)
-				_cov *= 0.211;
-			daily_rates[site][1] += _cov;
+			daily_rates[site][0] += _n;
+		if(use_tagging){
+			for(int _i=0;_i<2;++_i)
+				for(int j=0;j<n_range;++j){
+					for(int _j=0;_j<2;++_j){
+						double _cov = minim->CovMatrix(offset + step * i + _i, offset + step * j + _j);
+						if(i==n_range-1)
+							_cov *= 0.211;
+						if(j==n_range-1)
+							_cov *= 0.211;
+						daily_rates[site][1] += _cov;
+					}
+				}
+		}else{
+			for(int j=0;j<n_range;++j){
+				double _cov = minim->CovMatrix(offset + step * i, offset + step * j);
+				if(i==n_range-1)
+					_cov *= 0.211;
+				if(j==n_range-1)
+					_cov *= 0.211;
+				daily_rates[site][1] += _cov;
+			}
 		}
 	}
-	
+	daily_rates[site][1] = sqrt(daily_rates[site][1]);
 	plotHists(site, x);
 	plotSlice(site, minim);
 
