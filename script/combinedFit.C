@@ -20,7 +20,9 @@ double fitMax = 5000;
 
 const int npars_max = 500;
 const bool use_tagging = false;
-const bool fix_tau_short = false;
+const bool fix_tau_short = true;
+
+const int slice_max = 20;
 
 char par_names[npars_max][255]; 
 
@@ -260,12 +262,16 @@ void plotHists(int site, double *par){
 			for(int type=0;type<slice_types;++type){
 				for(int s=0;s<slices[type];++s){
 					TF1 ibd("ibd","[1] * [0] * exp(-[0] * x)",0, 5000);
+					TF1 heli("heli","[1] * [0] * exp(-[0] * x) + [2] * ([5] * ([0] + 1 / [3]) * exp(-([0] + 1 / [3]) * x ) + (1 - [5]) * ([0] + 1 / [4]) * exp(-([0] + 1 / [4]) * x) )",0, 5000);
 					ibd.SetParameters(_par[r][t][type][s]);
 					ibd.SetLineColor(kGreen);
+					heli.SetParameters(_par[r][t][type][s]);
+					heli.SetLineColor(kBlue);
 					sprintf(buf, "%s/cfit_%d_%d_%d_%d_%d.png", dir, site, r, t, type, s);
 					h[r][t][type][s]->Draw("E1");
 					func[r][t][type][s]->Draw("same");
 					ibd.Draw("same");
+					heli.Draw("same");
 					gPad->SetLogx();
 					c1->SaveAs(buf);
 				}
@@ -495,7 +501,7 @@ void do_fit(int site, ROOT::Fit::DataOptions &opt, double results[3][npars_max][
 	ROOT::Math::Minimizer *minim = ROOT::Math::Factory::CreateMinimizer("Minuit2", "migrad");
 	ROOT::Math::Minimizer *minim_simplex = ROOT::Math::Factory::CreateMinimizer("Minuit2", "Simplex");
 	minim->SetFunction(f_tmp);
-	//minim_simplex->SetFunction(f_tmp);
+	minim_simplex->SetFunction(f_tmp);
 	initialize_minimizer(site, minim, true);
 	initialize_minimizer(site, minim_simplex, false);
 	
