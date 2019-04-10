@@ -157,12 +157,20 @@ void parTrans(const double *par){
 		if(!use_slice[_type]) continue;
 		double _tmp_sum[n_pdfs];
 		for(int i=0;i<n_pdfs;++i){
+            /*
 			_tmp_sum[i] = 1;
 			eps_s[_type][i][0] = 1;
 			for(int _s=0;_s<slices[_type]-1;++_s){
 				eps_s[_type][i][_s+1] = fabs(par[p_idx++]);
 				_tmp_sum[i] += eps_s[_type][i][_s+1];
 			}
+            */
+            _tmp_sum[i] = 0;
+			for(int _s=0;_s<slices[_type];++_s){
+				eps_s[_type][i][_s] = fabs(par[p_idx++]);
+				_tmp_sum[i] += eps_s[_type][i][_s];
+			}
+
 			for(int _s=0;_s<slices[_type];++_s){
 				eps_s[_type][i][_s] /= _tmp_sum[i];	
 			}
@@ -366,7 +374,10 @@ void initialize_minimizer(int site, ROOT::Math::Minimizer *minim, bool verbose){
 	cout << "INITIALIZING MINIMIZER" << endl;
 	minim->SetErrorDef(0.5);
 	minim->SetTolerance(0.1);
-	minim->SetPrintLevel(2);
+    if(verbose)
+    	minim->SetPrintLevel(2);
+    else
+    	minim->SetPrintLevel(1);
 	//minim->SetPrecision(1e-10);
 	minim->SetStrategy(2);
 	minim->SetMaxFunctionCalls(1000000);
@@ -444,13 +455,21 @@ void initialize_minimizer(int site, ROOT::Math::Minimizer *minim, bool verbose){
                     bins.push_back(edge);
                 }
                 TH1 *h_spec_rebin = h_spec->Rebin(bins.size()-1, "h_spec_rebin", &bins[0]);
+                /*
                 for(int s=0;s<slices[type]-1;++s){
                     sprintf(buf, "eps_s_%s_%d_%d", _pre[i], type, s);
 				    sprintf(par_names[p_idx], "%s", buf);
     				minim->SetFixedVariable(p_idx++, buf, h_spec_rebin->GetBinContent(s+2) / h_spec_rebin->GetBinContent(1));
                 }
+                */
+                for(int s=0;s<slices[type];++s){
+                    sprintf(buf, "eps_s_%s_%d_%d", _pre[i], type, s);
+				    sprintf(par_names[p_idx], "%s", buf);
+    				minim->SetFixedVariable(p_idx++, buf, h_spec_rebin->GetBinContent(s+1));
+                }
                 file_spec->Close(); 
             }else{
+                /*
                 for(int s=0;s<slices[type]-1;++s){
                     if(i == 0)
                         eps_init = h[0][0][type][s+1]->GetEntries() / h[0][0][type][0]->GetEntries();
@@ -462,6 +481,19 @@ void initialize_minimizer(int site, ROOT::Math::Minimizer *minim, bool verbose){
                     //minim->SetVariable(p_idx++, buf, eps_init, eps_init * step_ratio);
                     minim->SetLowerLimitedVariable(p_idx++, buf, eps_init, eps_init * step_ratio, 0);
                 }
+                */
+                for(int s=0;s<slices[type];++s){
+                    if(i == 0)
+                        eps_init = h[0][0][type][s]->GetEntries() / h[0][0][type][0]->GetEntries();
+                    else 
+                        eps_init = 1;
+                        
+                    sprintf(buf, "eps_s_%s_%d_%d", _pre[i], type, s);
+                    sprintf(par_names[p_idx], "%s", buf);
+                    //minim->SetVariable(p_idx++, buf, eps_init, eps_init * step_ratio);
+                    minim->SetLowerLimitedVariable(p_idx++, buf, eps_init, eps_init * step_ratio, 0);
+                }
+
             }
 		}
 	}
@@ -581,7 +613,8 @@ void do_fit(int site, ROOT::Fit::DataOptions &opt, double results[3][npars_max][
 	int slice_pars = 0;
 	for(int type=0;type<slice_types;++type){
 		if(!use_slice[type]) continue;
-		slice_pars += slices[type] - 1;
+	//	slice_pars += slices[type] - 1;
+		slice_pars += slices[type];
 	}
 	slice_pars *= n_pdfs;
 	if(use_tagging)
@@ -596,8 +629,8 @@ void do_fit(int site, ROOT::Fit::DataOptions &opt, double results[3][npars_max][
 	initialize_minimizer(site, minim, true);
 	initialize_minimizer(site, minim_simplex, false);
 	//
-	minim_simplex->Minimize();
-	minim->SetVariableValues(minim_simplex->X());
+	//minim_simplex->Minimize();
+	//minim->SetVariableValues(minim_simplex->X());
 	for(int i=0;i<3;++i){
 		minim->Hesse();
 		minim->Minimize();
@@ -682,34 +715,47 @@ void plotSlice(int site, ROOT::Math::Minimizer *minim){
 		double _end = slice_range[type][1];
 		double _step = (_end-_start) / slices[type];
 		for(int j=0;j<n_pdfs;++j){
-			int _off = offset + (slices[type]-1) * j;
+			//int _off = offset + (slices[type]-1) * j;
+			int _off = offset + slices[type] * j;
 			for(int s=0;s<slices[type];++s){
 				x[j][s] = _start + _step * (s+0.5) + j * 0.1 * _step;
+                /*
 				if(s==0){
 					y[j][s] = 1;
 					y_err[j][s] = 0;
 				}else{
 					y[j][s] = fabs(par[_off + s-1]);
 					y_err[j][s] = sqrt(minim->CovMatrix(_off + s-1, _off + s-1));
-				}
+				}*/
+				y[j][s] = par[_off + s];
+				y_err[j][s] = sqrt(minim->CovMatrix(_off + s, _off + s));
+
 				y_sum[j] += y[j][s];
+                /*
 				if(s>0)
 					for(int s1=1;s1<slices[type];++s1)
 						y_sum_err[j] += minim->CovMatrix(_off + s-1, _off + s1-1);
+                */
+				for(int s1=0;s1<slices[type];++s1)
+					y_sum_err[j] += minim->CovMatrix(_off + s, _off + s1);
 			}
 		}
 		
 		for(int i=0;i<n_pdfs;++i){
-			int _off = offset + (slices[type]-1) * i;
+			//int _off = offset + (slices[type]-1) * i;
+			int _off = offset + slices[type] * i;
 			y_sum_err[i] = sqrt(y_sum_err[i]);
 			for(int j=0;j<slices[type];++j){
 				p[i][j] = y[i][j] / y_sum[i];
 				double _tmp_cov=0;
+                /*
 				if(j!=0)
 					for(int k=1;k<slices[type];++k){
 						_tmp_cov += minim->CovMatrix(_off + k-1, _off + j-1);		
 					}
-					
+				*/	
+				for(int k=0;k<slices[type];++k)
+					_tmp_cov += minim->CovMatrix(_off + k, _off + j);		
 				p_err[i][j] = p[i][j] * sqrt( pow(y_err[i][j] / y[i][j], 2) + pow(y_sum_err[i] / y_sum[i], 2) - 2 * _tmp_cov / (y[i][j] * y_sum[i]) );
 			}
 		}
@@ -759,6 +805,7 @@ void plotSlice(int site, ROOT::Math::Minimizer *minim){
 		gPad->SetLogy(0);
 		c1->SaveAs(buf);
         delete c1;
-		offset += n_pdfs * (slices[type] - 1);
+		//offset += n_pdfs * (slices[type] - 1);
+		offset += n_pdfs * (slices[type]);
 	}//type
 }
