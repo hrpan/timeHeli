@@ -2,7 +2,7 @@
 
 bool isIsolated(vector<double> *dtlSH, size_t mu, int r_idx, int r_shower);
 bool nTagged(vector<float> *nTag_e, vector<float> *nTag_dt, size_t start, size_t end);
-int findRange(double *range, int n_range, double npe);
+int findRange(double npe);
 
 const double maxT = 5000; //ms
 
@@ -17,7 +17,7 @@ const float distCut = 500; //mm
 void preprocess(){
 	TChain *chain = new TChain("Heli");
 
-	chain->Add("../p17b/data/heli.root");
+	chain->Add("../p17b/data_heli/*.root");
 	
 	TFile *f_out = new TFile("./data/proced.root","RECREATE");
 
@@ -90,7 +90,7 @@ void preprocess(){
 		tr_out->Branch(buf,&_dtlSH_tag_n[i]);
 	}
 
-	int r_shower = findRange(range, n_range, 4e5);
+	int r_shower = findRange(4e5);
 	for(size_t i=0;i<entries;++i){
 		if(i%(entries/10000)==0){
 			printf("\r%d/%d(%.3f%%)",i,entries,float(i*100)/entries);
@@ -98,6 +98,7 @@ void preprocess(){
 		}
 
 		chain->GetEntry(i);
+        /*
 		if(gd_only){
 			if(ed < 6 || dt > 200)
 				continue;
@@ -105,8 +106,10 @@ void preprocess(){
 			if(dist > distCut)
 				continue;
 		}
-
-		size_t muons = dtlSH->size();
+        */
+        if(dist > distCut)
+            continue;
+        
 		for(size_t j=0;j<n_range;++j){
 			for(size_t k=0;k<3;++k){
 				_dtlSH[k][j] = -1;
@@ -120,14 +123,14 @@ void preprocess(){
 
 		size_t n_idx_0 = 0;
 		
-		for(size_t mu = 0; mu < muons; ++mu){
+		for(size_t mu = 0; mu < dtlSH->size(); ++mu){
 		
 			if( (*dtlSH)[mu] < 0 ) break;
 
 			bool tagged = nTagged(nTag_e, nTag_dt, n_idx_0, n_idx_0 + (*nTag_n)[mu]);
 			n_idx_0 += (*nTag_n)[mu];
 
-			int r_idx = findRange(range,n_range,(*nPESum)[mu]);
+			int r_idx = findRange((*nPESum)[mu]);
 			
 			if(!isIsolated(dtlSH, mu, r_idx, r_shower)) continue;
 
@@ -217,16 +220,13 @@ bool nTagged(vector<float> *nTag_e, vector<float> *nTag_dt, size_t start, size_t
 	return tagged;
 }
 
-int findRange(double *range, int n_range, double npe){
-
-	int idx = n_range - 1;
+int findRange(double npe){
 
 	for(int i=0;i<n_range-1;++i){
 		if( npe < range[i+1] && npe >= range[i]){
-			idx = i;
-			break;
+			return i;
 		}
 	}
-	return idx;
+	return n_range - 1;
 
 }
