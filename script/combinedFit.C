@@ -46,9 +46,10 @@ double fitMin = 1.5;
 double fitMax = 5000;
 
 const int npars_max = 200;
+int npars;
 const bool use_tagging = false;
 const bool fix_tau_short = true;
-const bool use_predicted_li9 = false;
+const bool use_predicted_li9 = true;
 //const int slice_max = 5;
 
 const bool use_slice[4] = { 1, 1, 1, 1 };
@@ -120,9 +121,9 @@ ROOT::Math::WrappedMultiTF1 *wf[n_range][3][slice_types][slice_max];
 TF1 *func[n_range][3][slice_types][slice_max];
 TH1 *h[n_range][3][slice_types][slice_max];
 
-double _par[n_range][3][slice_types][slice_max][npars_single];
+//double _par[n_range][3][slice_types][slice_max][npars_single];
 
-void parTrans(const double *par){
+void parTrans(const double *par, double _par[n_range][3][slice_types][slice_max][npars_single]){
 
 	double scale = h[0][0][0][0]->GetBinWidth(1);
 
@@ -160,24 +161,14 @@ void parTrans(const double *par){
 	}
 	for(int _type=0;_type < slice_types; ++_type){
 		if(!use_slice[_type]) continue;
-		double _tmp_sum[n_pdfs];
 		for(int i=0;i<n_pdfs;++i){
-            /*
-			_tmp_sum[i] = 1;
-			eps_s[_type][i][0] = 1;
-			for(int _s=0;_s<slices[_type]-1;++_s){
-				eps_s[_type][i][_s+1] = fabs(par[p_idx++]);
-				_tmp_sum[i] += eps_s[_type][i][_s+1];
-			}
-            */
-            _tmp_sum[i] = 0;
+            double _tmp_sum = 0;
+            for(int _s=0; _s<slices[_type]; ++_s){
+                eps_s[_type][i][_s] = par[p_idx++];
+                _tmp_sum += eps_s[_type][i][_s];
+            }
 			for(int _s=0;_s<slices[_type];++_s){
-				eps_s[_type][i][_s] = fabs(par[p_idx++]);
-				_tmp_sum[i] += eps_s[_type][i][_s];
-			}
-
-			for(int _s=0;_s<slices[_type];++_s){
-				eps_s[_type][i][_s] /= _tmp_sum[i];	
+				eps_s[_type][i][_s] /= _tmp_sum;	
 			}
 		}
 	}
@@ -270,10 +261,11 @@ void parTrans(const double *par){
 
 double likelihood(const double *par){
 
-	parTrans(par);
+    static double _par[n_range][3][slice_types][slice_max][npars_single];
+
+	parTrans(par, _par);
 	
 	double result = 0;
-	int idx = 0;
 	for(int r = 0; r < n_range; ++r){
 		for(int t = 0; t < 3; ++t){
 			if(use_tagging && t==0) continue;
@@ -292,35 +284,68 @@ double likelihood(const double *par){
 
 double likelihood_derivative(const double *par, int coord){
 
-	parTrans(par);
-    double _g = 0;
-    double g[npars_single];
-    if(coord < n_range * n_pdfs){
-        int r = coord / n_pdfs;
-        if(coord % n_pdfs != 0){
-            double eps_tmp[slice_types][slice_max];
-            for(int t=0; t<slice_types; ++t){
-			    if(!use_slice[t]) continue;
-                double _tmp_sum = 0;
-                for(int s=0; s<slices[t]; ++s){
-                    eps_tmp[t][s] = _par[r][0][t][s][(coord%n_pdfs)*2];
-                    _tmp_sum += eps_tmp[t][s];
-                }
-                for(int s=0; s<slices[t]; ++s){
-                    eps_tmp[t][s] /= _tmp_sum;
+    static double _par[n_range][3][slice_types][slice_max][npars_single];
+
+	parTrans(par, _par);
+    static double par_cache[npars_max];
+    static double g_cache[n_range][3][slice_types][slice_max][npars_single];
+    static double eps_cache[n_pdfs][slice_types][slice_max];
+    static double eps_sum_cache[n_pdfs][slice_types];
+    static double p_cache[n_pdfs][slice_types][slice_max];
+    bool recalculate = false;
+    for(int i=0;i<npars;++i){
+        if(par[i] != par_cache[i]){
+            par_cache[i] = par[i];
+            recalculate = true;
+        }
+    }
+
+    if(recalculate){
+        for(int r = 0; r < n_range; ++r){
+            for(int type = 0; type < slice_types; ++type){
+                if(!use_slice[type]) continue;
+                for(int s = 0; s < slices[type]; ++s){
+                    fPNLL[r][0][type][s]->Gradient(_par[r][0][type][s], g_cache[r][0][type][s]);
                 }
             }
+        }
+        int _offset = n_pdfs * n_range;
+        for(int type = 0; type < slice_types; ++type){
+            if(!use_slice[type]) continue;
+            for(int iso = 0; iso < n_pdfs; ++iso){
+                double _tmp_sum = 0;
+                for(int s = 0; s < slices[type]; ++s){
+                    eps_cache[iso][type][s] = par[_offset + s];
+                    _tmp_sum += eps_cache[iso][type][s];
+                }
+                for(int s = 0; s < slices[type]; ++s){
+                    p_cache[iso][type][s] = eps_cache[iso][type][s] / _tmp_sum;
+                }
+                eps_sum_cache[iso][type] = _tmp_sum;
+                _offset += slices[type];
+            }
+        }
+    }
 
+    double _g = 0;
+    double *g;
+    if(coord < n_range * n_pdfs){
+        int r = coord / n_pdfs;
+        int d = coord % n_pdfs;
+        if(d != 0){
             for(int _r = 0; _r < n_range; ++_r){
                 for(int type = 0; type < slice_types; ++type){
                     if(!use_slice[type]) continue;
                     for(int s = 0; s < slices[type]; ++s){
-                        fPNLL[_r][0][type][s]->Gradient(_par[_r][0][type][s], g);
-                        int _n = coord % n_pdfs;
+                        g = g_cache[_r][0][type][s];
                         if(_r == r)
-                            _g += g[2 * _n] * eps_tmp[type][s]; 
+                            //_g += g[2 * d] * eps_tmp[type][s]; 
+                            //_g += g[2 * d] * ep_cache[d][type][s] / eps_sum_cache[d][type]; 
+                            _g += g[2 * d] * p_cache[d][type][s]; 
                         else
-                            _g += g[1] * eps_tmp[type][s];
+                            //_g += g[1] * eps_tmp[type][s];
+                            //_g += g[1] * eps_cache[d][type][s] / eps_sum_cache[d][type]; 
+                            _g += g[1] * p_cache[d][type][s]; 
                     }
                 }
 
@@ -330,7 +355,7 @@ double likelihood_derivative(const double *par, int coord){
             for(int type = 0; type < slice_types; ++type){
                 if(!use_slice[type]) continue;
                 for(int s = 0; s < slices[type]; ++s){
-                    fPNLL[r][0][type][s]->Gradient(_par[r][0][type][s], g);
+                    g = g_cache[r][0][type][s];
                     _g += g[0]; 
                 }
             }
@@ -350,7 +375,7 @@ double likelihood_derivative(const double *par, int coord){
         
         int type = par_names[coord][9] - '0';
         int _s = par_names[coord][11] - '0'; 
-
+        /*
         int _offset = n_pdfs * n_range;
         for(int t=0; t<type; ++t)
             _offset += slices[type] * n_pdfs;
@@ -360,17 +385,17 @@ double likelihood_derivative(const double *par, int coord){
         for(int s=0;s<slices[type];++s){
             _eps_sum += par[_offset + s];
         }
-
+        */
         for(int r = 0; r < n_range; ++r){
             double _n = 0;
             if(_c > 0)
                 for(int r_1 = 0; r_1 < n_range; ++r_1)
                     if(r_1 != r) 
-                        _n += par[n_pdfs * r_1 + _c];
+                        _n += fabs(par[n_pdfs * r_1 + _c]);
                     
 
             for(int s = 0; s < slices[type]; ++s){
-                fPNLL[r][0][type][s]->Gradient(_par[r][0][type][s], g);
+                g = g_cache[r][0][type][s];
                 int _idx;
                 double __n = 0;
                 if(_c == 0){
@@ -384,23 +409,37 @@ double likelihood_derivative(const double *par, int coord){
                     _idx = _c * 2;
                     __n = par[n_pdfs * r + _c];
                 }
-
+                double p_s_0 = p_cache[_c][type][_s];
+                double p_s_1 = p_cache[_c][type][s];
+                double p_der = (s == _s)? ( 1 - eps_cache[_c][type][s] / eps_sum_cache[_c][type] ) / eps_sum_cache[_c][type] : ( - eps_cache[_c][type][s]) / ( eps_sum_cache[_c][type] * eps_sum_cache[_c][type] ); 
+                //double p_der = (s == _s)? p_s_0 * ( 1 - p_s_0 ): -p_s_0 * p_s_1;
+                _g += g[_idx] * __n * p_der;
+                if( _c > 0 )
+                    _g += g[1] * _n * p_der;
+                /*
                 if(s == _s){
-                    _g += g[_idx] * __n * (_eps_sum - par[_offset + s]) / ( _eps_sum * _eps_sum );
+                    //_g += g[_idx] * __n * (1 - par[_offset + s] / _eps_sum) / _eps_sum;
+                    //_g += g[_idx] * __n * (1 - eps_cache[_c][type][s] / eps_sum_cache[_c][type]) / eps_sum_cache[_c][type];
+                    _g += g[_idx] * __n * p_der;
                     if(_c>0)
-                        _g += g[1] * _n * (_eps_sum - par[_offset + s]) / ( _eps_sum * _eps_sum );
-                    
+                        //_g += g[1] * _n * (1 - par[_offset + s] / _eps_sum) / _eps_sum;
+                        //_g += g[1] * _n * (1 - eps_cache[_c][type][s] / eps_sum_cache[_c][type]) / eps_sum_cache[_c][type];
+                        _g += g[1] * _n * p_der;
                 }else{
-                    _g += g[_idx] * __n * (-par[_offset + s]) / ( _eps_sum * _eps_sum );
+                    //_g += g[_idx] * __n * (-par[_offset + s]) / ( _eps_sum * _eps_sum );
+                    _g += g[_idx] * __n * (-eps_cache[_c][type][s])/ ( eps_sum_cache[_c][type] * eps_sum_cache[_c][type] );
                     if(_c>0)
-                        _g += g[1] * _n * (-par[_offset + s]) / ( _eps_sum * _eps_sum );
+                        //_g += g[1] * _n * (-par[_offset + s]) / ( _eps_sum * _eps_sum );
+                        _g += g[1] * _n * (-eps_cache[_c][type][s])/ ( eps_sum_cache[_c][type] * eps_sum_cache[_c][type] );
                 } 
+                */
             }
         }   
     }else if(strncmp(par_names[coord], "n_dc", 4) == 0){
         for(int r = 0; r < n_range; ++r){
             int _offset = n_range * n_pdfs;
             for(int t = 0;t < slice_types; ++t){
+                /*
                 double _eps_tmp[30];
                 double _eps_sum = 0;
                 for(int s = 0; s < slices[t]; ++s){
@@ -409,10 +448,12 @@ double likelihood_derivative(const double *par, int coord){
                 }
                 for(int s = 0; s < slices[t]; ++s)
                     _eps_tmp[s] /= _eps_sum;
-                 
+                */ 
                 for(int s = 0; s < slices[t]; ++s){
-                    fPNLL[r][0][t][s]->Gradient(_par[r][0][t][s], g);
-                    _g += g[1] * _eps_tmp[s]; 
+                    g = g_cache[r][0][t][s];
+                    //_g += g[1] * _eps_tmp[s]; 
+                    //_g += g[1] * eps_cache[0][t][s] / eps_sum_cache[0][t]; 
+                    _g += g[1] * p_cache[0][t][s]; 
                 }
                 _offset += slices[t] * n_pdfs;
             }
@@ -426,7 +467,9 @@ double likelihood_derivative(const double *par, int coord){
 
 double chi2(const double *par){
 
-	parTrans(par);
+    static double _par[n_range][3][slice_types][slice_max][npars_single];
+
+	parTrans(par, _par);
 	
 	double result = 0;
 	int idx = 0;
@@ -449,7 +492,8 @@ double chi2(const double *par){
 
 void fillPars(const double *par, TF1 *f[n_range][3][slice_types][slice_max]){
 
-	parTrans(par);
+    static double _par[n_range][3][slice_types][slice_max][npars_single];
+	parTrans(par, _par);
 
 	for(int r=0;r<n_range;++r)
 		for(int t=0;t<3;++t){
@@ -468,7 +512,8 @@ void plotHists(int site, const double *par){
 	fillPars(par, func);
 	const char *dir = "./plots/cfits";
 	char buf[255];
-	parTrans(par);
+    static double _par[n_range][3][slice_types][slice_max][npars_single];
+	parTrans(par, _par);
 	
 	char _fs[1000];
 	TF1 *_tf1s[n_pdfs];
@@ -512,20 +557,18 @@ void plotHists(int site, const double *par){
 void initialize_minimizer(int site, ROOT::Math::Minimizer *minim, bool verbose){
 	cout << "INITIALIZING MINIMIZER" << endl;
 	minim->SetErrorDef(0.5);
-	minim->SetTolerance(1);
+	minim->SetTolerance(0.001);
     if(verbose)
     	minim->SetPrintLevel(2);
     else
     	minim->SetPrintLevel(1);
-	//minim->SetPrecision(1e-15);
-	minim->SetStrategy(1);
+	minim->SetStrategy(2);
 	minim->SetMaxFunctionCalls(1000000);
 	minim->SetMaxIterations(1000000);
 
-	double rmu_init;
-	double n_iso_init = 1;
+	//double rmu_init;
+	double n_iso_init = site == 2? 0.1:1;
 	double eps_init = 0.5;
-	double r_init = 0.5;
 
 	const char *_pre[5] = {
 		"dc",
@@ -535,12 +578,23 @@ void initialize_minimizer(int site, ROOT::Math::Minimizer *minim, bool verbose){
 		"ni"
 	};
 
+    const double rmu_init[3][3] = {
+        { 1.18e-2, 8.61e-3, 1.44e-4 },
+        { 8.12e-3, 7.13e-3, 1.41e-4 },
+        { 5.83e-4, 4.62e-4, 1.37e-5 },
+    };
+    /*
+      rmu_0  1.178e-02/ 6.739e-06  8.118e-03/ 4.500e-06  5.825e-04/ 8.595e-07
+      rmu_1  8.613e-03/ 5.307e-06  7.128e-03/ 4.544e-06  4.615e-04/ 8.604e-07
+      rmu_2  1.441e-04/ 1.743e-07  1.412e-04/ 1.760e-07  1.373e-05/ 6.071e-08
+    */
 	double step_ratio = 1e-1;
 	char buf[255];
 	int p_idx = 0;
 	const char *init_str = "Initializing parameter %2d %20s %10.2e %10.2e\n";
 	for(int r=0;r<n_range;++r){
 		if(use_tagging){	
+            /*
             TF1 *f_tmp = new TF1("f_tmp","expo", 300, fitMax);	
 			h[r][1][0][0]->Fit(f_tmp,"LQN0","", 300, fitMax);
 			rmu_init = fabs(f_tmp->GetParameter(1));
@@ -561,23 +615,17 @@ void initialize_minimizer(int site, ROOT::Math::Minimizer *minim, bool verbose){
 					minim->SetVariable(p_idx++, buf, n_iso_init, n_iso_init * step_ratio);
 				}
 			}
-	
+	        */
 		}else{
-            TF1 *f_tmp = new TF1("f_tmp","expo", 300, fitMax);	
-    		h[r][0][0][0]->Fit(f_tmp,"LQN0","", 300, fitMax);
-			rmu_init = fabs(f_tmp->GetParameter(1));
 			sprintf(buf, "rmu_%d",r);
 			sprintf(par_names[p_idx], "%s", buf);
-			minim->SetVariable(p_idx++, buf, rmu_init, rmu_init * step_ratio);
+			minim->SetVariable(p_idx++, buf, rmu_init[site][r], rmu_init[site][r] * step_ratio);
 
 			for(int i=1;i<n_pdfs;++i){
 				sprintf(buf, "n_%s_%d",_pre[i], r);
 				sprintf(par_names[p_idx], "%s", buf);
-                if(r==2 && i==1)
-    				minim->SetVariable(p_idx++, buf, 3, 0.1);
-                else
-    				//minim->SetVariable(p_idx++, buf, n_iso_init, n_iso_init * step_ratio);
-				    minim->SetLowerLimitedVariable(p_idx++, buf, n_iso_init, n_iso_init * step_ratio, 0);
+    			//minim->SetVariable(p_idx++, buf, n_iso_init, n_iso_init * step_ratio);
+			    minim->SetLowerLimitedVariable(p_idx++, buf, n_iso_init, n_iso_init * step_ratio, 0);
 			}
 			
 		}
@@ -597,22 +645,17 @@ void initialize_minimizer(int site, ROOT::Math::Minimizer *minim, bool verbose){
                     bins.push_back(edge);
                 }
                 TH1 *h_spec_rebin = h_spec->Rebin(bins.size()-1, "h_spec_rebin", &bins[0]);
-                /*
-                for(int s=0;s<slices[type]-1;++s){
-                    sprintf(buf, "eps_s_%s_%d_%d", _pre[i], type, s);
-				    sprintf(par_names[p_idx], "%s", buf);
-    				minim->SetFixedVariable(p_idx++, buf, h_spec_rebin->GetBinContent(s+2) / h_spec_rebin->GetBinContent(1));
-                }
-                */
+                h_spec_rebin->Scale(1.0/h_spec_rebin->GetBinContent(1));
                 for(int s=0;s<slices[type];++s){
                     sprintf(buf, "eps_s_%s_%d_%d", _pre[i], type, s);
 				    sprintf(par_names[p_idx], "%s", buf);
     				minim->SetFixedVariable(p_idx++, buf, h_spec_rebin->GetBinContent(s+1));
+    				//minim->SetFixedVariable(p_idx++, buf, log(h_spec_rebin->GetBinContent(s+1)/h_spec_rebin->GetBinContent(1)));
                 }
                 file_spec->Close(); 
             }else{
                 for(int s=0;s<slices[type];++s){
-                    if(i == 0)
+                    if(i == 0 || i == 1)
                         eps_init = h[0][0][type][s]->GetEntries() / h[0][0][type][0]->GetEntries();
                     else 
                         eps_init = 1;
@@ -622,21 +665,16 @@ void initialize_minimizer(int site, ROOT::Math::Minimizer *minim, bool verbose){
                     //minim->SetVariable(p_idx++, buf, eps_init, eps_init * step_ratio);
                     if(s==0)
                         minim->SetFixedVariable(p_idx++, buf, 1);
+                        //minim->SetFixedVariable(p_idx++, buf, 0);
                     else
                         minim->SetLowerLimitedVariable(p_idx++, buf, eps_init, eps_init * step_ratio, 0);
+                        //minim->SetVariable(p_idx++, buf, log(eps_init), 0.1);
+                        //minim->SetLimitedVariable(p_idx++, buf, log(eps_init), 0.1, -10, 10);
                 }
 
             }
 		}
 	}
-	/*	
-	sprintf(par_names[p_idx], "r_lihe");
-	minim->SetLimitedVariable(p_idx++, "r_lihe", r_init, r_init * step_ratio, 0, 1);
-    */
-	/*
-	sprintf(par_names[p_idx], "r_boni");
-	minim->SetLimitedVariable(p_idx++, "r_boni", r_init, r_init * step_ratio, 0, 1);
-	*/
 
 	double n_dc_init = 0;
 	for(int s=0;s<slices[0];++s)
@@ -684,8 +722,7 @@ int main(){
 					sprintf(buf,"func%d_%d_%d_%d",r,t,type,s);
 					func[r][t][type][s] = new TF1(buf, _f_sum, 0, 5000);
 					wf[r][t][type][s] = new ROOT::Math::WrappedMultiTF1(*func[r][t][type][s], 1);
-                    wf[r][t][type][s]->SetDerivPrecision(1e-6);
-                    //cout << wf[r][t][type][s]->GetDerivPrecision() << endl; 
+                    wf[r][t][type][s]->SetDerivPrecision(1e-7);
 				}
 			}
 			if(!use_tagging) break;
@@ -708,6 +745,33 @@ int main(){
 	}	
 	cout << endl;
     return 0;
+}
+
+void gradient_descent(const double x[1000]){
+
+    double alpha = 1e-14;
+    double beta = 0.0;
+
+    double _x[1000];
+    for(int i=0;i<npars;++i)
+        _x[i] = x[i];
+
+    double _g[1000], _m[1000];
+    for(int i=0;i<npars;++i)
+        _m[i] = 0;
+    for(int iter=0;iter<100000;++iter){
+        printf("Iter %d %.10f\n", iter, likelihood(_x));
+        fflush(stdout);
+        for(int i=0;i<npars;++i)
+            _g[i] = likelihood_derivative(_x, i);
+        for(int i=0;i<npars;++i)
+            _m[i] = beta * _m[i] + alpha * _g[i];
+        for(int i=0;i<npars;++i)
+            _x[i] -= _m[i];
+    }
+    for(int i=0;i<npars;++i)
+        cout << par_names[i] << " " << _x[i] << endl;
+
 }
 
 void do_fit(int site, ROOT::Fit::DataOptions &opt, double results[3][npars_max][2], double daily_rates[3][2]){
@@ -743,11 +807,9 @@ void do_fit(int site, ROOT::Fit::DataOptions &opt, double results[3][npars_max][
 		}
 	}
 
-	int npars;
 	int slice_pars = 0;
 	for(int type=0;type<slice_types;++type){
 		if(!use_slice[type]) continue;
-	//	slice_pars += slices[type] - 1;
 		slice_pars += slices[type];
 	}
 	slice_pars *= n_pdfs;
@@ -757,16 +819,17 @@ void do_fit(int site, ROOT::Fit::DataOptions &opt, double results[3][npars_max][
 		npars = n_pdfs * n_range + slice_pars + 2;
 	//ROOT::Math::Functor f_tmp(&likelihood, npars);
 	ROOT::Math::GradFunctor f_tmp(&likelihood, &likelihood_derivative, npars);
-	ROOT::Math::Minimizer *minim = ROOT::Math::Factory::CreateMinimizer("Minuit2", "migrad");
+	ROOT::Math::Minimizer *minim = ROOT::Math::Factory::CreateMinimizer("Minuit2", "Migrad");
 	ROOT::Math::Minimizer *minim_simplex = ROOT::Math::Factory::CreateMinimizer("Minuit2", "Simplex");
 	minim->SetFunction(f_tmp);
 	minim_simplex->SetFunction(f_tmp);
 	initialize_minimizer(site, minim, true);
 	initialize_minimizer(site, minim_simplex, false);
-	minim_simplex->SetMaxFunctionCalls(10000);
-	//minim_simplex->Minimize();
-	//minim->SetVariableValues(minim_simplex->X());
-	//minim->Hesse();
+    minim_simplex->SetTolerance(0.1);
+	minim_simplex->Minimize();
+	minim->SetVariableValues(minim_simplex->X());
+
+	minim->Hesse();
     /*
     double _x[1000];
     for(int i=0;i<npars;++i){
@@ -781,17 +844,17 @@ void do_fit(int site, ROOT::Fit::DataOptions &opt, double results[3][npars_max][
         cout << par_names[i] << " " << (l1-l0) / _eps << " " << likelihood_derivative(_x, i) << endl;
     }
     */
-	minim->Hesse();
+	//minim->Hesse();
 	minim->Minimize();
-    cout << minim->NFree() << endl;
+    /* 
 	for(int i=0;i<3;++i){
 		minim->Hesse();
-		minim->Minimize();
+	    minim->Minimize();
 	}
+    */
+    for(int i=0;i<npars;++i)
+        cout << par_names[i] << " " << likelihood_derivative(minim->X(), i) << endl;
 	minim->Hesse();
-    double errUp, errLow;
-    minim->GetMinosError(9, errLow, errUp);
-    cout << errLow << " " << errUp << endl;
 	cout << "COV STATUS: " << minim->CovMatrixStatus() << endl;
 	minim->PrintResults();
 
