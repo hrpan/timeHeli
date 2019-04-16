@@ -1,3 +1,4 @@
+#include <cmath>
 double pull(double x, double mean, double err){
 
 	double diff = x - mean;
