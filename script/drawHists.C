@@ -1,6 +1,9 @@
 #include "range.h"
-#include "slice.h"
-const int bins = 100;
+#include "../hists/slice.h"
+
+const int bins = 500;
+const double histMin = 1.5;
+const double histMax = 5000;
 
 const double npe_sh = 3.0e5;
 
@@ -10,8 +13,9 @@ const char *suffix[3] = {
 	"_atag"
 };
 
-const char edCut[50] = "ed>1.5";
-const char dtCut[50] = "dt<200";
+//const char *gdCut = "ed>6&&dt<200";
+const char *defCut = "ed>4";
+//const char *unifiedCut = "dist<500";
 
 void drawHists(){
 	string filename;
@@ -19,6 +23,11 @@ void drawHists(){
 	TFile *f = new TFile(filename.c_str());
 
 	TTree *tr = f->Get("tr");
+
+    TFile *dump = new TFile("dump.root","RECREATE");
+
+    //TTree *tr_pre = tr->CopyTree(defCut);
+    //cout << "pre selection complete" << endl;
 
 	char shCut[255] = "";
 	for(int i=0;i<n_range;++i)
@@ -32,37 +41,52 @@ void drawHists(){
 		else
 			sprintf(siteCut,"site==4");
 
+        TTree *tr_site = tr->CopyTree(siteCut);
+        cout << "site selection complete" << endl;
+
 		for(int r=0;r<n_range;++r){
-			for(int t=0;t<3;++t){
-				for(int _var=0;_var<slice_types;++_var){
-					double _start = slice_range[_var][0];
-					double _end = slice_range[_var][1];
-					double _step = ( _end - _start ) / slices[_var];
-					char *var_name = slice_vars[_var];
-					for(int _s=0;_s<slices[_var];++_s){
-						TH1D *h = new TH1D("h","Time since last muon",bins,1.5,5000);
+			for(int t=0;t<1;++t){
+				TH1D *h0 = new TH1D("h", "Time since last muon", bins, histMin, histMax);
 
-						char s_tmp[255];
-						sprintf(s_tmp,"_%d%s",r,suffix[t]);
+				char s_tmp[255];
+				sprintf(s_tmp,"_%d%s",r,suffix[t]);
 
-						char buf[255];
-						sprintf(buf,"dtlSH%s>>h",s_tmp);
+				char buf[255];
+				sprintf(buf,"dtlSH%s>>h",s_tmp);
+
+				char cut[500];
+				sprintf(cut,"%s&&dtlSH%s>0&&dtlSH%s<5000",siteCut,s_tmp,s_tmp);
+				cout << cut << " " << buf << endl;
+				tr_site->Draw(buf,cut);
+				sprintf(buf,"./hists/EH%d_dtlSH%s.root",site+1,s_tmp);
+				h0->SaveAs(buf);
+				sprintf(buf,"./plots/EH%d_dtlSH%s.png",site+1,s_tmp);
+				c1->SaveAs(buf);
+				h0->Delete();
+
+				for(int type=0;type<slice_types;++type){
+					double _start = slice_range[type][0];
+					double _end = slice_range[type][1];
+					double _step = ( _end - _start ) / slices[type];
+					char *var_name = slice_vars[type];
+					for(int _s=0;_s<slices[type];++_s){
+						TH1D *h = new TH1D("h","Time since last muon",bins, histMin, histMax);
 
 						char sliceCut[255];
 						sprintf(sliceCut,"%s>%f&&%s<%f", var_name, _start + _s * _step, var_name, _start + (_s + 1) * _step);
 
-						char cut[500];
 						sprintf(cut,"%s&&dtlSH%s>0&&dtlSH%s<5000&&%s",siteCut,s_tmp,s_tmp,sliceCut);
 
-						cout << cut << endl;
-						tr->Draw(buf,cut);
-						sprintf(buf,"./hists/EH%d_dtlSH%s_%d.root",site+1,s_tmp,e);
+						sprintf(buf,"dtlSH%s>>h",s_tmp);
+						cout << cut << " " << buf << endl;
+						tr_site->Draw(buf,cut);
+						sprintf(buf,"./hists/EH%d_dtlSH%s_%d_%d.root",site+1,s_tmp,type,_s);
 						h->SaveAs(buf);
-						sprintf(buf,"./plots/EH%d_dtlSH%s_%d.png",site+1,s_tmp,e);
+						sprintf(buf,"./plots/EH%d_dtlSH%s_%d_%d.png",site+1,s_tmp,type,_s);
 						c1->SaveAs(buf);
 						h->Delete();
-					}
-				}
+					}//slice
+				}//type
 			}//tag
 		}//r
 	}//site
