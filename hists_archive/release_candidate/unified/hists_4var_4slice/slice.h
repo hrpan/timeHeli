@@ -1,0 +1,13 @@
+const int slice_types = 4;
+
+const char *slice_vars[slice_types] = { "ep", "ed", "dist", "dt" };
+const int slice_max = 5;
+const int slices[slice_types] = { 4, 4, 4, 4 };
+
+const double slice_range[slice_types][2] = {
+	{ 0.7, 12 },
+	{ 1.5, 12 },
+	{ 0, 500 },
+	{ 1, 400 }
+};
+
