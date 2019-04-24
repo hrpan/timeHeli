@@ -24,8 +24,18 @@
 #include "Fit/LogLikelihoodFCN.h"
 #include "Fit/PoissonLikelihoodFCN.h"
 #include "omp.h"
-using namespace std;
+//#include <Eigen/Core>
+#include "LBFGS.h"
+#include "cppoptlib/meta.h"
+#include "cppoptlib/boundedproblem.h"
+#include "cppoptlib/solver/lbfgsbsolver.h"
+#include "cppoptlib/solver/bfgssolver.h"
+#include "cppoptlib/solver/conjugatedgradientdescentsolver.h"
 
+using namespace std;
+using namespace cppoptlib;
+using namespace LBFGSpp;
+//using Eigen::VectorXd;
 
 const char *hists_prefix = "./hists";
 
@@ -42,7 +52,7 @@ const double tau_n12 = 15.9;
 
 const double _tau_short = tau_n12;
 
-const double rmu_scale = 1e3;
+const double rmu_scale = 1e6;
 
 double fitMin = 1.5;
 double fitMax = 5000;
@@ -53,7 +63,8 @@ const bool use_tagging = false;
 const bool fix_tau_short = true;
 bool use_predicted_li9 = true;
 
-const bool use_slice[4] = { 1, 1, 0, 0 };
+const bool use_isotope[3] = { 1, 1, 1 };
+const bool use_slice[4] = { 1, 1, 1, 1 };
 
 char par_names[npars_max][255]; 
 
@@ -149,14 +160,15 @@ void parTrans(const double *par, double _par[n_range][3][slice_types][slice_max]
 			n_bo_tag[r] = fabs(par[p_idx++]) * scale * lt;
 			n_bo_atag[r] = fabs(par[p_idx++]) * scale * lt;
 		}else{
-			r_mu[r] = par[p_idx++] / rmu_scale;
+			r_mu[r] = par[p_idx++];
 			for(int iso=0; iso<n_pdfs-1;++iso)
 				//n_iso[r][iso] = fabs(par[p_idx++]) * scale * lt;
                 //if(iso == 0 && r == n_range - 1)
                 //    n_iso[r][iso] = (fabs(par[p_idx++]) - n_iso[0][0] - n_iso[1][0]) / 0.211;
                 //else
     			//	n_iso[r][iso] = fabs(par[p_idx++]);
-    			n_iso[r][iso] = fabs(par[p_idx++]);
+    			//n_iso[r][iso] = fabs(par[p_idx++]);
+    			n_iso[r][iso] = par[p_idx++];
 		}
 	}
 	for(int _type=0;_type < slice_types; ++_type){
@@ -168,7 +180,7 @@ void parTrans(const double *par, double _par[n_range][3][slice_types][slice_max]
                 _tmp_sum += eps_s[_type][i][_s];
             }
 			for(int _s=0;_s<slices[_type];++_s){
-				eps_s[_type][i][_s] /= _tmp_sum;	
+				eps_s[_type][i][_s] /= _tmp_sum;
 			}
 		}
 	}
@@ -354,7 +366,7 @@ double likelihood_derivative(const double *par, int coord){
                     _g += g[0]; 
                 }
             }
-            _g /= rmu_scale;
+            _g;
         }
         
     }else if(strncmp(par_names[coord], "eps_s", 5) == 0){
@@ -405,16 +417,6 @@ double likelihood_derivative(const double *par, int coord){
         for(int r = 0; r < n_range; ++r){
             int _offset = n_range * n_pdfs;
             for(int t = 0;t < slice_types; ++t){
-                /*
-                double _eps_tmp[30];
-                double _eps_sum = 0;
-                for(int s = 0; s < slices[t]; ++s){
-                    _eps_tmp[s] = par[_offset + s];
-                    _eps_sum += par[_offset + s];
-                }
-                for(int s = 0; s < slices[t]; ++s)
-                    _eps_tmp[s] /= _eps_sum;
-                */ 
                 for(int s = 0; s < slices[t]; ++s){
                     g = g_cache[r][0][t][s];
                     //_g += g[1] * _eps_tmp[s]; 
@@ -428,6 +430,61 @@ double likelihood_derivative(const double *par, int coord){
 //    cout << coord << " " << par[coord] << " " << _g << endl;
     return _g;
     
+}
+
+/*
+class MyFunc{
+    public:
+    double operator()(const VectorXd &x, VectorXd &grad){
+
+        double _x[1000], _grad[1000];
+        for(int i=0;i<npars;++i)
+            _x[i] = x[i];
+        for(int i=0;i<npars;++i)
+            grad[i] = likelihood_derivative(_x, i); 
+        double f = likelihood(_x);
+        printf("%.10f\n", f);
+        fflush(stdout);
+        return f;
+    } 
+};
+*/
+
+namespace cppoptlib{
+
+template<typename T>
+class MyFunc2 : public BoundedProblem<T>{
+    double _x[1000];
+    public:
+        using Superclass = BoundedProblem<T>;
+        using typename Superclass::TVector;
+
+    public:
+        MyFunc2(int npars) :
+            Superclass(npars){}
+
+        T value(const TVector &x) {
+            
+            for(int i=0;i<npars;++i)
+                _x[i] = x[i];
+            double f = likelihood(_x);
+            //printf("%.10f\n", f);
+            //fflush(stdout);
+            return f;
+            
+        }
+
+        void gradient(const TVector &x, TVector &grad) {
+            
+            for(int i=0;i<npars;++i)
+                _x[i] = x[i];
+            for(int i=0;i<npars;++i)
+                grad[i] = likelihood_derivative(_x, i);
+            
+        }
+
+};
+
 }
 
 
@@ -523,7 +580,7 @@ void initialize_minimizer(int site, ROOT::Math::Minimizer *minim, bool verbose){
 	cout << "INITIALIZING MINIMIZER" << endl;
 	minim->SetErrorDef(0.5);
 	//minim->SetTolerance(0.001);
-	minim->SetTolerance(0.1);
+	minim->SetTolerance(1);
     if(verbose)
     	minim->SetPrintLevel(2);
     else
@@ -541,12 +598,13 @@ void initialize_minimizer(int site, ROOT::Math::Minimizer *minim, bool verbose){
 		"ni",
 		"ni"
 	};
-
+    
     const double rmu_init[3][3] = {
         { 1.178e-2, 8.613e-3, 1.441e-4 },
         { 8.118e-3, 7.128e-3, 1.412e-4 },
         { 5.825e-4, 4.615e-4, 1.373e-5 },
     };
+    
     /*
       rmu_0  1.178e-02/ 6.739e-06  8.118e-03/ 4.500e-06  5.825e-04/ 8.595e-07
       rmu_1  8.613e-03/ 5.307e-06  7.128e-03/ 4.544e-06  4.615e-04/ 8.604e-07
@@ -611,15 +669,19 @@ void initialize_minimizer(int site, ROOT::Math::Minimizer *minim, bool verbose){
 		}else{
 			sprintf(buf, "rmu_%d",r);
 			sprintf(par_names[p_idx], "%s", buf);
-			minim->SetVariable(p_idx++, buf, rmu_init[site][r] * rmu_scale, rmu_init[site][r] * step_ratio * rmu_scale);
-			//minim->SetFixedVariable(p_idx++, buf, rmu_init[site][r] * rmu_scale);
+            double _tmp = rmu_init[site][r];
+			minim->SetVariable(p_idx++, buf, rmu_init[site][r], rmu_init[site][r] * step_ratio);
+			//minim->SetLimitedVariable(p_idx++, buf, _tmp, step_ratio * _tmp, 0.9 * _tmp, 1.1 * _tmp);
 
 			for(int i=1;i<n_pdfs;++i){
 				sprintf(buf, "n_%s_%d",_pre[i], r);
 				sprintf(par_names[p_idx], "%s", buf);
     			//minim->SetVariable(p_idx++, buf, n_iso_init, n_iso_init * step_ratio);
                 double n_tmp = n_iso_init[site][r][i-1];    
-			    minim->SetLowerLimitedVariable(p_idx++, buf, n_tmp, n_tmp * step_ratio, 0);
+                if(!use_isotope[i-1])
+                    minim->SetFixedVariable(p_idx++, buf, 0);
+                else
+    			    minim->SetLowerLimitedVariable(p_idx++, buf, n_tmp, n_tmp * step_ratio, 0);
 			}
 			
 		}
@@ -629,7 +691,7 @@ void initialize_minimizer(int site, ROOT::Math::Minimizer *minim, bool verbose){
 		if(!use_slice[type]) continue;
 		for(int i=0;i<n_pdfs;++i){
 
-            if(i == 1 && use_predicted_li9 && type==0){
+            if(i == 1 && type==0){
         		TFile *file_spec = new TFile("./data/toyli9spec_BCWmodel_v1.root","READ");
                 TH1 *h_spec = (TH1*)file_spec->Get("h_eVisAllSmeared");
                 vector<double> bins;	
@@ -643,10 +705,20 @@ void initialize_minimizer(int site, ROOT::Math::Minimizer *minim, bool verbose){
                 for(int s=0;s<slices[type];++s){
                     sprintf(buf, "eps_s_%s_%d_%d", _pre[i], type, s);
 				    sprintf(par_names[p_idx], "%s", buf);
-    				minim->SetFixedVariable(p_idx++, buf, h_spec_rebin->GetBinContent(s+1));
+                    double _tmp = h_spec_rebin->GetBinContent(s+1);
+                    if(use_predicted_li9 || s==0)
+        				minim->SetFixedVariable(p_idx++, buf, _tmp);
+                    else
+        				minim->SetLowerLimitedVariable(p_idx++, buf, _tmp, _tmp * step_ratio, 0);
     				//minim->SetFixedVariable(p_idx++, buf, log(h_spec_rebin->GetBinContent(s+1)/h_spec_rebin->GetBinContent(1)));
                 }
-                file_spec->Close(); 
+                file_spec->Close();
+            }else if( i>0 && !use_isotope[i-1] ){ 
+                for(int s=0;s<slices[type];++s){
+                    sprintf(buf, "eps_s_%s_%d_%d", _pre[i], type, s);
+                    sprintf(par_names[p_idx], "%s", buf);
+                    minim->SetFixedVariable(p_idx++, buf, 1);
+                }
             }else{
                 for(int s=0;s<slices[type];++s){
                     if(i == 0 || i == 1)
@@ -662,7 +734,6 @@ void initialize_minimizer(int site, ROOT::Math::Minimizer *minim, bool verbose){
                         //minim->SetFixedVariable(p_idx++, buf, 0);
                     else
                         minim->SetLowerLimitedVariable(p_idx++, buf, eps_init, eps_init * step_ratio, 0);
-                        //minim->SetVariable(p_idx++, buf, log(eps_init), 0.1);
                         //minim->SetLimitedVariable(p_idx++, buf, log(eps_init), 0.1, -10, 10);
                 }
 
@@ -720,7 +791,7 @@ int main(int argc, char **argv){
 					sprintf(buf,"func%d_%d_%d_%d",r,t,type,s);
 					func[r][t][type][s] = new TF1(buf, _f_sum, 0, 5000);
 					wf[r][t][type][s] = new ROOT::Math::WrappedMultiTF1(*func[r][t][type][s], 1);
-                    wf[r][t][type][s]->SetDerivPrecision(5e-8);
+                    wf[r][t][type][s]->SetDerivPrecision(1e-7);
 				}
 			}
 			if(!use_tagging) break;
@@ -747,8 +818,8 @@ int main(int argc, char **argv){
 
 void gradient_descent(const double x[1000]){
 
-    double alpha = 1e-14;
-    double beta = 0.0;
+    double alpha = 1e-15;
+    double beta = 0.9;
 
     double _x[1000];
     for(int i=0;i<npars;++i)
@@ -758,14 +829,24 @@ void gradient_descent(const double x[1000]){
     for(int i=0;i<npars;++i)
         _m[i] = 0;
     for(int iter=0;iter<100000;++iter){
-        printf("Iter %d %.10f\n", iter, likelihood(_x));
-        fflush(stdout);
         for(int i=0;i<npars;++i)
             _g[i] = likelihood_derivative(_x, i);
+        double g2 = 0;
+        for(int i=0;i<npars;++i)
+            g2 += _g[i] * _g[i];
         for(int i=0;i<npars;++i)
             _m[i] = beta * _m[i] + alpha * _g[i];
-        for(int i=0;i<npars;++i)
-            _x[i] -= _m[i];
+        for(int i=0;i<npars;++i){
+            double _tmp = _x[i] - _m[i];
+            if(_tmp < 0){
+                _m[i] = _x[i];
+                _x[i] = 0;
+            }else{
+                _x[i] = _tmp;
+            }
+        }
+        printf("Iter %d %.10f g2: %.10f x[5]: %.10f\n", iter, likelihood(_x), g2, _x[5]);
+        fflush(stdout);
     }
     for(int i=0;i<npars;++i)
         cout << par_names[i] << " " << _x[i] << endl;
@@ -823,11 +904,44 @@ void do_fit(int site, ROOT::Fit::DataOptions &opt, double results[3][npars_max][
 	minim_simplex->SetFunction(f_tmp);
 	initialize_minimizer(site, minim, true);
 	initialize_minimizer(site, minim_simplex, false);
-    minim_simplex->SetTolerance(.1);
+    minim_simplex->SetTolerance(1);
 	minim_simplex->Minimize();
 	minim->SetVariableValues(minim_simplex->X());
-    //for(int i=0;i<npars;++i)
-    //    minim->SetVariableStepSize(i, minim_simplex->X()[i] * 0.01);
+	minim->Hesse();
+	minim->Minimize();
+
+    /*
+    LBFGSParam<double> param;
+    param.epsilon=1e-6;
+    param.max_iterations = 100000;
+    LBFGSSolver<double> solver(param);
+    MyFunc mf;
+    VectorXd v_x = VectorXd::Zero(npars);
+    for(int i=0;i<npars;++i)
+        v_x[i] = minim->X()[i];
+    double fx;
+    solver.minimize(mf, v_x, fx);
+    cout << fx << v_x << endl;
+    */
+     
+    typedef double T;
+    typedef typename MyFunc2<T>::TVector TVector;
+    MyFunc2<double> mf(npars);
+    TVector v_x(npars);
+    for(int i=0;i<npars;++i)
+        v_x[i] = minim->X()[i];
+    mf.setLowerBound(TVector::Zero(npars));
+    LbfgsbSolver<MyFunc2<double>> solver;
+    Criteria<double> crit = Criteria<double>::defaults();
+    crit.iterations = 10000000;
+    crit.gradNorm = 1e-8;
+    solver.setHistorySize(3);
+    solver.setStopCriteria(crit); 
+    solver.setDebug(DebugLevel::High);
+    solver.minimize(mf, v_x);
+    for(int i=0;i<npars;++i)
+        cout << par_names[i] << " " << v_x[i] << endl;
+    cout << "f: " << mf(v_x) << endl;
     
     double _x[1000];
     for(int i=0;i<npars;++i){
@@ -842,8 +956,12 @@ void do_fit(int site, ROOT::Fit::DataOptions &opt, double results[3][npars_max][
         cout << par_names[i] << " " << (l1-l0) / _eps << " " << likelihood_derivative(_x, i) << endl;
     }
     
+	minim_simplex->Minimize();
+	minim->SetVariableValues(minim_simplex->X());
 	minim->Hesse();
 	minim->Minimize();
+    getchar();
+    //gradient_descent(minim->X());
     /* 
 	for(int i=0;i<3;++i){
 		minim->Hesse();
@@ -931,26 +1049,15 @@ void plotSlice(int site, ROOT::Math::Minimizer *minim){
 			//int _off = offset + (slices[type]-1) * j;
 			int _off = offset + slices[type] * j;
 			for(int s=0;s<slices[type];++s){
-				x[j][s] = _start + _step * (s+0.5) + j * 0.1 * _step;
-                /*
-				if(s==0){
-					y[j][s] = 1;
-					y_err[j][s] = 0;
-				}else{
-					y[j][s] = fabs(par[_off + s-1]);
-					y_err[j][s] = sqrt(minim->CovMatrix(_off + s-1, _off + s-1));
-				}*/
+				x[j][s] = _start + _step * (s+0.5) + j * 0.05 * _step;
 				y[j][s] = par[_off + s];
 				y_err[j][s] = sqrt(minim->CovMatrix(_off + s, _off + s));
 
 				y_sum[j] += y[j][s];
-                /*
-				if(s>0)
-					for(int s1=1;s1<slices[type];++s1)
-						y_sum_err[j] += minim->CovMatrix(_off + s-1, _off + s1-1);
-                */
-				for(int s1=0;s1<slices[type];++s1)
+
+				for(int s1=0;s1<slices[type];++s1){
 					y_sum_err[j] += minim->CovMatrix(_off + s, _off + s1);
+                }
 			}
 		}
 		
@@ -961,12 +1068,6 @@ void plotSlice(int site, ROOT::Math::Minimizer *minim){
 			for(int j=0;j<slices[type];++j){
 				p[i][j] = y[i][j] / y_sum[i];
 				double _tmp_cov=0;
-                /*
-				if(j!=0)
-					for(int k=1;k<slices[type];++k){
-						_tmp_cov += minim->CovMatrix(_off + k-1, _off + j-1);		
-					}
-				*/	
 				for(int k=0;k<slices[type];++k)
 					_tmp_cov += minim->CovMatrix(_off + k, _off + j);		
 				p_err[i][j] = p[i][j] * sqrt( pow(y_err[i][j] / y[i][j], 2) + pow(y_sum_err[i] / y_sum[i], 2) - 2 * _tmp_cov / (y[i][j] * y_sum[i]) );
@@ -982,6 +1083,7 @@ void plotSlice(int site, ROOT::Math::Minimizer *minim){
             "N12"
         };
 		for(int i=0;i<n_pdfs;++i){
+            if(i>0 && !use_isotope[i-1]) continue;
 			gr[i] = new TGraphErrors(slices[type], x[i], p[i], 0, p_err[i]);
 			gr[i]->SetMarkerStyle(20);
 			gr[i]->SetMarkerColor(colors[i]);
