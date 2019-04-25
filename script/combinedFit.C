@@ -24,18 +24,8 @@
 #include "Fit/LogLikelihoodFCN.h"
 #include "Fit/PoissonLikelihoodFCN.h"
 #include "omp.h"
-//#include <Eigen/Core>
-#include "LBFGS.h"
-#include "cppoptlib/meta.h"
-#include "cppoptlib/boundedproblem.h"
-#include "cppoptlib/solver/lbfgsbsolver.h"
-#include "cppoptlib/solver/bfgssolver.h"
-#include "cppoptlib/solver/conjugatedgradientdescentsolver.h"
 
 using namespace std;
-using namespace cppoptlib;
-using namespace LBFGSpp;
-//using Eigen::VectorXd;
 
 const char *hists_prefix = "./hists";
 
@@ -86,6 +76,91 @@ const char *_pdfs[4] = {
 	"[6] * ([0] + 1 / [7]) * exp(-([0] + 1 / [7]) * x )",
 };
 
+double c_func(double x, double *par){
+
+    double rmu = par[0];
+    double n_dc = par[1];
+    double n_li = par[2];
+    double tau_li = par[3];
+    double n_bo = par[4];
+    double tau_bo = par[5];
+    double n_ni = par[6];
+    double tau_ni = par[7];
+    double norm = par[8];
+
+    double term1 = n_dc * rmu * exp(-rmu * x);
+    double term2 = n_li * (rmu + 1.0 / tau_li) * exp( -(rmu + 1.0 / tau_li) * x);
+    double term3 = n_bo * (rmu + 1.0 / tau_bo) * exp( -(rmu + 1.0 / tau_bo) * x);
+    double term4 = n_ni * (rmu + 1.0 / tau_ni) * exp( -(rmu + 1.0 / tau_ni) * x);
+    
+    return norm * ( term1 + term2 + term3 + term4 );
+}
+
+void func_gradient(double x, double *par, double *grad){
+
+    double rmu = par[0];
+    double n_dc = par[1];
+    double n_li = par[2];
+    double tau_li = par[3];
+    double n_bo = par[4];
+    double tau_bo = par[5];
+    double n_ni = par[6];
+    double tau_ni = par[7];
+    double norm = par[8];
+
+    double term1 = n_dc * rmu * exp(-rmu * x);
+    double lambda1 = rmu + 1.0 / tau_li;
+    double term2 = n_li * lambda1 * exp( -lambda1 * x);
+    double lambda2 = rmu + 1.0 / tau_bo;
+    double term3 = n_bo * lambda2 * exp( -lambda2 * x);
+    double lambda3 = rmu + 1.0 / tau_ni;
+    double term4 = n_ni * lambda3 * exp( -lambda3 * x);
+
+    grad[0] = norm * ( n_dc * ( (1 - rmu * x) * exp(-rmu *x)) + 
+        n_li * ( (1 - lambda1 * x) * exp(-lambda1 * x) ) +
+        n_bo * ( (1 - lambda2 * x) * exp(-lambda2 * x) ) +
+        n_ni * ( (1 - lambda3 * x) * exp(-lambda3 * x) ));
+    grad[1] = norm * rmu * exp(-rmu * x);
+    grad[2] = norm * lambda1 * exp(-lambda1 * x);
+    grad[3] = 0;
+    grad[4] = norm * lambda2 * exp(-lambda2 * x);
+    grad[5] = 0;
+    grad[6] = norm * lambda3 * exp(-lambda3 * x);
+    grad[7] = 0;
+    grad[8] = 0;
+
+}
+
+double likelihood_single(vector<double> n, vector<double> x, double *par){
+    double r = 0;
+    for(size_t b=0; b<n.size(); ++b){
+        double _f = c_func(x[b], par);
+        //cout << n[b] << " " << _f << endl;
+        
+        if(_f < 0 || isnan(_f)){
+            for(int i=0;i<npars_single;++i)
+                cout << par[i] << endl;
+            throw std::invalid_argument("NAN");
+        }
+        //cout << "logf: " << log(_f) << " lgamma: " << lgamma(n[b]+1) << endl; 
+        r += (-n[b] * log(_f) + _f + lgamma(n[b]+1));
+    }
+    //cout << r << endl;
+    return r;
+}
+
+void likelihood_gradient_single(vector<double> n, vector<double> x, double *par, double *g){
+    for(int i=0;i<npars_single;++i)
+        g[i] = 0;
+    double _g[npars_single];
+    for(size_t b=0; b<n.size();++b){
+        double _f = c_func(x[b], par);
+        func_gradient(x[b], par, _g);
+        for(int i=0;i<npars_single;++i)
+            g[i] += (1 - n[b] / (_f ) ) * _g[i];
+    } 
+}
+
 const int colors[6] = {
 	2, 3, 4, 6, 7, 8
 };
@@ -131,6 +206,8 @@ ROOT::Math::WrappedMultiTF1 *wf[n_range][3][slice_types][slice_max];
 
 TF1 *func[n_range][3][slice_types][slice_max];
 TH1 *h[n_range][3][slice_types][slice_max];
+vector<double> hist_content[n_range][3][slice_types][slice_max];
+vector<double> hist_center[n_range][3][slice_types][slice_max];
 
 //double _par[n_range][3][slice_types][slice_max][npars_single];
 
@@ -162,12 +239,10 @@ void parTrans(const double *par, double _par[n_range][3][slice_types][slice_max]
 		}else{
 			r_mu[r] = par[p_idx++];
 			for(int iso=0; iso<n_pdfs-1;++iso)
-				//n_iso[r][iso] = fabs(par[p_idx++]) * scale * lt;
                 //if(iso == 0 && r == n_range - 1)
-                //    n_iso[r][iso] = (fabs(par[p_idx++]) - n_iso[0][0] - n_iso[1][0]) / 0.211;
+                //    n_iso[r][iso] = (par[p_idx++] - n_iso[0][0] - n_iso[1][0]) / 0.211;
                 //else
-    			//	n_iso[r][iso] = fabs(par[p_idx++]);
-    			//n_iso[r][iso] = fabs(par[p_idx++]);
+    			//    n_iso[r][iso] = par[p_idx++];
     			n_iso[r][iso] = par[p_idx++];
 		}
 	}
@@ -273,6 +348,7 @@ void parTrans(const double *par, double _par[n_range][3][slice_types][slice_max]
 
 double likelihood(const double *par){
 
+//double likelihood_single(vector<double> n, vector<double> x, double *par){
     static double _par[n_range][3][slice_types][slice_max][npars_single];
 
 	parTrans(par, _par);
@@ -283,7 +359,10 @@ double likelihood(const double *par){
 			for(int type = 0; type < slice_types; ++type){
 				if(!use_slice[type]) continue;
 				for(int s = 0; s < slices[type]; ++s){
-					double _tmp = (*fPNLL[r][t][type][s])(_par[r][t][type][s]);
+					//double _tmp = (*fPNLL[r][t][type][s])(_par[r][t][type][s]);
+                    double _tmp = likelihood_single(hist_content[r][t][type][s], hist_center[r][t][type][s], _par[r][t][type][s]);
+                    //cout << _tmp << " " << _tmp2 << endl;
+                    //getchar();
 					result += _tmp;
 				}//slice
 			}//slice type
@@ -303,6 +382,7 @@ double likelihood_derivative(const double *par, int coord){
     static double eps_cache[n_pdfs][slice_types][slice_max];
     static double eps_sum_cache[n_pdfs][slice_types];
     static double p_cache[n_pdfs][slice_types][slice_max];
+
     bool recalculate = false;
     for(int i=0;i<npars;++i){
         if(par[i] != par_cache[i]){
@@ -316,7 +396,9 @@ double likelihood_derivative(const double *par, int coord){
             for(int type = 0; type < slice_types; ++type){
                 if(!use_slice[type]) continue;
                 for(int s = 0; s < slices[type]; ++s){
-                    fPNLL[r][0][type][s]->Gradient(_par[r][0][type][s], g_cache[r][0][type][s]);
+                    //void likelihood_gradient_single(vector<double> n, vector<double> x, double *par, double *g){
+                    //fPNLL[r][0][type][s]->Gradient(_par[r][0][type][s], g_cache[r][0][type][s]);
+                    likelihood_gradient_single(hist_content[r][0][type][s], hist_center[r][0][type][s], _par[r][0][type][s], g_cache[r][0][type][s]);
                 }
             }
         }
@@ -419,8 +501,6 @@ double likelihood_derivative(const double *par, int coord){
             for(int t = 0;t < slice_types; ++t){
                 for(int s = 0; s < slices[t]; ++s){
                     g = g_cache[r][0][t][s];
-                    //_g += g[1] * _eps_tmp[s]; 
-                    //_g += g[1] * eps_cache[0][t][s] / eps_sum_cache[0][t]; 
                     _g += g[1] * p_cache[0][t][s]; 
                 }
                 _offset += slices[t] * n_pdfs;
@@ -430,61 +510,6 @@ double likelihood_derivative(const double *par, int coord){
 //    cout << coord << " " << par[coord] << " " << _g << endl;
     return _g;
     
-}
-
-/*
-class MyFunc{
-    public:
-    double operator()(const VectorXd &x, VectorXd &grad){
-
-        double _x[1000], _grad[1000];
-        for(int i=0;i<npars;++i)
-            _x[i] = x[i];
-        for(int i=0;i<npars;++i)
-            grad[i] = likelihood_derivative(_x, i); 
-        double f = likelihood(_x);
-        printf("%.10f\n", f);
-        fflush(stdout);
-        return f;
-    } 
-};
-*/
-
-namespace cppoptlib{
-
-template<typename T>
-class MyFunc2 : public BoundedProblem<T>{
-    double _x[1000];
-    public:
-        using Superclass = BoundedProblem<T>;
-        using typename Superclass::TVector;
-
-    public:
-        MyFunc2(int npars) :
-            Superclass(npars){}
-
-        T value(const TVector &x) {
-            
-            for(int i=0;i<npars;++i)
-                _x[i] = x[i];
-            double f = likelihood(_x);
-            //printf("%.10f\n", f);
-            //fflush(stdout);
-            return f;
-            
-        }
-
-        void gradient(const TVector &x, TVector &grad) {
-            
-            for(int i=0;i<npars;++i)
-                _x[i] = x[i];
-            for(int i=0;i<npars;++i)
-                grad[i] = likelihood_derivative(_x, i);
-            
-        }
-
-};
-
 }
 
 
@@ -579,13 +604,13 @@ void plotHists(int site, const double *par){
 void initialize_minimizer(int site, ROOT::Math::Minimizer *minim, bool verbose){
 	cout << "INITIALIZING MINIMIZER" << endl;
 	minim->SetErrorDef(0.5);
-	//minim->SetTolerance(0.001);
-	minim->SetTolerance(1);
+	minim->SetTolerance(0.1);
     if(verbose)
     	minim->SetPrintLevel(2);
     else
     	minim->SetPrintLevel(1);
-	minim->SetStrategy(2);
+	//minim->SetStrategy(2);
+	minim->SetStrategy(1);
 	minim->SetMaxFunctionCalls(1000000);
 	minim->SetMaxIterations(1000000);
 
@@ -669,9 +694,7 @@ void initialize_minimizer(int site, ROOT::Math::Minimizer *minim, bool verbose){
 		}else{
 			sprintf(buf, "rmu_%d",r);
 			sprintf(par_names[p_idx], "%s", buf);
-            double _tmp = rmu_init[site][r];
 			minim->SetVariable(p_idx++, buf, rmu_init[site][r], rmu_init[site][r] * step_ratio);
-			//minim->SetLimitedVariable(p_idx++, buf, _tmp, step_ratio * _tmp, 0.9 * _tmp, 1.1 * _tmp);
 
 			for(int i=1;i<n_pdfs;++i){
 				sprintf(buf, "n_%s_%d",_pre[i], r);
@@ -706,7 +729,8 @@ void initialize_minimizer(int site, ROOT::Math::Minimizer *minim, bool verbose){
                     sprintf(buf, "eps_s_%s_%d_%d", _pre[i], type, s);
 				    sprintf(par_names[p_idx], "%s", buf);
                     double _tmp = h_spec_rebin->GetBinContent(s+1);
-                    if(use_predicted_li9 || s==0)
+                    //if(use_predicted_li9 || s==0)
+                    if(use_predicted_li9)
         				minim->SetFixedVariable(p_idx++, buf, _tmp);
                     else
         				minim->SetLowerLimitedVariable(p_idx++, buf, _tmp, _tmp * step_ratio, 0);
@@ -729,12 +753,14 @@ void initialize_minimizer(int site, ROOT::Math::Minimizer *minim, bool verbose){
                     sprintf(buf, "eps_s_%s_%d_%d", _pre[i], type, s);
                     sprintf(par_names[p_idx], "%s", buf);
                     //minim->SetVariable(p_idx++, buf, eps_init, eps_init * step_ratio);
+                    
                     if(s==0)
                         minim->SetFixedVariable(p_idx++, buf, 1);
                         //minim->SetFixedVariable(p_idx++, buf, 0);
                     else
                         minim->SetLowerLimitedVariable(p_idx++, buf, eps_init, eps_init * step_ratio, 0);
                         //minim->SetLimitedVariable(p_idx++, buf, log(eps_init), 0.1, -10, 10);
+                    //minim->SetLowerLimitedVariable(p_idx++, buf, eps_init, eps_init * step_ratio, 0);
                 }
 
             }
@@ -747,7 +773,8 @@ void initialize_minimizer(int site, ROOT::Math::Minimizer *minim, bool verbose){
 	n_dc_init /= lt;	
 
 	sprintf(par_names[p_idx], "n_dc");
-	minim->SetVariable(p_idx++, "n_dc", n_dc_init, n_dc_init * step_ratio);
+	//minim->SetVariable(p_idx++, "n_dc", n_dc_init, n_dc_init * step_ratio);
+	minim->SetLowerLimitedVariable(p_idx++, "n_dc", n_dc_init, n_dc_init * step_ratio, 0);
 	
 	double tau_init = 10;
 	sprintf(par_names[p_idx], "tau_short");
@@ -818,8 +845,8 @@ int main(int argc, char **argv){
 
 void gradient_descent(const double x[1000]){
 
-    double alpha = 1e-15;
-    double beta = 0.9;
+    double alpha = 1e-7;
+    double beta = 0.0;
 
     double _x[1000];
     for(int i=0;i<npars;++i)
@@ -828,14 +855,14 @@ void gradient_descent(const double x[1000]){
     double _g[1000], _m[1000];
     for(int i=0;i<npars;++i)
         _m[i] = 0;
-    for(int iter=0;iter<100000;++iter){
+    for(int iter=0;iter<1000;++iter){
         for(int i=0;i<npars;++i)
             _g[i] = likelihood_derivative(_x, i);
         double g2 = 0;
         for(int i=0;i<npars;++i)
             g2 += _g[i] * _g[i];
         for(int i=0;i<npars;++i)
-            _m[i] = beta * _m[i] + alpha * _g[i];
+            _m[i] = beta * _m[i] + alpha * _g[i] / sqrt(g2);
         for(int i=0;i<npars;++i){
             double _tmp = _x[i] - _m[i];
             if(_tmp < 0){
@@ -880,6 +907,13 @@ void do_fit(int site, ROOT::Fit::DataOptions &opt, double results[3][npars_max][
 					ndf += data_chi2[r][t][type][s]->NPoints();
 					fPNLL[r][t][type][s] = new ROOT::Fit::PoissonLikelihoodFCN<ROOT::Math::IBaseFunctionMultiDim>(*data[r][t][type][s], *wf[r][t][type][s]);	
 					fChi2[r][t][type][s] = new ROOT::Fit::Chi2FCN<ROOT::Math::IBaseFunctionMultiDim>(*data_chi2[r][t][type][s], *wf[r][t][type][s]);	
+                    size_t bins = h[r][t][type][s]->GetNbinsX();
+                    hist_content[r][t][type][s].resize(bins);
+                    hist_center[r][t][type][s].resize(bins);
+                    for(size_t b=1;b<=h[r][t][type][s]->GetNbinsX();++b){
+                        hist_content[r][t][type][s][b-1] = h[r][t][type][s]->GetBinContent(b);
+                        hist_center[r][t][type][s][b-1] = h[r][t][type][s]->GetBinCenter(b);
+                    }
 				}
 			}
 			if(!use_tagging) break;
@@ -904,51 +938,23 @@ void do_fit(int site, ROOT::Fit::DataOptions &opt, double results[3][npars_max][
 	minim_simplex->SetFunction(f_tmp);
 	initialize_minimizer(site, minim, true);
 	initialize_minimizer(site, minim_simplex, false);
-    minim_simplex->SetTolerance(1);
-	minim_simplex->Minimize();
-	minim->SetVariableValues(minim_simplex->X());
-	minim->Hesse();
+    //minim_simplex->SetTolerance(1);
+	//minim_simplex->Minimize();
+	//minim->SetVariableValues(minim_simplex->X());
+	//minim->Hesse();
 	minim->Minimize();
+	minim->SetStrategy(2);
+    minim->Hesse();
+    minim->Minimize();
 
-    /*
-    LBFGSParam<double> param;
-    param.epsilon=1e-6;
-    param.max_iterations = 100000;
-    LBFGSSolver<double> solver(param);
-    MyFunc mf;
-    VectorXd v_x = VectorXd::Zero(npars);
-    for(int i=0;i<npars;++i)
-        v_x[i] = minim->X()[i];
-    double fx;
-    solver.minimize(mf, v_x, fx);
-    cout << fx << v_x << endl;
-    */
-     
-    typedef double T;
-    typedef typename MyFunc2<T>::TVector TVector;
-    MyFunc2<double> mf(npars);
-    TVector v_x(npars);
-    for(int i=0;i<npars;++i)
-        v_x[i] = minim->X()[i];
-    mf.setLowerBound(TVector::Zero(npars));
-    LbfgsbSolver<MyFunc2<double>> solver;
-    Criteria<double> crit = Criteria<double>::defaults();
-    crit.iterations = 10000000;
-    crit.gradNorm = 1e-8;
-    solver.setHistorySize(3);
-    solver.setStopCriteria(crit); 
-    solver.setDebug(DebugLevel::High);
-    solver.minimize(mf, v_x);
-    for(int i=0;i<npars;++i)
-        cout << par_names[i] << " " << v_x[i] << endl;
-    cout << "f: " << mf(v_x) << endl;
-    
+    //gradient_descent(minim->X());
+        
     double _x[1000];
     for(int i=0;i<npars;++i){
         _x[i] = minim->X()[i];
     }
     for(int i=0;i<npars;++i){
-        double _eps = _x[i] * 0.0001;
+        double _eps = _x[i] * 1e-6;
         double l0 = likelihood(_x);
         _x[i] += _eps;
         double l1 = likelihood(_x);
@@ -956,20 +962,9 @@ void do_fit(int site, ROOT::Fit::DataOptions &opt, double results[3][npars_max][
         cout << par_names[i] << " " << (l1-l0) / _eps << " " << likelihood_derivative(_x, i) << endl;
     }
     
-	minim_simplex->Minimize();
-	minim->SetVariableValues(minim_simplex->X());
-	minim->Hesse();
-	minim->Minimize();
-    getchar();
-    //gradient_descent(minim->X());
-    /* 
-	for(int i=0;i<3;++i){
-		minim->Hesse();
-	    minim->Minimize();
-	}
-    */
-    for(int i=0;i<npars;++i)
+    for(int i=0;i<npars;++i){
         cout << par_names[i] << " " << likelihood_derivative(minim->X(), i) << endl;
+    }
 	minim->Hesse();
 	cout << "COV STATUS: " << minim->CovMatrixStatus() << endl;
 	minim->PrintResults();
@@ -992,9 +987,9 @@ void do_fit(int site, ROOT::Fit::DataOptions &opt, double results[3][npars_max][
 			int r_idx = int(par_names[idx][5]) - 48;
 			indices[r_idx] = idx;
 			if(r_idx==n_range-1)
-				daily_rates[site][0] += 0.211 * fabs(x[idx]);
+				daily_rates[site][0] += 0.211 * x[idx];
 			else
-				daily_rates[site][0] += fabs(x[idx]);
+				daily_rates[site][0] += x[idx];
 		}
 	}
 	for(int i=0;i<n_range;++i){
