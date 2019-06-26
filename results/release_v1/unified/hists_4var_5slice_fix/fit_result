@@ -1,0 +1,2726 @@
+INITIALIZING FUNCTION WRAPPERS
+READING FILE:./hists/EH1_dtlSH_0_0_0.root
+READING FILE:./hists/EH1_dtlSH_0_0_1.root
+READING FILE:./hists/EH1_dtlSH_0_0_2.root
+READING FILE:./hists/EH1_dtlSH_0_0_3.root
+READING FILE:./hists/EH1_dtlSH_0_0_4.root
+READING FILE:./hists/EH1_dtlSH_0_1_0.root
+READING FILE:./hists/EH1_dtlSH_0_1_1.root
+READING FILE:./hists/EH1_dtlSH_0_1_2.root
+READING FILE:./hists/EH1_dtlSH_0_1_3.root
+READING FILE:./hists/EH1_dtlSH_0_1_4.root
+READING FILE:./hists/EH1_dtlSH_0_2_0.root
+READING FILE:./hists/EH1_dtlSH_0_2_1.root
+READING FILE:./hists/EH1_dtlSH_0_2_2.root
+READING FILE:./hists/EH1_dtlSH_0_2_3.root
+READING FILE:./hists/EH1_dtlSH_0_2_4.root
+READING FILE:./hists/EH1_dtlSH_0_3_0.root
+READING FILE:./hists/EH1_dtlSH_0_3_1.root
+READING FILE:./hists/EH1_dtlSH_0_3_2.root
+READING FILE:./hists/EH1_dtlSH_0_3_3.root
+READING FILE:./hists/EH1_dtlSH_0_3_4.root
+READING FILE:./hists/EH1_dtlSH_1_0_0.root
+READING FILE:./hists/EH1_dtlSH_1_0_1.root
+READING FILE:./hists/EH1_dtlSH_1_0_2.root
+READING FILE:./hists/EH1_dtlSH_1_0_3.root
+READING FILE:./hists/EH1_dtlSH_1_0_4.root
+READING FILE:./hists/EH1_dtlSH_1_1_0.root
+READING FILE:./hists/EH1_dtlSH_1_1_1.root
+READING FILE:./hists/EH1_dtlSH_1_1_2.root
+READING FILE:./hists/EH1_dtlSH_1_1_3.root
+READING FILE:./hists/EH1_dtlSH_1_1_4.root
+READING FILE:./hists/EH1_dtlSH_1_2_0.root
+READING FILE:./hists/EH1_dtlSH_1_2_1.root
+READING FILE:./hists/EH1_dtlSH_1_2_2.root
+READING FILE:./hists/EH1_dtlSH_1_2_3.root
+READING FILE:./hists/EH1_dtlSH_1_2_4.root
+READING FILE:./hists/EH1_dtlSH_1_3_0.root
+READING FILE:./hists/EH1_dtlSH_1_3_1.root
+READING FILE:./hists/EH1_dtlSH_1_3_2.root
+READING FILE:./hists/EH1_dtlSH_1_3_3.root
+READING FILE:./hists/EH1_dtlSH_1_3_4.root
+READING FILE:./hists/EH1_dtlSH_2_0_0.root
+READING FILE:./hists/EH1_dtlSH_2_0_1.root
+READING FILE:./hists/EH1_dtlSH_2_0_2.root
+READING FILE:./hists/EH1_dtlSH_2_0_3.root
+READING FILE:./hists/EH1_dtlSH_2_0_4.root
+READING FILE:./hists/EH1_dtlSH_2_1_0.root
+READING FILE:./hists/EH1_dtlSH_2_1_1.root
+READING FILE:./hists/EH1_dtlSH_2_1_2.root
+READING FILE:./hists/EH1_dtlSH_2_1_3.root
+READING FILE:./hists/EH1_dtlSH_2_1_4.root
+READING FILE:./hists/EH1_dtlSH_2_2_0.root
+READING FILE:./hists/EH1_dtlSH_2_2_1.root
+READING FILE:./hists/EH1_dtlSH_2_2_2.root
+READING FILE:./hists/EH1_dtlSH_2_2_3.root
+READING FILE:./hists/EH1_dtlSH_2_2_4.root
+READING FILE:./hists/EH1_dtlSH_2_3_0.root
+READING FILE:./hists/EH1_dtlSH_2_3_1.root
+READING FILE:./hists/EH1_dtlSH_2_3_2.root
+READING FILE:./hists/EH1_dtlSH_2_3_3.root
+READING FILE:./hists/EH1_dtlSH_2_3_4.root
+INITIALIZING MINIMIZER
+Initializing parameter  0                rmu_0   1.18e-02   1.18e-04
+Initializing parameter  1               n_li_0   1.00e-02   1.00e-04
+Initializing parameter  2               n_bo_0   0.00e+00   0.00e+00
+Initializing parameter  3               n_ni_0   0.00e+00   0.00e+00
+Initializing parameter  4                rmu_1   8.61e-03   8.61e-05
+Initializing parameter  5               n_li_1   1.65e+00   1.65e-02
+Initializing parameter  6               n_bo_1   0.00e+00   0.00e+00
+Initializing parameter  7               n_ni_1   0.00e+00   0.00e+00
+Initializing parameter  8                rmu_2   1.44e-04   1.44e-06
+Initializing parameter  9               n_li_2   4.60e+00   4.60e-02
+Initializing parameter 10               n_bo_2   0.00e+00   0.00e+00
+Initializing parameter 11               n_ni_2   0.00e+00   0.00e+00
+Initializing parameter 12         eps_s_dc_0_0   1.00e+00   0.00e+00
+Initializing parameter 13         eps_s_dc_0_1   6.19e-01   6.19e-03
+Initializing parameter 14         eps_s_dc_0_2   1.47e-01   1.47e-03
+Initializing parameter 15         eps_s_dc_0_3   6.44e-03   6.44e-05
+Initializing parameter 16         eps_s_dc_0_4   1.06e-03   1.06e-05
+Initializing parameter 17         eps_s_li_0_0   1.00e+00   0.00e+00
+Initializing parameter 18         eps_s_li_0_1   1.95e+00   0.00e+00
+Initializing parameter 19         eps_s_li_0_2   1.91e+00   0.00e+00
+Initializing parameter 20         eps_s_li_0_3   1.04e+00   0.00e+00
+Initializing parameter 21         eps_s_li_0_4   1.43e-01   0.00e+00
+Initializing parameter 22         eps_s_bo_0_0   1.00e+00   0.00e+00
+Initializing parameter 23         eps_s_bo_0_1   1.00e+00   0.00e+00
+Initializing parameter 24         eps_s_bo_0_2   1.00e+00   0.00e+00
+Initializing parameter 25         eps_s_bo_0_3   1.00e+00   0.00e+00
+Initializing parameter 26         eps_s_bo_0_4   1.00e+00   0.00e+00
+Initializing parameter 27         eps_s_ni_0_0   1.00e+00   0.00e+00
+Initializing parameter 28         eps_s_ni_0_1   1.00e+00   0.00e+00
+Initializing parameter 29         eps_s_ni_0_2   1.00e+00   0.00e+00
+Initializing parameter 30         eps_s_ni_0_3   1.00e+00   0.00e+00
+Initializing parameter 31         eps_s_ni_0_4   1.00e+00   0.00e+00
+Initializing parameter 32         eps_s_dc_1_0   1.00e+00   0.00e+00
+Initializing parameter 33         eps_s_dc_1_1   3.75e-02   3.75e-04
+Initializing parameter 34         eps_s_dc_1_2   2.17e-01   2.17e-03
+Initializing parameter 35         eps_s_dc_1_3   4.17e-01   4.17e-03
+Initializing parameter 36         eps_s_dc_1_4   6.80e-05   6.80e-07
+Initializing parameter 37         eps_s_li_1_0   1.00e+00   0.00e+00
+Initializing parameter 38         eps_s_li_1_1   3.75e-02   3.75e-04
+Initializing parameter 39         eps_s_li_1_2   2.17e-01   2.17e-03
+Initializing parameter 40         eps_s_li_1_3   4.17e-01   4.17e-03
+Initializing parameter 41         eps_s_li_1_4   6.80e-05   6.80e-07
+Initializing parameter 42         eps_s_bo_1_0   1.00e+00   0.00e+00
+Initializing parameter 43         eps_s_bo_1_1   1.00e+00   0.00e+00
+Initializing parameter 44         eps_s_bo_1_2   1.00e+00   0.00e+00
+Initializing parameter 45         eps_s_bo_1_3   1.00e+00   0.00e+00
+Initializing parameter 46         eps_s_bo_1_4   1.00e+00   0.00e+00
+Initializing parameter 47         eps_s_ni_1_0   1.00e+00   0.00e+00
+Initializing parameter 48         eps_s_ni_1_1   1.00e+00   0.00e+00
+Initializing parameter 49         eps_s_ni_1_2   1.00e+00   0.00e+00
+Initializing parameter 50         eps_s_ni_1_3   1.00e+00   0.00e+00
+Initializing parameter 51         eps_s_ni_1_4   1.00e+00   0.00e+00
+Initializing parameter 52         eps_s_dc_2_0   1.00e+00   0.00e+00
+Initializing parameter 53         eps_s_dc_2_1   3.75e+00   3.75e-02
+Initializing parameter 54         eps_s_dc_2_2   4.71e+00   4.71e-02
+Initializing parameter 55         eps_s_dc_2_3   4.39e+00   4.39e-02
+Initializing parameter 56         eps_s_dc_2_4   4.02e+00   4.02e-02
+Initializing parameter 57         eps_s_li_2_0   1.00e+00   0.00e+00
+Initializing parameter 58         eps_s_li_2_1   3.75e+00   3.75e-02
+Initializing parameter 59         eps_s_li_2_2   4.71e+00   4.71e-02
+Initializing parameter 60         eps_s_li_2_3   4.39e+00   4.39e-02
+Initializing parameter 61         eps_s_li_2_4   4.02e+00   4.02e-02
+Initializing parameter 62         eps_s_bo_2_0   1.00e+00   0.00e+00
+Initializing parameter 63         eps_s_bo_2_1   1.00e+00   0.00e+00
+Initializing parameter 64         eps_s_bo_2_2   1.00e+00   0.00e+00
+Initializing parameter 65         eps_s_bo_2_3   1.00e+00   0.00e+00
+Initializing parameter 66         eps_s_bo_2_4   1.00e+00   0.00e+00
+Initializing parameter 67         eps_s_ni_2_0   1.00e+00   0.00e+00
+Initializing parameter 68         eps_s_ni_2_1   1.00e+00   0.00e+00
+Initializing parameter 69         eps_s_ni_2_2   1.00e+00   0.00e+00
+Initializing parameter 70         eps_s_ni_2_3   1.00e+00   0.00e+00
+Initializing parameter 71         eps_s_ni_2_4   1.00e+00   0.00e+00
+Initializing parameter 72         eps_s_dc_3_0   1.00e+00   0.00e+00
+Initializing parameter 73         eps_s_dc_3_1   2.71e-01   2.71e-03
+Initializing parameter 74         eps_s_dc_3_2   1.81e-01   1.81e-03
+Initializing parameter 75         eps_s_dc_3_3   1.48e-01   1.48e-03
+Initializing parameter 76         eps_s_dc_3_4   1.27e-01   1.27e-03
+Initializing parameter 77         eps_s_li_3_0   1.00e+00   0.00e+00
+Initializing parameter 78         eps_s_li_3_1   2.71e-01   2.71e-03
+Initializing parameter 79         eps_s_li_3_2   1.81e-01   1.81e-03
+Initializing parameter 80         eps_s_li_3_3   1.48e-01   1.48e-03
+Initializing parameter 81         eps_s_li_3_4   1.27e-01   1.27e-03
+Initializing parameter 82         eps_s_bo_3_0   1.00e+00   0.00e+00
+Initializing parameter 83         eps_s_bo_3_1   1.00e+00   0.00e+00
+Initializing parameter 84         eps_s_bo_3_2   1.00e+00   0.00e+00
+Initializing parameter 85         eps_s_bo_3_3   1.00e+00   0.00e+00
+Initializing parameter 86         eps_s_bo_3_4   1.00e+00   0.00e+00
+Initializing parameter 87         eps_s_ni_3_0   1.00e+00   0.00e+00
+Initializing parameter 88         eps_s_ni_3_1   1.00e+00   0.00e+00
+Initializing parameter 89         eps_s_ni_3_2   1.00e+00   0.00e+00
+Initializing parameter 90         eps_s_ni_3_3   1.00e+00   0.00e+00
+Initializing parameter 91         eps_s_ni_3_4   1.00e+00   0.00e+00
+Initializing parameter 92                 n_dc   1.58e+03   1.58e+01
+Initializing parameter 93            tau_short   1.59e+01   0.00e+00
+
+Minuit2Minimizer: Minimize with max-calls 1000000 convergence for edm < 0.01 strategy 1
+VariableMetric: start iterating until Edm is < 2e-05
+VariableMetric: Initial state   - FCN =   11175.79924995 Edm =  4.40382e+06 NCalls =      1
+VariableMetric: Iteration #   0 - FCN =   11175.79924995 Edm =  4.40382e+06 NCalls =      1
+VariableMetric: Iteration #   1 - FCN =   9030.453323041 Edm =      8417.19 NCalls =      5
+VariableMetric: Iteration #   2 - FCN =   9012.127336625 Edm =      7539.64 NCalls =      8
+VariableMetric: Iteration #   3 - FCN =   8949.491767981 Edm =      4116.88 NCalls =     11
+VariableMetric: Iteration #   4 - FCN =    8907.59973021 Edm =      4216.78 NCalls =     13
+VariableMetric: Iteration #   5 - FCN =   8790.246181345 Edm =      9365.47 NCalls =     15
+VariableMetric: Iteration #   6 - FCN =    8571.82350333 Edm =      79336.2 NCalls =     17
+VariableMetric: Iteration #   7 - FCN =   8379.889882804 Edm =      1898.28 NCalls =     19
+VariableMetric: Iteration #   8 - FCN =   8354.237734481 Edm =       441.11 NCalls =     21
+VariableMetric: Iteration #   9 - FCN =   8351.653269926 Edm =      431.433 NCalls =     23
+VariableMetric: Iteration #  10 - FCN =   8347.981974624 Edm =       259.03 NCalls =     25
+VariableMetric: Iteration #  11 - FCN =   8334.521855309 Edm =      402.543 NCalls =     27
+VariableMetric: Iteration #  12 - FCN =   8310.818081386 Edm =      1112.61 NCalls =     29
+VariableMetric: Iteration #  13 - FCN =   8273.246732444 Edm =      841.025 NCalls =     31
+VariableMetric: Iteration #  14 - FCN =   8251.654402375 Edm =      588.401 NCalls =     33
+VariableMetric: Iteration #  15 - FCN =   8179.513854605 Edm =      366.286 NCalls =     35
+VariableMetric: Iteration #  16 - FCN =    8166.18147627 Edm =      204.292 NCalls =     37
+VariableMetric: Iteration #  17 - FCN =   8159.176300447 Edm =      426.337 NCalls =     39
+VariableMetric: Iteration #  18 - FCN =   8143.554423613 Edm =      138.997 NCalls =     41
+VariableMetric: Iteration #  19 - FCN =   8136.879397944 Edm =      127.391 NCalls =     43
+VariableMetric: Iteration #  20 - FCN =   8078.420558756 Edm =      1.58738 NCalls =     45
+VariableMetric: Iteration #  21 - FCN =      8069.653209 Edm =      1.12004 NCalls =     48
+VariableMetric: Iteration #  22 - FCN =   8066.679587371 Edm =      1.45181 NCalls =     50
+VariableMetric: Iteration #  23 - FCN =   8000.765645784 Edm =      3.30441 NCalls =     54
+VariableMetric: Iteration #  24 - FCN =    7996.26854438 Edm =     0.136192 NCalls =     56
+VariableMetric: Iteration #  25 - FCN =   7995.580152212 Edm =     0.406685 NCalls =     58
+VariableMetric: Iteration #  26 - FCN =    7983.65738415 Edm =      5.65051 NCalls =     62
+VariableMetric: Iteration #  27 - FCN =   7974.009999664 Edm =     0.255901 NCalls =     64
+VariableMetric: Iteration #  28 - FCN =   7973.654345859 Edm =     0.103067 NCalls =     66
+VariableMetric: Iteration #  29 - FCN =   7970.652620009 Edm =      1.19014 NCalls =     70
+VariableMetric: Iteration #  30 - FCN =   7968.313683897 Edm =    0.0424161 NCalls =     72
+VariableMetric: Iteration #  31 - FCN =   7968.233224806 Edm =    0.0310956 NCalls =     74
+VariableMetric: Iteration #  32 - FCN =   7965.608461635 Edm =       1.5145 NCalls =     79
+VariableMetric: Iteration #  33 - FCN =   7960.992180036 Edm =    0.0800884 NCalls =     82
+VariableMetric: Iteration #  34 - FCN =   7960.888482548 Edm =    0.0260973 NCalls =     84
+VariableMetric: Iteration #  35 - FCN =   7960.429410924 Edm =     0.472419 NCalls =     88
+VariableMetric: Iteration #  36 - FCN =   7958.502332044 Edm =      1.18484 NCalls =     93
+VariableMetric: Iteration #  37 - FCN =   7955.845645834 Edm =    0.0274431 NCalls =     96
+VariableMetric: Iteration #  38 - FCN =   7955.784953377 Edm =    0.0393001 NCalls =     98
+VariableMetric: Iteration #  39 - FCN =   7954.985440859 Edm =     0.562864 NCalls =    103
+VariableMetric: Iteration #  40 - FCN =   7953.834748505 Edm =    0.0200112 NCalls =    105
+VariableMetric: Iteration #  41 - FCN =   7953.814164945 Edm =   0.00174153 NCalls =    106
+VariableMetric: Iteration #  42 - FCN =   7953.802025622 Edm =    0.0118573 NCalls =    109
+VariableMetric: Iteration #  43 - FCN =   7953.290628773 Edm =     0.128759 NCalls =    115
+VariableMetric: Iteration #  44 - FCN =   7953.119737613 Edm =   0.00198619 NCalls =    117
+VariableMetric: Iteration #  45 - FCN =   7953.116268742 Edm =    0.0018506 NCalls =    119
+VariableMetric: Iteration #  46 - FCN =   7953.015434643 Edm =    0.0728581 NCalls =    124
+VariableMetric: Iteration #  47 - FCN =    7952.77792491 Edm =   0.00505802 NCalls =    126
+VariableMetric: Iteration #  48 - FCN =   7952.771309311 Edm =   0.00159066 NCalls =    128
+VariableMetric: Iteration #  49 - FCN =    7952.68882161 Edm =     0.054243 NCalls =    133
+VariableMetric: Iteration #  50 - FCN =   7952.536706495 Edm =   0.00496037 NCalls =    135
+VariableMetric: Iteration #  51 - FCN =   7952.529025936 Edm =   0.00327377 NCalls =    137
+VariableMetric: Iteration #  52 - FCN =   7952.123483372 Edm =     0.316336 NCalls =    143
+VariableMetric: Iteration #  53 - FCN =   7950.884208225 Edm =    0.0251878 NCalls =    145
+VariableMetric: Iteration #  54 - FCN =   7950.855209786 Edm =   0.00492954 NCalls =    147
+VariableMetric: Iteration #  55 - FCN =   7950.787098099 Edm =     0.064421 NCalls =    151
+VariableMetric: Iteration #  56 - FCN =   7947.451217287 Edm =      1.30235 NCalls =    159
+VariableMetric: Iteration #  57 - FCN =   7945.776708607 Edm =    0.0569733 NCalls =    161
+VariableMetric: Iteration #  58 - FCN =   7945.720638714 Edm =    0.0059009 NCalls =    162
+VariableMetric: Iteration #  59 - FCN =   7945.711181532 Edm =   0.00537883 NCalls =    164
+VariableMetric: Iteration #  60 - FCN =   7945.602577183 Edm =     0.110091 NCalls =    168
+VariableMetric: Iteration #  61 - FCN =   7944.457008505 Edm =      1.11661 NCalls =    175
+VariableMetric: Iteration #  62 - FCN =   7930.445331669 Edm =      4.57225 NCalls =    179
+VariableMetric: Iteration #  63 - FCN =   7925.399133167 Edm =     0.836834 NCalls =    181
+VariableMetric: Iteration #  64 - FCN =     7924.4238082 Edm =     0.305689 NCalls =    183
+VariableMetric: Iteration #  65 - FCN =   7924.050512837 Edm =      0.10726 NCalls =    185
+VariableMetric: Iteration #  66 - FCN =   7923.709177097 Edm =     0.176676 NCalls =    190
+VariableMetric: Iteration #  67 - FCN =   7919.463210216 Edm =       10.371 NCalls =    195
+VariableMetric: Iteration #  68 - FCN =   7919.104860553 Edm =      2.74062 NCalls =    198
+VariableMetric: Iteration #  69 - FCN =   7915.092121135 Edm =      2.99942 NCalls =    201
+VariableMetric: Iteration #  70 - FCN =   7903.630366664 Edm =      2.46641 NCalls =    205
+VariableMetric: Iteration #  71 - FCN =   7902.009105548 Edm =      0.88078 NCalls =    207
+VariableMetric: Iteration #  72 - FCN =   7901.543307236 Edm =     0.176999 NCalls =    209
+VariableMetric: Iteration #  73 - FCN =   7901.352554336 Edm =     0.045878 NCalls =    211
+VariableMetric: Iteration #  74 - FCN =   7901.267793837 Edm =    0.0177133 NCalls =    213
+VariableMetric: Iteration #  75 - FCN =   7901.234821342 Edm =   0.00971051 NCalls =    215
+VariableMetric: Iteration #  76 - FCN =    7901.20039061 Edm =    0.0155386 NCalls =    217
+VariableMetric: Iteration #  77 - FCN =   7901.131229771 Edm =    0.0443089 NCalls =    219
+VariableMetric: Iteration #  78 - FCN =   7900.606039321 Edm =     0.346347 NCalls =    222
+VariableMetric: Iteration #  79 - FCN =   7899.340060787 Edm =     0.392481 NCalls =    225
+VariableMetric: Iteration #  80 - FCN =   7897.967260698 Edm =     0.790877 NCalls =    227
+VariableMetric: Iteration #  81 - FCN =   7896.241639546 Edm =     0.215052 NCalls =    230
+VariableMetric: Iteration #  82 - FCN =   7896.027436658 Edm =    0.0208386 NCalls =    231
+VariableMetric: Iteration #  83 - FCN =   7896.002174796 Edm =   0.00814269 NCalls =    233
+VariableMetric: Iteration #  84 - FCN =   7895.990773521 Edm =   0.00599881 NCalls =    235
+VariableMetric: Iteration #  85 - FCN =   7895.961927623 Edm =    0.0256842 NCalls =    238
+VariableMetric: Iteration #  86 - FCN =   7895.634083478 Edm =     0.409695 NCalls =    244
+VariableMetric: Iteration #  87 - FCN =   7895.571732527 Edm =    0.0626155 NCalls =    248
+VariableMetric: Iteration #  88 - FCN =   7895.245380722 Edm =     0.283684 NCalls =    253
+VariableMetric: Iteration #  89 - FCN =   7892.542740658 Edm =     0.295686 NCalls =    257
+VariableMetric: Iteration #  90 - FCN =    7892.33969763 Edm =   0.00956076 NCalls =    259
+VariableMetric: Iteration #  91 - FCN =   7892.332146014 Edm =  0.000988354 NCalls =    261
+VariableMetric: Iteration #  92 - FCN =     7892.3317117 Edm =  7.14114e-05 NCalls =    263
+VariableMetric: Iteration #  93 - FCN =   7892.331650649 Edm =   1.6745e-06 NCalls =    265
+Info in <Minuit2>: negative or zero diagonal element in covariance matrix : i = 1
+Info in <Minuit2>: added to diagonal of Error matrix a value : dg = 1.91625
+Info in <Minuit2>: matrix forced pos-def by adding to diagonal : padd = 0.849378
+Info in <Minuit2>: MnHesse: matrix was forced pos. def. 
+VariableMetric: After Hessian   - FCN =   7892.331650649 Edm =        27.91 NCalls =   1173
+VariableMetric: Iteration #  94 - FCN =   7892.331650649 Edm =        27.91 NCalls =   1173
+Info in <Minuit2>: VariableMetricBuilder: Tolerance is not sufficient, continue the minimization
+Info in <Minuit2>: Current  Edm is : edm = 27.91
+Info in <Minuit2>: Required Edm is : edmval = 2e-05
+VariableMetric: Iteration #  95 - FCN =   7892.171288175 Edm =      0.63326 NCalls =   1176
+VariableMetric: Iteration #  96 - FCN =   7892.157490711 Edm =    0.0471619 NCalls =   1178
+VariableMetric: Iteration #  97 - FCN =   7892.005689067 Edm =      0.13055 NCalls =   1181
+VariableMetric: Iteration #  98 - FCN =    7891.80372848 Edm =     0.299342 NCalls =   1185
+VariableMetric: Iteration #  99 - FCN =   7889.989027807 Edm =     0.227669 NCalls =   1191
+VariableMetric: Iteration # 100 - FCN =    7889.76394306 Edm =     0.255903 NCalls =   1192
+VariableMetric: Iteration # 101 - FCN =   7889.480072839 Edm =    0.0233076 NCalls =   1194
+VariableMetric: Iteration # 102 - FCN =     7889.4027019 Edm =     0.037331 NCalls =   1196
+VariableMetric: Iteration # 103 - FCN =   7889.186236909 Edm =      0.12187 NCalls =   1199
+VariableMetric: Iteration # 104 - FCN =   7888.668017135 Edm =    0.0588028 NCalls =   1201
+VariableMetric: Iteration # 105 - FCN =   7888.542016007 Edm =    0.0199922 NCalls =   1203
+VariableMetric: Iteration # 106 - FCN =   7888.489182684 Edm =    0.0120277 NCalls =   1205
+VariableMetric: Iteration # 107 - FCN =   7888.467689033 Edm =   0.00421854 NCalls =   1207
+VariableMetric: Iteration # 108 - FCN =   7888.459958247 Edm =      0.00183 NCalls =   1209
+VariableMetric: Iteration # 109 - FCN =   7888.457002091 Edm =   0.00032547 NCalls =   1211
+VariableMetric: Iteration # 110 - FCN =    7888.45612409 Edm =  9.02085e-05 NCalls =   1213
+VariableMetric: Iteration # 111 - FCN =   7888.455926117 Edm =  4.74193e-05 NCalls =   1215
+VariableMetric: Iteration # 112 - FCN =   7888.455806381 Edm =  1.14769e-05 NCalls =   1217
+VariableMetric: After Hessian   - FCN =   7888.455806381 Edm =  9.09668e-05 NCalls =   2109
+VariableMetric: Iteration # 113 - FCN =   7888.455806381 Edm =  9.09668e-05 NCalls =   2109
+Info in <Minuit2>: VariableMetricBuilder: Stop the minimization - reached machine accuracy limit
+Info in <Minuit2>: Edm is smaller than machine accuracy : machineLimit = 0.000470189
+Info in <Minuit2>: Current  Edm is : edm = 9.09668e-05
+Info in <Minuit2>: Required Edm is : edmval = 2e-05
+Minuit2Minimizer : Valid minimum - status = 0
+FVAL  = 7888.45580638107094
+Edm   = 9.09668099470448268e-05
+Nfcn  = 2109
+rmu_0	  = 0.0117808	 +/-  5.16719e-06	(limited)
+n_li_0	  = 2.70554	 +/-  1.68704	(limited)
+n_bo_0	  = 0	 (fixed)
+n_ni_0	  = 0	 (fixed)
+rmu_1	  = 0.00861601	 +/-  3.48478e-06	(limited)
+n_li_1	  = 3.04843	 +/-  1.0352	(limited)
+n_bo_1	  = 0	 (fixed)
+n_ni_1	  = 0	 (fixed)
+rmu_2	  = 0.000143677	 +/-  1.12977e-07	(limited)
+n_li_2	  = 6.4798	 +/-  0.126439	(limited)
+n_bo_2	  = 0	 (fixed)
+n_ni_2	  = 0	 (fixed)
+eps_s_dc_0_0	  = 1	 (fixed)
+eps_s_dc_0_1	  = 0.615446	 +/-  0.000762927	(limited)
+eps_s_dc_0_2	  = 0.143121	 +/-  0.000685488	(limited)
+eps_s_dc_0_3	  = 0.00412018	 +/-  0.000375862	(limited)
+eps_s_dc_0_4	  = 0.000740619	 +/-  5.48499e-05	(limited)
+eps_s_li_0_0	  = 1	 (fixed)
+eps_s_li_0_1	  = 1.94794	 (fixed)
+eps_s_li_0_2	  = 1.91063	 (fixed)
+eps_s_li_0_3	  = 1.03612	 (fixed)
+eps_s_li_0_4	  = 0.143062	 (fixed)
+eps_s_bo_0_0	  = 1	 (fixed)
+eps_s_bo_0_1	  = 1	 (fixed)
+eps_s_bo_0_2	  = 1	 (fixed)
+eps_s_bo_0_3	  = 1	 (fixed)
+eps_s_bo_0_4	  = 1	 (fixed)
+eps_s_ni_0_0	  = 1	 (fixed)
+eps_s_ni_0_1	  = 1	 (fixed)
+eps_s_ni_0_2	  = 1	 (fixed)
+eps_s_ni_0_3	  = 1	 (fixed)
+eps_s_ni_0_4	  = 1	 (fixed)
+eps_s_dc_1_0	  = 1	 (fixed)
+eps_s_dc_1_1	  = 0.0369716	 +/-  0.000176111	(limited)
+eps_s_dc_1_2	  = 0.215905	 +/-  0.000448973	(limited)
+eps_s_dc_1_3	  = 0.414769	 +/-  0.000748674	(limited)
+eps_s_dc_1_4	  = 2.45381e-05	 +/-  1.12425e-05	(limited)
+eps_s_li_1_0	  = 1	 (fixed)
+eps_s_li_1_1	  = 0.133459	 +/-  0.0231664	(limited)
+eps_s_li_1_2	  = 0.461851	 +/-  0.0634523	(limited)
+eps_s_li_1_3	  = 0.954501	 +/-  0.108795	(limited)
+eps_s_li_1_4	  = 0.00836837	 +/-  0.00183334	(limited)
+eps_s_bo_1_0	  = 1	 (fixed)
+eps_s_bo_1_1	  = 1	 (fixed)
+eps_s_bo_1_2	  = 1	 (fixed)
+eps_s_bo_1_3	  = 1	 (fixed)
+eps_s_bo_1_4	  = 1	 (fixed)
+eps_s_ni_1_0	  = 1	 (fixed)
+eps_s_ni_1_1	  = 1	 (fixed)
+eps_s_ni_1_2	  = 1	 (fixed)
+eps_s_ni_1_3	  = 1	 (fixed)
+eps_s_ni_1_4	  = 1	 (fixed)
+eps_s_dc_2_0	  = 1	 (fixed)
+eps_s_dc_2_1	  = 3.75202	 +/-  0.0110797	(limited)
+eps_s_dc_2_2	  = 4.7142	 +/-  0.0137401	(limited)
+eps_s_dc_2_3	  = 4.39952	 +/-  0.0129816	(limited)
+eps_s_dc_2_4	  = 4.04287	 +/-  0.0123064	(limited)
+eps_s_li_2_0	  = 1	 (fixed)
+eps_s_li_2_1	  = 3.81991	 +/-  0.708606	(limited)
+eps_s_li_2_2	  = 3.63987	 +/-  0.698227	(limited)
+eps_s_li_2_3	  = 3.06825	 +/-  0.610042	(limited)
+eps_s_li_2_4	  = 2.05475	 +/-  0.464755	(limited)
+eps_s_bo_2_0	  = 1	 (fixed)
+eps_s_bo_2_1	  = 1	 (fixed)
+eps_s_bo_2_2	  = 1	 (fixed)
+eps_s_bo_2_3	  = 1	 (fixed)
+eps_s_bo_2_4	  = 1	 (fixed)
+eps_s_ni_2_0	  = 1	 (fixed)
+eps_s_ni_2_1	  = 1	 (fixed)
+eps_s_ni_2_2	  = 1	 (fixed)
+eps_s_ni_2_3	  = 1	 (fixed)
+eps_s_ni_2_4	  = 1	 (fixed)
+eps_s_dc_3_0	  = 1	 (fixed)
+eps_s_dc_3_1	  = 0.271318	 +/-  0.000495322	(limited)
+eps_s_dc_3_2	  = 0.182069	 +/-  0.000397969	(limited)
+eps_s_dc_3_3	  = 0.148204	 +/-  0.000346734	(limited)
+eps_s_dc_3_4	  = 0.127283	 +/-  0.000322855	(limited)
+eps_s_li_3_0	  = 1	 (fixed)
+eps_s_li_3_1	  = 0.183799	 +/-  0.0295272	(limited)
+eps_s_li_3_2	  = 0.0886672	 +/-  0.0229321	(limited)
+eps_s_li_3_3	  = 0.082216	 +/-  0.020879	(limited)
+eps_s_li_3_4	  = 0.0550993	 +/-  0.0190363	(limited)
+eps_s_bo_3_0	  = 1	 (fixed)
+eps_s_bo_3_1	  = 1	 (fixed)
+eps_s_bo_3_2	  = 1	 (fixed)
+eps_s_bo_3_3	  = 1	 (fixed)
+eps_s_bo_3_4	  = 1	 (fixed)
+eps_s_ni_3_0	  = 1	 (fixed)
+eps_s_ni_3_1	  = 1	 (fixed)
+eps_s_ni_3_2	  = 1	 (fixed)
+eps_s_ni_3_3	  = 1	 (fixed)
+eps_s_ni_3_4	  = 1	 (fixed)
+n_dc	  = 1595.63	 +/-  2.02193	(limited)
+tau_short	  = 15.9	 (fixed)
+Info in <Minuit2>: Minuit2Minimizer::Hesse : Hesse is valid - matrix is accurate
+Minuit2Minimizer: Minimize with max-calls 1000000 convergence for edm < 0.01 strategy 2
+VariableMetric: start iterating until Edm is < 2e-05
+VariableMetric: Initial state   - FCN =   7888.455806381 Edm =  8.98977e-05 NCalls =      1
+VariableMetric: Iteration #   0 - FCN =   7888.455806381 Edm =  8.98977e-05 NCalls =      1
+VariableMetric: Iteration #   1 - FCN =   7888.455718433 Edm =  8.91145e-06 NCalls =      2
+VariableMetric: After Hessian   - FCN =   7888.455718433 Edm =  1.82088e-06 NCalls =    982
+VariableMetric: Iteration #   2 - FCN =   7888.455718433 Edm =  1.82088e-06 NCalls =    982
+Minuit2Minimizer : Valid minimum - status = 0
+FVAL  = 7888.45571843297694
+Edm   = 1.82088322361310937e-06
+Nfcn  = 982
+rmu_0	  = 0.0117808	 +/-  4.80404e-06	(limited)
+n_li_0	  = 2.70652	 +/-  1.33454	(limited)
+n_bo_0	  = 0	 (fixed)
+n_ni_0	  = 0	 (fixed)
+rmu_1	  = 0.00861601	 +/-  3.48481e-06	(limited)
+n_li_1	  = 3.04941	 +/-  1.0352	(limited)
+n_bo_1	  = 0	 (fixed)
+n_ni_1	  = 0	 (fixed)
+rmu_2	  = 0.000143676	 +/-  1.12979e-07	(limited)
+n_li_2	  = 6.48	 +/-  0.126473	(limited)
+n_bo_2	  = 0	 (fixed)
+n_ni_2	  = 0	 (fixed)
+eps_s_dc_0_0	  = 1	 (fixed)
+eps_s_dc_0_1	  = 0.615445	 +/-  0.000719729	(limited)
+eps_s_dc_0_2	  = 0.143121	 +/-  0.000597712	(limited)
+eps_s_dc_0_3	  = 0.00411979	 +/-  0.000321043	(limited)
+eps_s_dc_0_4	  = 0.00074056	 +/-  4.77836e-05	(limited)
+eps_s_li_0_0	  = 1	 (fixed)
+eps_s_li_0_1	  = 1.94794	 (fixed)
+eps_s_li_0_2	  = 1.91063	 (fixed)
+eps_s_li_0_3	  = 1.03612	 (fixed)
+eps_s_li_0_4	  = 0.143062	 (fixed)
+eps_s_bo_0_0	  = 1	 (fixed)
+eps_s_bo_0_1	  = 1	 (fixed)
+eps_s_bo_0_2	  = 1	 (fixed)
+eps_s_bo_0_3	  = 1	 (fixed)
+eps_s_bo_0_4	  = 1	 (fixed)
+eps_s_ni_0_0	  = 1	 (fixed)
+eps_s_ni_0_1	  = 1	 (fixed)
+eps_s_ni_0_2	  = 1	 (fixed)
+eps_s_ni_0_3	  = 1	 (fixed)
+eps_s_ni_0_4	  = 1	 (fixed)
+eps_s_dc_1_0	  = 1	 (fixed)
+eps_s_dc_1_1	  = 0.0369714	 +/-  0.0001714	(limited)
+eps_s_dc_1_2	  = 0.215905	 +/-  0.000437794	(limited)
+eps_s_dc_1_3	  = 0.414768	 +/-  0.000712102	(limited)
+eps_s_dc_1_4	  = 2.45228e-05	 +/-  1.0649e-05	(limited)
+eps_s_li_1_0	  = 1	 (fixed)
+eps_s_li_1_1	  = 0.133481	 +/-  0.0232173	(limited)
+eps_s_li_1_2	  = 0.461837	 +/-  0.0635566	(limited)
+eps_s_li_1_3	  = 0.954477	 +/-  0.109009	(limited)
+eps_s_li_1_4	  = 0.00836887	 +/-  0.00182387	(limited)
+eps_s_bo_1_0	  = 1	 (fixed)
+eps_s_bo_1_1	  = 1	 (fixed)
+eps_s_bo_1_2	  = 1	 (fixed)
+eps_s_bo_1_3	  = 1	 (fixed)
+eps_s_bo_1_4	  = 1	 (fixed)
+eps_s_ni_1_0	  = 1	 (fixed)
+eps_s_ni_1_1	  = 1	 (fixed)
+eps_s_ni_1_2	  = 1	 (fixed)
+eps_s_ni_1_3	  = 1	 (fixed)
+eps_s_ni_1_4	  = 1	 (fixed)
+eps_s_dc_2_0	  = 1	 (fixed)
+eps_s_dc_2_1	  = 3.75194	 +/-  0.0110827	(limited)
+eps_s_dc_2_2	  = 4.7141	 +/-  0.0137069	(limited)
+eps_s_dc_2_3	  = 4.39942	 +/-  0.0129281	(limited)
+eps_s_dc_2_4	  = 4.04279	 +/-  0.0121789	(limited)
+eps_s_li_2_0	  = 1	 (fixed)
+eps_s_li_2_1	  = 3.82502	 +/-  0.71053	(limited)
+eps_s_li_2_2	  = 3.64466	 +/-  0.700011	(limited)
+eps_s_li_2_3	  = 3.07229	 +/-  0.611554	(limited)
+eps_s_li_2_4	  = 2.05721	 +/-  0.465724	(limited)
+eps_s_bo_2_0	  = 1	 (fixed)
+eps_s_bo_2_1	  = 1	 (fixed)
+eps_s_bo_2_2	  = 1	 (fixed)
+eps_s_bo_2_3	  = 1	 (fixed)
+eps_s_bo_2_4	  = 1	 (fixed)
+eps_s_ni_2_0	  = 1	 (fixed)
+eps_s_ni_2_1	  = 1	 (fixed)
+eps_s_ni_2_2	  = 1	 (fixed)
+eps_s_ni_2_3	  = 1	 (fixed)
+eps_s_ni_2_4	  = 1	 (fixed)
+eps_s_dc_3_0	  = 1	 (fixed)
+eps_s_dc_3_1	  = 0.271318	 +/-  0.000489369	(limited)
+eps_s_dc_3_2	  = 0.18207	 +/-  0.000391296	(limited)
+eps_s_dc_3_3	  = 0.148204	 +/-  0.000343745	(limited)
+eps_s_dc_3_4	  = 0.127283	 +/-  0.000318045	(limited)
+eps_s_li_3_0	  = 1	 (fixed)
+eps_s_li_3_1	  = 0.183827	 +/-  0.0295248	(limited)
+eps_s_li_3_2	  = 0.0886812	 +/-  0.0229326	(limited)
+eps_s_li_3_3	  = 0.0822309	 +/-  0.0209278	(limited)
+eps_s_li_3_4	  = 0.0551045	 +/-  0.0190389	(limited)
+eps_s_bo_3_0	  = 1	 (fixed)
+eps_s_bo_3_1	  = 1	 (fixed)
+eps_s_bo_3_2	  = 1	 (fixed)
+eps_s_bo_3_3	  = 1	 (fixed)
+eps_s_bo_3_4	  = 1	 (fixed)
+eps_s_ni_3_0	  = 1	 (fixed)
+eps_s_ni_3_1	  = 1	 (fixed)
+eps_s_ni_3_2	  = 1	 (fixed)
+eps_s_ni_3_3	  = 1	 (fixed)
+eps_s_ni_3_4	  = 1	 (fixed)
+n_dc	  = 1595.63	 +/-  1.7347	(limited)
+tau_short	  = 15.9	 (fixed)
+rmu_0 686.525 0.00613054
+n_li_0 -0.000499689 -0.000439695
+n_bo_0 -nan -1.57744
+n_ni_0 -nan 0.520417
+rmu_1 939.052 -0.00448557
+n_li_1 -0.000457817 -0.000457735
+n_bo_1 -nan -88.3923
+n_ni_1 -nan -132.336
+rmu_2 14692.9 49.4057
+n_li_2 -0.000917635 -0.00150069
+n_bo_2 -nan -1788.56
+n_ni_2 -nan -2522.61
+eps_s_dc_0_0 1.23201 -0.000139938
+eps_s_dc_0_1 1.85531 -9.26862e-05
+eps_s_dc_0_2 2.56182 0.000141737
+eps_s_dc_0_3 1.85882 0.0345234
+eps_s_dc_0_4 2.14921 0.0465421
+eps_s_li_0_0 -24.1269 -24.127
+eps_s_li_0_1 -7.41744 -7.41763
+eps_s_li_0_2 19.9337 19.9334
+eps_s_li_0_3 36.6252 36.6232
+eps_s_li_0_4 -261.81 -261.812
+eps_s_bo_0_0 0 0
+eps_s_bo_0_1 0 0
+eps_s_bo_0_2 0 0
+eps_s_bo_0_3 0 0
+eps_s_bo_0_4 0 0
+eps_s_ni_0_0 0 0
+eps_s_ni_0_1 0 0
+eps_s_ni_0_2 0 0
+eps_s_ni_0_3 0 0
+eps_s_ni_0_4 0 0
+eps_s_dc_1_0 1.2045 0.000261559
+eps_s_dc_1_1 2.91687 0.00242447
+eps_s_dc_1_2 2.61416 -0.000667264
+eps_s_dc_1_3 2.25622 -0.000538004
+eps_s_dc_1_4 5.63734 0.653171
+eps_s_li_1_0 0.000118234 -0.000103821
+eps_s_li_1_1 0.00111744 1.04674e-05
+eps_s_li_1_2 0.000149667 -2.19433e-05
+eps_s_li_1_3 0.000291579 -2.18979e-05
+eps_s_li_1_4 0.0332548 0.0159471
+eps_s_bo_1_0 0 0
+eps_s_bo_1_1 0 0
+eps_s_bo_1_2 0 0
+eps_s_bo_1_3 0 0
+eps_s_bo_1_4 0 0
+eps_s_ni_1_0 0 0
+eps_s_ni_1_1 0 0
+eps_s_ni_1_2 0 0
+eps_s_ni_1_3 0 0
+eps_s_ni_1_4 0 0
+eps_s_dc_2_0 0.271149 0.00700385
+eps_s_dc_2_1 0.221255 -1.07749e-06
+eps_s_dc_2_2 0.205835 -0.000812013
+eps_s_dc_2_3 0.210996 -0.000671193
+eps_s_dc_2_4 0.217539 -5.41798e-05
+eps_s_li_2_0 0.000224645 0.000154426
+eps_s_li_2_1 -4.51772e-06 -3.23495e-05
+eps_s_li_2_2 8.23488e-06 -1.17391e-05
+eps_s_li_2_3 6.21667e-06 -7.77272e-06
+eps_s_li_2_4 2.65261e-06 1.74882e-05
+eps_s_bo_2_0 0 0
+eps_s_bo_2_1 0 0
+eps_s_bo_2_2 0 0
+eps_s_bo_2_3 0 0
+eps_s_bo_2_4 0 0
+eps_s_ni_2_0 0 0
+eps_s_ni_2_1 0 0
+eps_s_ni_2_2 0 0
+eps_s_ni_2_3 0 0
+eps_s_ni_2_4 0 0
+eps_s_dc_3_0 -0.033514 -1.25931
+eps_s_dc_3_1 1.59153 -0.860471
+eps_s_dc_3_2 1.9845 -0.622835
+eps_s_dc_3_3 13.9771 11.3145
+eps_s_dc_3_4 2.14527 -0.555343
+eps_s_li_3_0 -0.00841919 -0.00840191
+eps_s_li_3_1 -0.0101524 -0.0103152
+eps_s_li_3_2 -0.00542531 -0.00516155
+eps_s_li_3_3 0.132966 0.133249
+eps_s_li_3_4 -0.00406021 -0.00365394
+eps_s_bo_3_0 0 0
+eps_s_bo_3_1 0 0
+eps_s_bo_3_2 0 0
+eps_s_bo_3_3 0 0
+eps_s_bo_3_4 0 0
+eps_s_ni_3_0 0 0
+eps_s_ni_3_1 0 0
+eps_s_ni_3_2 0 0
+eps_s_ni_3_3 0 0
+eps_s_ni_3_4 0 0
+n_dc 0.0126019 7.22046e-06
+tau_short 0 0
+rmu_0 0.00613054
+n_li_0 -0.000439695
+n_bo_0 -1.57744
+n_ni_0 0.520417
+rmu_1 -0.00448557
+n_li_1 -0.000457735
+n_bo_1 -88.3923
+n_ni_1 -132.336
+rmu_2 49.4057
+n_li_2 -0.00150069
+n_bo_2 -1788.56
+n_ni_2 -2522.61
+eps_s_dc_0_0 -0.000139938
+eps_s_dc_0_1 -9.26862e-05
+eps_s_dc_0_2 0.000141737
+eps_s_dc_0_3 0.0345234
+eps_s_dc_0_4 0.0465421
+eps_s_li_0_0 -24.127
+eps_s_li_0_1 -7.41763
+eps_s_li_0_2 19.9334
+eps_s_li_0_3 36.6232
+eps_s_li_0_4 -261.812
+eps_s_bo_0_0 0
+eps_s_bo_0_1 0
+eps_s_bo_0_2 0
+eps_s_bo_0_3 0
+eps_s_bo_0_4 0
+eps_s_ni_0_0 0
+eps_s_ni_0_1 0
+eps_s_ni_0_2 0
+eps_s_ni_0_3 0
+eps_s_ni_0_4 0
+eps_s_dc_1_0 0.00026156
+eps_s_dc_1_1 0.00242447
+eps_s_dc_1_2 -0.000667265
+eps_s_dc_1_3 -0.000538005
+eps_s_dc_1_4 0.653171
+eps_s_li_1_0 -0.000103821
+eps_s_li_1_1 1.04674e-05
+eps_s_li_1_2 -2.19433e-05
+eps_s_li_1_3 -2.18979e-05
+eps_s_li_1_4 0.0159471
+eps_s_bo_1_0 0
+eps_s_bo_1_1 0
+eps_s_bo_1_2 0
+eps_s_bo_1_3 0
+eps_s_bo_1_4 0
+eps_s_ni_1_0 0
+eps_s_ni_1_1 0
+eps_s_ni_1_2 0
+eps_s_ni_1_3 0
+eps_s_ni_1_4 0
+eps_s_dc_2_0 0.00700385
+eps_s_dc_2_1 -1.07749e-06
+eps_s_dc_2_2 -0.000812013
+eps_s_dc_2_3 -0.000671193
+eps_s_dc_2_4 -5.41798e-05
+eps_s_li_2_0 0.000154426
+eps_s_li_2_1 -3.23495e-05
+eps_s_li_2_2 -1.17391e-05
+eps_s_li_2_3 -7.77272e-06
+eps_s_li_2_4 1.74882e-05
+eps_s_bo_2_0 0
+eps_s_bo_2_1 0
+eps_s_bo_2_2 0
+eps_s_bo_2_3 0
+eps_s_bo_2_4 0
+eps_s_ni_2_0 0
+eps_s_ni_2_1 0
+eps_s_ni_2_2 0
+eps_s_ni_2_3 0
+eps_s_ni_2_4 0
+eps_s_dc_3_0 -1.25931
+eps_s_dc_3_1 -0.860471
+eps_s_dc_3_2 -0.622835
+eps_s_dc_3_3 11.3145
+eps_s_dc_3_4 -0.555343
+eps_s_li_3_0 -0.00840191
+eps_s_li_3_1 -0.0103152
+eps_s_li_3_2 -0.00516155
+eps_s_li_3_3 0.133249
+eps_s_li_3_4 -0.00365394
+eps_s_bo_3_0 0
+eps_s_bo_3_1 0
+eps_s_bo_3_2 0
+eps_s_bo_3_3 0
+eps_s_bo_3_4 0
+eps_s_ni_3_0 0
+eps_s_ni_3_1 0
+eps_s_ni_3_2 0
+eps_s_ni_3_3 0
+eps_s_ni_3_4 0
+n_dc 7.22046e-06
+tau_short 0
+Info in <Minuit2>: Minuit2Minimizer::Hesse : Hesse is valid - matrix is accurate
+COV STATUS: 3
+Minuit2Minimizer : Valid minimum - status = 0
+FVAL  = 7888.45571843297694
+Edm   = 1.82491056243164235e-06
+Nfcn  = 1766
+rmu_0	  = 0.0117808	 +/-  4.81952e-06	(limited)
+n_li_0	  = 2.70652	 +/-  1.35118	(limited)
+n_bo_0	  = 0	 (fixed)
+n_ni_0	  = 0	 (fixed)
+rmu_1	  = 0.00861601	 +/-  3.49148e-06	(limited)
+n_li_1	  = 3.04941	 +/-  1.04332	(limited)
+n_bo_1	  = 0	 (fixed)
+n_ni_1	  = 0	 (fixed)
+rmu_2	  = 0.000143676	 +/-  1.12978e-07	(limited)
+n_li_2	  = 6.48	 +/-  0.126447	(limited)
+n_bo_2	  = 0	 (fixed)
+n_ni_2	  = 0	 (fixed)
+eps_s_dc_0_0	  = 1	 (fixed)
+eps_s_dc_0_1	  = 0.615445	 +/-  0.000723825	(limited)
+eps_s_dc_0_2	  = 0.143121	 +/-  0.000606441	(limited)
+eps_s_dc_0_3	  = 0.00411979	 +/-  0.000326656	(limited)
+eps_s_dc_0_4	  = 0.00074056	 +/-  4.85065e-05	(limited)
+eps_s_li_0_0	  = 1	 (fixed)
+eps_s_li_0_1	  = 1.94794	 (fixed)
+eps_s_li_0_2	  = 1.91063	 (fixed)
+eps_s_li_0_3	  = 1.03612	 (fixed)
+eps_s_li_0_4	  = 0.143062	 (fixed)
+eps_s_bo_0_0	  = 1	 (fixed)
+eps_s_bo_0_1	  = 1	 (fixed)
+eps_s_bo_0_2	  = 1	 (fixed)
+eps_s_bo_0_3	  = 1	 (fixed)
+eps_s_bo_0_4	  = 1	 (fixed)
+eps_s_ni_0_0	  = 1	 (fixed)
+eps_s_ni_0_1	  = 1	 (fixed)
+eps_s_ni_0_2	  = 1	 (fixed)
+eps_s_ni_0_3	  = 1	 (fixed)
+eps_s_ni_0_4	  = 1	 (fixed)
+eps_s_dc_1_0	  = 1	 (fixed)
+eps_s_dc_1_1	  = 0.0369714	 +/-  0.000171533	(limited)
+eps_s_dc_1_2	  = 0.215905	 +/-  0.000439764	(limited)
+eps_s_dc_1_3	  = 0.414768	 +/-  0.000718719	(limited)
+eps_s_dc_1_4	  = 2.45228e-05	 +/-  1.08428e-05	(limited)
+eps_s_li_1_0	  = 1	 (fixed)
+eps_s_li_1_1	  = 0.133481	 +/-  0.0230208	(limited)
+eps_s_li_1_2	  = 0.461837	 +/-  0.0633713	(limited)
+eps_s_li_1_3	  = 0.954477	 +/-  0.10881	(limited)
+eps_s_li_1_4	  = 0.00836887	 +/-  0.00183739	(limited)
+eps_s_bo_1_0	  = 1	 (fixed)
+eps_s_bo_1_1	  = 1	 (fixed)
+eps_s_bo_1_2	  = 1	 (fixed)
+eps_s_bo_1_3	  = 1	 (fixed)
+eps_s_bo_1_4	  = 1	 (fixed)
+eps_s_ni_1_0	  = 1	 (fixed)
+eps_s_ni_1_1	  = 1	 (fixed)
+eps_s_ni_1_2	  = 1	 (fixed)
+eps_s_ni_1_3	  = 1	 (fixed)
+eps_s_ni_1_4	  = 1	 (fixed)
+eps_s_dc_2_0	  = 1	 (fixed)
+eps_s_dc_2_1	  = 3.75194	 +/-  0.0110751	(limited)
+eps_s_dc_2_2	  = 4.7141	 +/-  0.0136825	(limited)
+eps_s_dc_2_3	  = 4.39942	 +/-  0.0128847	(limited)
+eps_s_dc_2_4	  = 4.04279	 +/-  0.0121396	(limited)
+eps_s_li_2_0	  = 1	 (fixed)
+eps_s_li_2_1	  = 3.82502	 +/-  0.70978	(limited)
+eps_s_li_2_2	  = 3.64466	 +/-  0.700026	(limited)
+eps_s_li_2_3	  = 3.07229	 +/-  0.609929	(limited)
+eps_s_li_2_4	  = 2.05721	 +/-  0.465849	(limited)
+eps_s_bo_2_0	  = 1	 (fixed)
+eps_s_bo_2_1	  = 1	 (fixed)
+eps_s_bo_2_2	  = 1	 (fixed)
+eps_s_bo_2_3	  = 1	 (fixed)
+eps_s_bo_2_4	  = 1	 (fixed)
+eps_s_ni_2_0	  = 1	 (fixed)
+eps_s_ni_2_1	  = 1	 (fixed)
+eps_s_ni_2_2	  = 1	 (fixed)
+eps_s_ni_2_3	  = 1	 (fixed)
+eps_s_ni_2_4	  = 1	 (fixed)
+eps_s_dc_3_0	  = 1	 (fixed)
+eps_s_dc_3_1	  = 0.271318	 +/-  0.000489325	(limited)
+eps_s_dc_3_2	  = 0.18207	 +/-  0.000391146	(limited)
+eps_s_dc_3_3	  = 0.148204	 +/-  0.000343477	(limited)
+eps_s_dc_3_4	  = 0.127283	 +/-  0.000317684	(limited)
+eps_s_li_3_0	  = 1	 (fixed)
+eps_s_li_3_1	  = 0.183827	 +/-  0.0295078	(limited)
+eps_s_li_3_2	  = 0.0886812	 +/-  0.0229075	(limited)
+eps_s_li_3_3	  = 0.0822309	 +/-  0.0209025	(limited)
+eps_s_li_3_4	  = 0.0551045	 +/-  0.0190118	(limited)
+eps_s_bo_3_0	  = 1	 (fixed)
+eps_s_bo_3_1	  = 1	 (fixed)
+eps_s_bo_3_2	  = 1	 (fixed)
+eps_s_bo_3_3	  = 1	 (fixed)
+eps_s_bo_3_4	  = 1	 (fixed)
+eps_s_ni_3_0	  = 1	 (fixed)
+eps_s_ni_3_1	  = 1	 (fixed)
+eps_s_ni_3_2	  = 1	 (fixed)
+eps_s_ni_3_3	  = 1	 (fixed)
+eps_s_ni_3_4	  = 1	 (fixed)
+n_dc	  = 1595.63	 +/-  1.76367	(limited)
+tau_short	  = 15.9	 (fixed)
+CHI2/NDF: 14570.9/13833
+Info in <TCanvas::Print>: png file h_cov_0.png has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_0_0_0_0.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_0_0_0_0.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_0_0_0_1.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_0_0_0_1.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_0_0_0_2.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_0_0_0_2.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_0_0_0_3.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_0_0_0_3.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_0_0_0_4.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_0_0_0_4.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_0_0_1_0.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_0_0_1_0.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_0_0_1_1.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_0_0_1_1.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_0_0_1_2.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_0_0_1_2.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_0_0_1_3.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_0_0_1_3.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_0_0_1_4.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_0_0_1_4.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_0_0_2_0.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_0_0_2_0.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_0_0_2_1.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_0_0_2_1.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_0_0_2_2.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_0_0_2_2.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_0_0_2_3.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_0_0_2_3.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_0_0_2_4.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_0_0_2_4.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_0_0_3_0.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_0_0_3_0.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_0_0_3_1.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_0_0_3_1.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_0_0_3_2.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_0_0_3_2.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_0_0_3_3.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_0_0_3_3.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_0_0_3_4.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_0_0_3_4.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_1_0_0_0.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_1_0_0_0.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_1_0_0_1.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_1_0_0_1.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_1_0_0_2.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_1_0_0_2.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_1_0_0_3.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_1_0_0_3.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_1_0_0_4.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_1_0_0_4.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_1_0_1_0.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_1_0_1_0.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_1_0_1_1.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_1_0_1_1.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_1_0_1_2.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_1_0_1_2.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_1_0_1_3.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_1_0_1_3.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_1_0_1_4.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_1_0_1_4.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_1_0_2_0.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_1_0_2_0.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_1_0_2_1.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_1_0_2_1.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_1_0_2_2.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_1_0_2_2.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_1_0_2_3.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_1_0_2_3.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_1_0_2_4.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_1_0_2_4.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_1_0_3_0.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_1_0_3_0.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_1_0_3_1.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_1_0_3_1.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_1_0_3_2.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_1_0_3_2.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_1_0_3_3.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_1_0_3_3.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_1_0_3_4.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_1_0_3_4.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_2_0_0_0.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_2_0_0_0.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_2_0_0_1.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_2_0_0_1.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_2_0_0_2.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_2_0_0_2.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_2_0_0_3.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_2_0_0_3.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_2_0_0_4.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_2_0_0_4.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_2_0_1_0.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_2_0_1_0.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_2_0_1_1.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_2_0_1_1.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_2_0_1_2.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_2_0_1_2.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_2_0_1_3.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_2_0_1_3.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_2_0_1_4.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_2_0_1_4.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_2_0_2_0.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_2_0_2_0.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_2_0_2_1.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_2_0_2_1.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_2_0_2_2.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_2_0_2_2.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_2_0_2_3.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_2_0_2_3.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_2_0_2_4.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_2_0_2_4.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_2_0_3_0.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_2_0_3_0.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_2_0_3_1.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_2_0_3_1.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_2_0_3_2.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_2_0_3_2.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_2_0_3_3.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_2_0_3_3.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_0_2_0_3_4.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_0_2_0_3_4.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits_slice/cfit_ep_0.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits_slice/cfit_ep_0.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits_slice/cfit_ed_0.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits_slice/cfit_ed_0.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits_slice/cfit_dist_0.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits_slice/cfit_dist_0.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits_slice/cfit_dt_0.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits_slice/cfit_dt_0.pdf has been created
+READING FILE:./hists/EH2_dtlSH_0_0_0.root
+READING FILE:./hists/EH2_dtlSH_0_0_1.root
+READING FILE:./hists/EH2_dtlSH_0_0_2.root
+READING FILE:./hists/EH2_dtlSH_0_0_3.root
+READING FILE:./hists/EH2_dtlSH_0_0_4.root
+READING FILE:./hists/EH2_dtlSH_0_1_0.root
+READING FILE:./hists/EH2_dtlSH_0_1_1.root
+READING FILE:./hists/EH2_dtlSH_0_1_2.root
+READING FILE:./hists/EH2_dtlSH_0_1_3.root
+READING FILE:./hists/EH2_dtlSH_0_1_4.root
+READING FILE:./hists/EH2_dtlSH_0_2_0.root
+READING FILE:./hists/EH2_dtlSH_0_2_1.root
+READING FILE:./hists/EH2_dtlSH_0_2_2.root
+READING FILE:./hists/EH2_dtlSH_0_2_3.root
+READING FILE:./hists/EH2_dtlSH_0_2_4.root
+READING FILE:./hists/EH2_dtlSH_0_3_0.root
+READING FILE:./hists/EH2_dtlSH_0_3_1.root
+READING FILE:./hists/EH2_dtlSH_0_3_2.root
+READING FILE:./hists/EH2_dtlSH_0_3_3.root
+READING FILE:./hists/EH2_dtlSH_0_3_4.root
+READING FILE:./hists/EH2_dtlSH_1_0_0.root
+READING FILE:./hists/EH2_dtlSH_1_0_1.root
+READING FILE:./hists/EH2_dtlSH_1_0_2.root
+READING FILE:./hists/EH2_dtlSH_1_0_3.root
+READING FILE:./hists/EH2_dtlSH_1_0_4.root
+READING FILE:./hists/EH2_dtlSH_1_1_0.root
+READING FILE:./hists/EH2_dtlSH_1_1_1.root
+READING FILE:./hists/EH2_dtlSH_1_1_2.root
+READING FILE:./hists/EH2_dtlSH_1_1_3.root
+READING FILE:./hists/EH2_dtlSH_1_1_4.root
+READING FILE:./hists/EH2_dtlSH_1_2_0.root
+READING FILE:./hists/EH2_dtlSH_1_2_1.root
+READING FILE:./hists/EH2_dtlSH_1_2_2.root
+READING FILE:./hists/EH2_dtlSH_1_2_3.root
+READING FILE:./hists/EH2_dtlSH_1_2_4.root
+READING FILE:./hists/EH2_dtlSH_1_3_0.root
+READING FILE:./hists/EH2_dtlSH_1_3_1.root
+READING FILE:./hists/EH2_dtlSH_1_3_2.root
+READING FILE:./hists/EH2_dtlSH_1_3_3.root
+READING FILE:./hists/EH2_dtlSH_1_3_4.root
+READING FILE:./hists/EH2_dtlSH_2_0_0.root
+READING FILE:./hists/EH2_dtlSH_2_0_1.root
+READING FILE:./hists/EH2_dtlSH_2_0_2.root
+READING FILE:./hists/EH2_dtlSH_2_0_3.root
+READING FILE:./hists/EH2_dtlSH_2_0_4.root
+READING FILE:./hists/EH2_dtlSH_2_1_0.root
+READING FILE:./hists/EH2_dtlSH_2_1_1.root
+READING FILE:./hists/EH2_dtlSH_2_1_2.root
+READING FILE:./hists/EH2_dtlSH_2_1_3.root
+READING FILE:./hists/EH2_dtlSH_2_1_4.root
+READING FILE:./hists/EH2_dtlSH_2_2_0.root
+READING FILE:./hists/EH2_dtlSH_2_2_1.root
+READING FILE:./hists/EH2_dtlSH_2_2_2.root
+READING FILE:./hists/EH2_dtlSH_2_2_3.root
+READING FILE:./hists/EH2_dtlSH_2_2_4.root
+READING FILE:./hists/EH2_dtlSH_2_3_0.root
+READING FILE:./hists/EH2_dtlSH_2_3_1.root
+READING FILE:./hists/EH2_dtlSH_2_3_2.root
+READING FILE:./hists/EH2_dtlSH_2_3_3.root
+READING FILE:./hists/EH2_dtlSH_2_3_4.root
+INITIALIZING MINIMIZER
+Initializing parameter  0                rmu_0   8.12e-03   8.12e-05
+Initializing parameter  1               n_li_0   1.00e-02   1.00e-04
+Initializing parameter  2               n_bo_0   0.00e+00   0.00e+00
+Initializing parameter  3               n_ni_0   0.00e+00   0.00e+00
+Initializing parameter  4                rmu_1   7.13e-03   7.13e-05
+Initializing parameter  5               n_li_1   1.14e+00   1.14e-02
+Initializing parameter  6               n_bo_1   0.00e+00   0.00e+00
+Initializing parameter  7               n_ni_1   0.00e+00   0.00e+00
+Initializing parameter  8                rmu_2   1.41e-04   1.41e-06
+Initializing parameter  9               n_li_2   3.71e+00   3.71e-02
+Initializing parameter 10               n_bo_2   0.00e+00   0.00e+00
+Initializing parameter 11               n_ni_2   0.00e+00   0.00e+00
+Initializing parameter 12         eps_s_dc_0_0   1.00e+00   0.00e+00
+Initializing parameter 13         eps_s_dc_0_1   6.10e-01   6.10e-03
+Initializing parameter 14         eps_s_dc_0_2   1.46e-01   1.46e-03
+Initializing parameter 15         eps_s_dc_0_3   5.86e-03   5.86e-05
+Initializing parameter 16         eps_s_dc_0_4   8.26e-04   8.26e-06
+Initializing parameter 17         eps_s_li_0_0   1.00e+00   0.00e+00
+Initializing parameter 18         eps_s_li_0_1   1.95e+00   0.00e+00
+Initializing parameter 19         eps_s_li_0_2   1.91e+00   0.00e+00
+Initializing parameter 20         eps_s_li_0_3   1.04e+00   0.00e+00
+Initializing parameter 21         eps_s_li_0_4   1.43e-01   0.00e+00
+Initializing parameter 22         eps_s_bo_0_0   1.00e+00   0.00e+00
+Initializing parameter 23         eps_s_bo_0_1   1.00e+00   0.00e+00
+Initializing parameter 24         eps_s_bo_0_2   1.00e+00   0.00e+00
+Initializing parameter 25         eps_s_bo_0_3   1.00e+00   0.00e+00
+Initializing parameter 26         eps_s_bo_0_4   1.00e+00   0.00e+00
+Initializing parameter 27         eps_s_ni_0_0   1.00e+00   0.00e+00
+Initializing parameter 28         eps_s_ni_0_1   1.00e+00   0.00e+00
+Initializing parameter 29         eps_s_ni_0_2   1.00e+00   0.00e+00
+Initializing parameter 30         eps_s_ni_0_3   1.00e+00   0.00e+00
+Initializing parameter 31         eps_s_ni_0_4   1.00e+00   0.00e+00
+Initializing parameter 32         eps_s_dc_1_0   1.00e+00   0.00e+00
+Initializing parameter 33         eps_s_dc_1_1   3.66e-02   3.66e-04
+Initializing parameter 34         eps_s_dc_1_2   2.05e-01   2.05e-03
+Initializing parameter 35         eps_s_dc_1_3   4.18e-01   4.18e-03
+Initializing parameter 36         eps_s_dc_1_4   5.42e-05   5.42e-07
+Initializing parameter 37         eps_s_li_1_0   1.00e+00   0.00e+00
+Initializing parameter 38         eps_s_li_1_1   3.66e-02   3.66e-04
+Initializing parameter 39         eps_s_li_1_2   2.05e-01   2.05e-03
+Initializing parameter 40         eps_s_li_1_3   4.18e-01   4.18e-03
+Initializing parameter 41         eps_s_li_1_4   5.42e-05   5.42e-07
+Initializing parameter 42         eps_s_bo_1_0   1.00e+00   0.00e+00
+Initializing parameter 43         eps_s_bo_1_1   1.00e+00   0.00e+00
+Initializing parameter 44         eps_s_bo_1_2   1.00e+00   0.00e+00
+Initializing parameter 45         eps_s_bo_1_3   1.00e+00   0.00e+00
+Initializing parameter 46         eps_s_bo_1_4   1.00e+00   0.00e+00
+Initializing parameter 47         eps_s_ni_1_0   1.00e+00   0.00e+00
+Initializing parameter 48         eps_s_ni_1_1   1.00e+00   0.00e+00
+Initializing parameter 49         eps_s_ni_1_2   1.00e+00   0.00e+00
+Initializing parameter 50         eps_s_ni_1_3   1.00e+00   0.00e+00
+Initializing parameter 51         eps_s_ni_1_4   1.00e+00   0.00e+00
+Initializing parameter 52         eps_s_dc_2_0   1.00e+00   0.00e+00
+Initializing parameter 53         eps_s_dc_2_1   3.75e+00   3.75e-02
+Initializing parameter 54         eps_s_dc_2_2   4.70e+00   4.70e-02
+Initializing parameter 55         eps_s_dc_2_3   4.40e+00   4.40e-02
+Initializing parameter 56         eps_s_dc_2_4   4.07e+00   4.07e-02
+Initializing parameter 57         eps_s_li_2_0   1.00e+00   0.00e+00
+Initializing parameter 58         eps_s_li_2_1   3.75e+00   3.75e-02
+Initializing parameter 59         eps_s_li_2_2   4.70e+00   4.70e-02
+Initializing parameter 60         eps_s_li_2_3   4.40e+00   4.40e-02
+Initializing parameter 61         eps_s_li_2_4   4.07e+00   4.07e-02
+Initializing parameter 62         eps_s_bo_2_0   1.00e+00   0.00e+00
+Initializing parameter 63         eps_s_bo_2_1   1.00e+00   0.00e+00
+Initializing parameter 64         eps_s_bo_2_2   1.00e+00   0.00e+00
+Initializing parameter 65         eps_s_bo_2_3   1.00e+00   0.00e+00
+Initializing parameter 66         eps_s_bo_2_4   1.00e+00   0.00e+00
+Initializing parameter 67         eps_s_ni_2_0   1.00e+00   0.00e+00
+Initializing parameter 68         eps_s_ni_2_1   1.00e+00   0.00e+00
+Initializing parameter 69         eps_s_ni_2_2   1.00e+00   0.00e+00
+Initializing parameter 70         eps_s_ni_2_3   1.00e+00   0.00e+00
+Initializing parameter 71         eps_s_ni_2_4   1.00e+00   0.00e+00
+Initializing parameter 72         eps_s_dc_3_0   1.00e+00   0.00e+00
+Initializing parameter 73         eps_s_dc_3_1   2.74e-01   2.74e-03
+Initializing parameter 74         eps_s_dc_3_2   1.84e-01   1.84e-03
+Initializing parameter 75         eps_s_dc_3_3   1.52e-01   1.52e-03
+Initializing parameter 76         eps_s_dc_3_4   1.31e-01   1.31e-03
+Initializing parameter 77         eps_s_li_3_0   1.00e+00   0.00e+00
+Initializing parameter 78         eps_s_li_3_1   2.74e-01   2.74e-03
+Initializing parameter 79         eps_s_li_3_2   1.84e-01   1.84e-03
+Initializing parameter 80         eps_s_li_3_3   1.52e-01   1.52e-03
+Initializing parameter 81         eps_s_li_3_4   1.31e-01   1.31e-03
+Initializing parameter 82         eps_s_bo_3_0   1.00e+00   0.00e+00
+Initializing parameter 83         eps_s_bo_3_1   1.00e+00   0.00e+00
+Initializing parameter 84         eps_s_bo_3_2   1.00e+00   0.00e+00
+Initializing parameter 85         eps_s_bo_3_3   1.00e+00   0.00e+00
+Initializing parameter 86         eps_s_bo_3_4   1.00e+00   0.00e+00
+Initializing parameter 87         eps_s_ni_3_0   1.00e+00   0.00e+00
+Initializing parameter 88         eps_s_ni_3_1   1.00e+00   0.00e+00
+Initializing parameter 89         eps_s_ni_3_2   1.00e+00   0.00e+00
+Initializing parameter 90         eps_s_ni_3_3   1.00e+00   0.00e+00
+Initializing parameter 91         eps_s_ni_3_4   1.00e+00   0.00e+00
+Initializing parameter 92                 n_dc   1.43e+03   1.43e+01
+Initializing parameter 93            tau_short   1.59e+01   0.00e+00
+
+Minuit2Minimizer: Minimize with max-calls 1000000 convergence for edm < 0.01 strategy 1
+VariableMetric: start iterating until Edm is < 2e-05
+VariableMetric: Initial state   - FCN =   10390.69892454 Edm =  2.11879e+06 NCalls =      1
+VariableMetric: Iteration #   0 - FCN =   10390.69892454 Edm =  2.11879e+06 NCalls =      1
+VariableMetric: Iteration #   1 - FCN =   9295.747963587 Edm =      3229.02 NCalls =      5
+VariableMetric: Iteration #   2 - FCN =    9269.96314688 Edm =      8635.91 NCalls =      8
+VariableMetric: Iteration #   3 - FCN =   9243.263241544 Edm =      2673.14 NCalls =     11
+VariableMetric: Iteration #   4 - FCN =   9206.617104236 Edm =      2356.32 NCalls =     13
+VariableMetric: Iteration #   5 - FCN =   9155.930053345 Edm =      4641.77 NCalls =     15
+VariableMetric: Iteration #   6 - FCN =   9117.166631052 Edm =      21644.5 NCalls =     17
+VariableMetric: Iteration #   7 - FCN =    8800.76771713 Edm =      807.578 NCalls =     19
+VariableMetric: Iteration #   8 - FCN =   8795.243535855 Edm =      444.323 NCalls =     21
+VariableMetric: Iteration #   9 - FCN =   8792.777290681 Edm =      226.231 NCalls =     23
+VariableMetric: Iteration #  10 - FCN =    8788.51526719 Edm =      176.097 NCalls =     25
+VariableMetric: Iteration #  11 - FCN =   8782.508148899 Edm =      241.667 NCalls =     27
+VariableMetric: Iteration #  12 - FCN =   8763.199946018 Edm =      420.891 NCalls =     29
+VariableMetric: Iteration #  13 - FCN =    8746.42717536 Edm =      640.574 NCalls =     31
+VariableMetric: Iteration #  14 - FCN =   8720.542636669 Edm =      746.646 NCalls =     33
+VariableMetric: Iteration #  15 - FCN =   8664.606959426 Edm =      335.181 NCalls =     35
+VariableMetric: Iteration #  16 - FCN =   8659.743372286 Edm =       132.91 NCalls =     37
+VariableMetric: Iteration #  17 - FCN =   8653.713993146 Edm =      137.188 NCalls =     39
+VariableMetric: Iteration #  18 - FCN =   8621.287497586 Edm =      113.509 NCalls =     41
+VariableMetric: Iteration #  19 - FCN =      8568.005114 Edm =      91.9531 NCalls =     43
+VariableMetric: Iteration #  20 - FCN =   8565.897438983 Edm =     0.730893 NCalls =     45
+VariableMetric: Iteration #  21 - FCN =   8561.732343987 Edm =      1.32436 NCalls =     48
+VariableMetric: Iteration #  22 - FCN =   8558.822090771 Edm =     0.494971 NCalls =     50
+VariableMetric: Iteration #  23 - FCN =   8527.278890244 Edm =       9.0566 NCalls =     55
+VariableMetric: Iteration #  24 - FCN =   8512.118458688 Edm =     0.142807 NCalls =     57
+VariableMetric: Iteration #  25 - FCN =   8511.733983274 Edm =     0.149328 NCalls =     59
+VariableMetric: Iteration #  26 - FCN =   8506.619308104 Edm =      2.66551 NCalls =     63
+VariableMetric: Iteration #  27 - FCN =   8500.422217601 Edm =     0.103814 NCalls =     65
+VariableMetric: Iteration #  28 - FCN =   8500.232322506 Edm =     0.094584 NCalls =     67
+VariableMetric: Iteration #  29 - FCN =   8497.099993721 Edm =      1.90752 NCalls =     72
+VariableMetric: Iteration #  30 - FCN =   8492.293293208 Edm =    0.0757791 NCalls =     74
+VariableMetric: Iteration #  31 - FCN =    8492.20629971 Edm =   0.00893276 NCalls =     76
+VariableMetric: Iteration #  32 - FCN =   8491.959255125 Edm =     0.229652 NCalls =     80
+VariableMetric: Iteration #  33 - FCN =   8488.984274742 Edm =    0.0557983 NCalls =     83
+VariableMetric: Iteration #  34 - FCN =   8488.921095317 Edm =   0.00728905 NCalls =     85
+VariableMetric: Iteration #  35 - FCN =   8488.694730825 Edm =     0.213928 NCalls =     89
+VariableMetric: Iteration #  36 - FCN =   8485.507366334 Edm =     0.210224 NCalls =     92
+VariableMetric: Iteration #  37 - FCN =   8485.294746334 Edm =    0.0104384 NCalls =     94
+VariableMetric: Iteration #  38 - FCN =   8485.261553347 Edm =    0.0274932 NCalls =     96
+VariableMetric: Iteration #  39 - FCN =   8484.333661063 Edm =     0.282907 NCalls =    101
+VariableMetric: Iteration #  40 - FCN =    8483.95398698 Edm =   0.00497168 NCalls =    103
+VariableMetric: Iteration #  41 - FCN =    8483.94846105 Edm =   0.00131359 NCalls =    105
+VariableMetric: Iteration #  42 - FCN =   8483.900910998 Edm =    0.0409561 NCalls =    109
+VariableMetric: Iteration #  43 - FCN =    8483.41882517 Edm =    0.0283781 NCalls =    112
+VariableMetric: Iteration #  44 - FCN =    8483.38896117 Edm =   0.00146973 NCalls =    114
+VariableMetric: Iteration #  45 - FCN =   8483.357940867 Edm =    0.0272471 NCalls =    118
+VariableMetric: Iteration #  46 - FCN =   8483.134932884 Edm =   0.00584846 NCalls =    121
+VariableMetric: Iteration #  47 - FCN =    8483.12856768 Edm =  0.000669387 NCalls =    123
+VariableMetric: Iteration #  48 - FCN =    8483.12246718 Edm =   0.00580203 NCalls =    126
+VariableMetric: Iteration #  49 - FCN =   8482.693642564 Edm =     0.167048 NCalls =    133
+VariableMetric: Iteration #  50 - FCN =   8482.422192342 Edm =   0.00295398 NCalls =    135
+VariableMetric: Iteration #  51 - FCN =   8482.418492094 Edm =  0.000915479 NCalls =    137
+VariableMetric: Iteration #  52 - FCN =   8482.382583183 Edm =    0.0328718 NCalls =    142
+VariableMetric: Iteration #  53 - FCN =   8481.670610198 Edm =    0.0982598 NCalls =    146
+VariableMetric: Iteration #  54 - FCN =   8481.571470338 Edm =   0.00204603 NCalls =    147
+VariableMetric: Iteration #  55 - FCN =    8481.56859297 Edm =  0.000702479 NCalls =    149
+VariableMetric: Iteration #  56 - FCN =   8481.545118266 Edm =    0.0212419 NCalls =    153
+VariableMetric: Iteration #  57 - FCN =   8481.350368167 Edm =    0.0134114 NCalls =    156
+VariableMetric: Iteration #  58 - FCN =   8481.335475299 Edm =  0.000684346 NCalls =    158
+VariableMetric: Iteration #  59 - FCN =   8481.332244588 Edm =   0.00278794 NCalls =    160
+VariableMetric: Iteration #  60 - FCN =   8481.114997776 Edm =     0.219891 NCalls =    166
+VariableMetric: Iteration #  61 - FCN =   8481.007482278 Edm =     0.105014 NCalls =    172
+VariableMetric: Iteration #  62 - FCN =   8473.857382711 Edm =      1.41317 NCalls =    178
+VariableMetric: Iteration #  63 - FCN =   8471.747041805 Edm =     0.715891 NCalls =    180
+VariableMetric: Iteration #  64 - FCN =    8469.85790952 Edm =     0.676529 NCalls =    184
+VariableMetric: Iteration #  65 - FCN =   8468.192327676 Edm =      2.33126 NCalls =    186
+VariableMetric: Iteration #  66 - FCN =   8467.229876576 Edm =      2.31624 NCalls =    191
+VariableMetric: Iteration #  67 - FCN =   8465.017570286 Edm =      3.15581 NCalls =    193
+VariableMetric: Iteration #  68 - FCN =   8464.009297756 Edm =     0.527689 NCalls =    196
+VariableMetric: Iteration #  69 - FCN =   8463.457753127 Edm =     0.133797 NCalls =    197
+VariableMetric: Iteration #  70 - FCN =   8463.335453301 Edm =    0.0125042 NCalls =    199
+VariableMetric: Iteration #  71 - FCN =   8463.301784988 Edm =   0.00895303 NCalls =    201
+VariableMetric: Iteration #  72 - FCN =   8463.269219982 Edm =    0.0175026 NCalls =    203
+VariableMetric: Iteration #  73 - FCN =   8463.207058108 Edm =    0.0218407 NCalls =    205
+VariableMetric: Iteration #  74 - FCN =   8463.147803996 Edm =    0.0193173 NCalls =    207
+VariableMetric: Iteration #  75 - FCN =   8463.110354461 Edm =    0.0115676 NCalls =    209
+VariableMetric: Iteration #  76 - FCN =   8463.073317466 Edm =    0.0335178 NCalls =    211
+VariableMetric: Iteration #  77 - FCN =   8462.281961774 Edm =     0.643476 NCalls =    216
+VariableMetric: Iteration #  78 - FCN =   8460.601365513 Edm =      0.37044 NCalls =    219
+VariableMetric: Iteration #  79 - FCN =   8460.281071673 Edm =    0.0237266 NCalls =    221
+VariableMetric: Iteration #  80 - FCN =   8460.257820995 Edm =   0.00174836 NCalls =    223
+VariableMetric: Iteration #  81 - FCN =   8460.253923267 Edm =   0.00213224 NCalls =    225
+VariableMetric: Iteration #  82 - FCN =    8460.24425957 Edm =   0.00179427 NCalls =    227
+VariableMetric: Iteration #  83 - FCN =   8460.242211158 Edm =  0.000298172 NCalls =    229
+VariableMetric: Iteration #  84 - FCN =   8460.241412987 Edm =  0.000703706 NCalls =    231
+VariableMetric: Iteration #  85 - FCN =   8460.222083909 Edm =    0.0205104 NCalls =    236
+VariableMetric: Iteration #  86 - FCN =   8460.064527915 Edm =     0.139306 NCalls =    243
+VariableMetric: Iteration #  87 - FCN =   8459.169225627 Edm =     0.168058 NCalls =    246
+VariableMetric: Iteration #  88 - FCN =   8458.665939373 Edm =     0.485181 NCalls =    248
+VariableMetric: Iteration #  89 - FCN =   8455.528324859 Edm =      5.50291 NCalls =    253
+VariableMetric: Iteration #  90 - FCN =   8454.401897661 Edm =      2.56164 NCalls =    258
+VariableMetric: Iteration #  91 - FCN =   8453.673630038 Edm =      2.29207 NCalls =    260
+VariableMetric: Iteration #  92 - FCN =   8452.722425454 Edm =     0.922707 NCalls =    264
+VariableMetric: Iteration #  93 - FCN =   8449.452205325 Edm =      1.10529 NCalls =    269
+VariableMetric: Iteration #  94 - FCN =   8449.090803712 Edm =     0.839388 NCalls =    271
+VariableMetric: Iteration #  95 - FCN =   8448.248376872 Edm =     0.360345 NCalls =    274
+VariableMetric: Iteration #  96 - FCN =    8448.10348881 Edm =    0.0595082 NCalls =    276
+VariableMetric: Iteration #  97 - FCN =   8448.077310698 Edm =     0.100105 NCalls =    278
+VariableMetric: Iteration #  98 - FCN =   8448.059273011 Edm =   0.00602654 NCalls =    280
+VariableMetric: Iteration #  99 - FCN =   8448.054754865 Edm =   0.00122904 NCalls =    282
+VariableMetric: Iteration # 100 - FCN =   8448.053804472 Edm =  3.55006e-05 NCalls =    283
+VariableMetric: Iteration # 101 - FCN =   8448.053775783 Edm =  4.71347e-07 NCalls =    285
+Info in <Minuit2>: matrix forced pos-def by adding to diagonal : padd = 17.2881
+Info in <Minuit2>: MnHesse: matrix was forced pos. def. 
+VariableMetric: After Hessian   - FCN =   8448.053775783 Edm =      84.7227 NCalls =   1193
+VariableMetric: Iteration # 102 - FCN =   8448.053775783 Edm =      84.7227 NCalls =   1193
+Info in <Minuit2>: VariableMetricBuilder: Tolerance is not sufficient, continue the minimization
+Info in <Minuit2>: Current  Edm is : edm = 84.7227
+Info in <Minuit2>: Required Edm is : edmval = 2e-05
+VariableMetric: Iteration # 103 - FCN =   8448.034360377 Edm =      39.5147 NCalls =   1197
+VariableMetric: Iteration # 104 - FCN =   8448.028744505 Edm =   0.00671972 NCalls =   1199
+VariableMetric: Iteration # 105 - FCN =   8448.023404009 Edm =   0.00377651 NCalls =   1202
+VariableMetric: Iteration # 106 - FCN =   8447.961238567 Edm =    0.0595406 NCalls =   1207
+VariableMetric: Iteration # 107 - FCN =   8447.956253471 Edm =   0.00690206 NCalls =   1210
+VariableMetric: Iteration # 108 - FCN =   8447.845842094 Edm =     0.018866 NCalls =   1215
+VariableMetric: Iteration # 109 - FCN =   8447.818026514 Edm =   0.00738129 NCalls =   1218
+VariableMetric: Iteration # 110 - FCN =   8447.770389959 Edm =    0.0289595 NCalls =   1222
+VariableMetric: Iteration # 111 - FCN =   8447.725330538 Edm =    0.0444206 NCalls =   1224
+VariableMetric: Iteration # 112 - FCN =   8447.622138931 Edm =   0.00541104 NCalls =   1228
+VariableMetric: Iteration # 113 - FCN =   8447.613853289 Edm =   0.00331907 NCalls =   1230
+VariableMetric: Iteration # 114 - FCN =   8447.597249113 Edm =   0.00752678 NCalls =   1233
+VariableMetric: Iteration # 115 - FCN =   8447.575473726 Edm =   0.00201945 NCalls =   1235
+VariableMetric: Iteration # 116 - FCN =   8447.572613174 Edm =   0.00035713 NCalls =   1237
+VariableMetric: Iteration # 117 - FCN =   8447.568210158 Edm =   0.00182815 NCalls =   1240
+VariableMetric: Iteration # 118 - FCN =   8447.565240201 Edm =  0.000345214 NCalls =   1242
+VariableMetric: Iteration # 119 - FCN =    8447.56103611 Edm =   0.00315078 NCalls =   1245
+VariableMetric: Iteration # 120 - FCN =   8447.540756654 Edm =  0.000933262 NCalls =   1248
+VariableMetric: Iteration # 121 - FCN =   8447.517633157 Edm =    0.0117717 NCalls =   1252
+VariableMetric: Iteration # 122 - FCN =    8447.49211211 Edm =   0.00180848 NCalls =   1254
+VariableMetric: Iteration # 123 - FCN =   8447.483491809 Edm =   0.00599223 NCalls =   1256
+VariableMetric: Iteration # 124 - FCN =   8447.457049521 Edm =  0.000785322 NCalls =   1258
+VariableMetric: Iteration # 125 - FCN =   8447.453776057 Edm =   0.00217253 NCalls =   1260
+VariableMetric: Iteration # 126 - FCN =   8447.443829576 Edm =  0.000456194 NCalls =   1262
+VariableMetric: Iteration # 127 - FCN =   8447.443300449 Edm =  7.10159e-05 NCalls =   1264
+VariableMetric: Iteration # 128 - FCN =   8447.442869591 Edm =  0.000189964 NCalls =   1267
+VariableMetric: Iteration # 129 - FCN =   8447.442223639 Edm =  2.94258e-05 NCalls =   1269
+VariableMetric: Iteration # 130 - FCN =   8447.441916711 Edm =  0.000182794 NCalls =   1272
+VariableMetric: Iteration # 131 - FCN =   8447.441362735 Edm =  1.15455e-05 NCalls =   1274
+VariableMetric: After Hessian   - FCN =   8447.441362735 Edm =  0.000396021 NCalls =   2150
+VariableMetric: Iteration # 132 - FCN =   8447.441362735 Edm =  0.000396021 NCalls =   2150
+Info in <Minuit2>: VariableMetricBuilder: Stop the minimization - reached machine accuracy limit
+Info in <Minuit2>: Edm is smaller than machine accuracy : machineLimit = 0.000503507
+Info in <Minuit2>: Current  Edm is : edm = 0.000396021
+Info in <Minuit2>: Required Edm is : edmval = 2e-05
+Info in <Minuit2>: VariableMetricBuilder: INVALID function minimum - edm is above tolerance, : edm = 0.000396021
+Info in <Minuit2>: VariableMetricBuilder: Required tolerance  is 10 x edmval  : edmval = 2e-05
+Info in <Minuit2>: Minuit2Minimizer::Minimize : Minimization did NOT converge, Edm is above max
+Minuit2Minimizer : Invalid Minimum - status = 3
+FVAL  = 8447.44
+Edm   = 0.000396021
+Nfcn  = 2150
+Info in <Minuit2>: Minuit2Minimizer::Hesse : Hesse is valid - matrix is accurate
+Minuit2Minimizer: Minimize with max-calls 1000000 convergence for edm < 0.01 strategy 2
+VariableMetric: start iterating until Edm is < 2e-05
+VariableMetric: Initial state   - FCN =   8447.441362735 Edm =  0.000398106 NCalls =      1
+VariableMetric: Iteration #   0 - FCN =   8447.441362735 Edm =  0.000398106 NCalls =      1
+VariableMetric: Iteration #   1 - FCN =   8447.441000961 Edm =  0.000112454 NCalls =      3
+VariableMetric: Iteration #   2 - FCN =    8447.44097333 Edm =  6.04557e-07 NCalls =      5
+VariableMetric: After Hessian   - FCN =    8447.44097333 Edm =  2.63693e-06 NCalls =    965
+VariableMetric: Iteration #   3 - FCN =    8447.44097333 Edm =  2.63693e-06 NCalls =    965
+Minuit2Minimizer : Valid minimum - status = 0
+FVAL  = 8447.44097333023092
+Edm   = 2.63693096853604714e-06
+Nfcn  = 965
+rmu_0	  = 0.00811523	 +/-  3.3786e-06	(limited)
+n_li_0	  = 0.720666	 +/-  0.844664	(limited)
+n_bo_0	  = 0	 (fixed)
+n_ni_0	  = 0	 (fixed)
+rmu_1	  = 0.00712679	 +/-  2.93314e-06	(limited)
+n_li_1	  = 2.678	 +/-  0.80422	(limited)
+n_bo_1	  = 0	 (fixed)
+n_ni_1	  = 0	 (fixed)
+rmu_2	  = 0.000141216	 +/-  1.14302e-07	(limited)
+n_li_2	  = 5.22402	 +/-  0.114046	(limited)
+n_bo_2	  = 0	 (fixed)
+n_ni_2	  = 0	 (fixed)
+eps_s_dc_0_0	  = 1	 (fixed)
+eps_s_dc_0_1	  = 0.608248	 +/-  0.000686585	(limited)
+eps_s_dc_0_2	  = 0.142554	 +/-  0.000502254	(limited)
+eps_s_dc_0_3	  = 0.0040611	 +/-  0.000257829	(limited)
+eps_s_dc_0_4	  = 0.000577331	 +/-  3.91503e-05	(limited)
+eps_s_li_0_0	  = 1	 (fixed)
+eps_s_li_0_1	  = 1.94794	 (fixed)
+eps_s_li_0_2	  = 1.91063	 (fixed)
+eps_s_li_0_3	  = 1.03612	 (fixed)
+eps_s_li_0_4	  = 0.143062	 (fixed)
+eps_s_bo_0_0	  = 1	 (fixed)
+eps_s_bo_0_1	  = 1	 (fixed)
+eps_s_bo_0_2	  = 1	 (fixed)
+eps_s_bo_0_3	  = 1	 (fixed)
+eps_s_bo_0_4	  = 1	 (fixed)
+eps_s_ni_0_0	  = 1	 (fixed)
+eps_s_ni_0_1	  = 1	 (fixed)
+eps_s_ni_0_2	  = 1	 (fixed)
+eps_s_ni_0_3	  = 1	 (fixed)
+eps_s_ni_0_4	  = 1	 (fixed)
+eps_s_dc_1_0	  = 1	 (fixed)
+eps_s_dc_1_1	  = 0.0362993	 +/-  0.000154933	(limited)
+eps_s_dc_1_2	  = 0.203885	 +/-  0.000393392	(limited)
+eps_s_dc_1_3	  = 0.415477	 +/-  0.000655008	(limited)
+eps_s_dc_1_4	  = 3.43613e-05	 +/-  7.33151e-06	(limited)
+eps_s_li_1_0	  = 1	 (fixed)
+eps_s_li_1_1	  = 0.104727	 +/-  0.0230867	(limited)
+eps_s_li_1_2	  = 0.38031	 +/-  0.0618053	(limited)
+eps_s_li_1_3	  = 0.904108	 +/-  0.113078	(limited)
+eps_s_li_1_4	  = 0.00524292	 +/-  0.00144524	(limited)
+eps_s_bo_1_0	  = 1	 (fixed)
+eps_s_bo_1_1	  = 1	 (fixed)
+eps_s_bo_1_2	  = 1	 (fixed)
+eps_s_bo_1_3	  = 1	 (fixed)
+eps_s_bo_1_4	  = 1	 (fixed)
+eps_s_ni_1_0	  = 1	 (fixed)
+eps_s_ni_1_1	  = 1	 (fixed)
+eps_s_ni_1_2	  = 1	 (fixed)
+eps_s_ni_1_3	  = 1	 (fixed)
+eps_s_ni_1_4	  = 1	 (fixed)
+eps_s_dc_2_0	  = 1	 (fixed)
+eps_s_dc_2_1	  = 3.75431	 +/-  0.0107631	(limited)
+eps_s_dc_2_2	  = 4.70282	 +/-  0.013209	(limited)
+eps_s_dc_2_3	  = 4.40216	 +/-  0.0124509	(limited)
+eps_s_dc_2_4	  = 4.08169	 +/-  0.0117499	(limited)
+eps_s_li_2_0	  = 1	 (fixed)
+eps_s_li_2_1	  = 3.78867	 +/-  0.884357	(limited)
+eps_s_li_2_2	  = 4.18137	 +/-  0.977952	(limited)
+eps_s_li_2_3	  = 3.70153	 +/-  0.882309	(limited)
+eps_s_li_2_4	  = 2.35549	 +/-  0.634992	(limited)
+eps_s_bo_2_0	  = 1	 (fixed)
+eps_s_bo_2_1	  = 1	 (fixed)
+eps_s_bo_2_2	  = 1	 (fixed)
+eps_s_bo_2_3	  = 1	 (fixed)
+eps_s_bo_2_4	  = 1	 (fixed)
+eps_s_ni_2_0	  = 1	 (fixed)
+eps_s_ni_2_1	  = 1	 (fixed)
+eps_s_ni_2_2	  = 1	 (fixed)
+eps_s_ni_2_3	  = 1	 (fixed)
+eps_s_ni_2_4	  = 1	 (fixed)
+eps_s_dc_3_0	  = 1	 (fixed)
+eps_s_dc_3_1	  = 0.274585	 +/-  0.000475371	(limited)
+eps_s_dc_3_2	  = 0.185004	 +/-  0.000379128	(limited)
+eps_s_dc_3_3	  = 0.15224	 +/-  0.0003431	(limited)
+eps_s_dc_3_4	  = 0.131249	 +/-  0.000310298	(limited)
+eps_s_li_3_0	  = 1	 (fixed)
+eps_s_li_3_1	  = 0.186018	 +/-  0.0336303	(limited)
+eps_s_li_3_2	  = 0.0982258	 +/-  0.0264659	(limited)
+eps_s_li_3_3	  = 0.0594944	 +/-  0.0233849	(limited)
+eps_s_li_3_4	  = 0.0648053	 +/-  0.02208	(limited)
+eps_s_bo_3_0	  = 1	 (fixed)
+eps_s_bo_3_1	  = 1	 (fixed)
+eps_s_bo_3_2	  = 1	 (fixed)
+eps_s_bo_3_3	  = 1	 (fixed)
+eps_s_bo_3_4	  = 1	 (fixed)
+eps_s_ni_3_0	  = 1	 (fixed)
+eps_s_ni_3_1	  = 1	 (fixed)
+eps_s_ni_3_2	  = 1	 (fixed)
+eps_s_ni_3_3	  = 1	 (fixed)
+eps_s_ni_3_4	  = 1	 (fixed)
+n_dc	  = 1439.02	 +/-  1.27579	(limited)
+tau_short	  = 15.9	 (fixed)
+rmu_0 940.465 -0.522141
+n_li_0 -0.000999519 -0.00047782
+n_bo_0 -nan -64.6327
+n_ni_0 -nan -86.7909
+rmu_1 1070.9 0.241387
+n_li_1 -0.000385805 -0.000297808
+n_bo_1 -nan -61.1085
+n_ni_1 -nan -67.6179
+rmu_2 14049.3 45.872
+n_li_2 -0.00054284 -0.00112012
+n_bo_2 -nan -2441.22
+n_ni_2 -nan -3418.12
+eps_s_dc_0_0 1.16217 0.00145616
+eps_s_dc_0_1 1.77 0.00511545
+eps_s_dc_0_2 2.40538 -0.033972
+eps_s_dc_0_3 1.9681 0.0565874
+eps_s_dc_0_4 1.98493 0.0786392
+eps_s_li_0_0 -23.4126 -23.4127
+eps_s_li_0_1 -25.7915 -25.7917
+eps_s_li_0_2 35.925 35.9247
+eps_s_li_0_3 63.6155 63.6141
+eps_s_li_0_4 -425.67 -425.672
+eps_s_bo_0_0 0 0
+eps_s_bo_0_1 0 0
+eps_s_bo_0_2 0 0
+eps_s_bo_0_3 0 0
+eps_s_bo_0_4 0 0
+eps_s_ni_0_0 0 0
+eps_s_ni_0_1 0 0
+eps_s_ni_0_2 0 0
+eps_s_ni_0_3 0 0
+eps_s_ni_0_4 0 0
+eps_s_dc_1_0 1.13594 0.00374288
+eps_s_dc_1_1 2.76291 -0.0190033
+eps_s_dc_1_2 2.50807 0.00255748
+eps_s_dc_1_3 2.13071 -0.00852577
+eps_s_dc_1_4 1.05874 -0.938395
+eps_s_li_1_0 -2.72848e-05 -0.000291043
+eps_s_li_1_1 0.000121582 -0.000397949
+eps_s_li_1_2 -5.26121e-05 1.44293e-05
+eps_s_li_1_3 0.000144858 -4.7106e-05
+eps_s_li_1_4 0.0770212 0.0705371
+eps_s_bo_1_0 0 0
+eps_s_bo_1_1 0 0
+eps_s_bo_1_2 0 0
+eps_s_bo_1_3 0 0
+eps_s_bo_1_4 0 0
+eps_s_ni_1_0 0 0
+eps_s_ni_1_1 0 0
+eps_s_ni_1_2 0 0
+eps_s_ni_1_3 0 0
+eps_s_ni_1_4 0 0
+eps_s_dc_2_0 0.267082 0.018019
+eps_s_dc_2_1 0.205937 -0.00269383
+eps_s_dc_2_2 0.193318 -0.00151482
+eps_s_dc_2_3 0.198128 -0.0011819
+eps_s_dc_2_4 0.205397 0.00108321
+eps_s_li_2_0 0.00133696 0.00134332
+eps_s_li_2_1 -0.000119548 -0.000125485
+eps_s_li_2_2 -5.56829e-05 -8.69546e-05
+eps_s_li_2_3 -6.04441e-05 -8.8715e-05
+eps_s_li_2_4 -7.25901e-05 -7.46896e-05
+eps_s_bo_2_0 0 0
+eps_s_bo_2_1 0 0
+eps_s_bo_2_2 0 0
+eps_s_bo_2_3 0 0
+eps_s_bo_2_4 0 0
+eps_s_ni_2_0 0 0
+eps_s_ni_2_1 0 0
+eps_s_ni_2_2 0 0
+eps_s_ni_2_3 0 0
+eps_s_ni_2_4 0 0
+eps_s_dc_3_0 0.552795 -0.606593
+eps_s_dc_3_1 1.88269 -0.408917
+eps_s_dc_3_2 2.11347 -0.320577
+eps_s_dc_3_3 7.85541 5.36759
+eps_s_dc_3_4 2.22119 -0.296984
+eps_s_li_3_0 0.00522414 0.0052453
+eps_s_li_3_1 -0.00272823 -0.00259167
+eps_s_li_3_2 -0.00279628 -0.000742687
+eps_s_li_3_3 -0.0810214 -0.0784768
+eps_s_li_3_4 -0.00193673 -0.000328999
+eps_s_bo_3_0 0 0
+eps_s_bo_3_1 0 0
+eps_s_bo_3_2 0 0
+eps_s_bo_3_3 0 0
+eps_s_bo_3_4 0 0
+eps_s_ni_3_0 0 0
+eps_s_ni_3_1 0 0
+eps_s_ni_3_2 0 0
+eps_s_ni_3_3 0 0
+eps_s_ni_3_4 0 0
+n_dc 0.0131815 7.6266e-06
+tau_short 0 0
+rmu_0 -0.522141
+n_li_0 -0.00047782
+n_bo_0 -64.6327
+n_ni_0 -86.7909
+rmu_1 0.241387
+n_li_1 -0.000297808
+n_bo_1 -61.1085
+n_ni_1 -67.6179
+rmu_2 45.872
+n_li_2 -0.00112012
+n_bo_2 -2441.22
+n_ni_2 -3418.12
+eps_s_dc_0_0 0.00145616
+eps_s_dc_0_1 0.00511545
+eps_s_dc_0_2 -0.033972
+eps_s_dc_0_3 0.0565874
+eps_s_dc_0_4 0.0786392
+eps_s_li_0_0 -23.4127
+eps_s_li_0_1 -25.7917
+eps_s_li_0_2 35.9247
+eps_s_li_0_3 63.6141
+eps_s_li_0_4 -425.672
+eps_s_bo_0_0 0
+eps_s_bo_0_1 0
+eps_s_bo_0_2 0
+eps_s_bo_0_3 0
+eps_s_bo_0_4 0
+eps_s_ni_0_0 0
+eps_s_ni_0_1 0
+eps_s_ni_0_2 0
+eps_s_ni_0_3 0
+eps_s_ni_0_4 0
+eps_s_dc_1_0 0.00374288
+eps_s_dc_1_1 -0.0190033
+eps_s_dc_1_2 0.00255748
+eps_s_dc_1_3 -0.00852577
+eps_s_dc_1_4 -0.938395
+eps_s_li_1_0 -0.000291043
+eps_s_li_1_1 -0.000397949
+eps_s_li_1_2 1.44293e-05
+eps_s_li_1_3 -4.7106e-05
+eps_s_li_1_4 0.0705371
+eps_s_bo_1_0 0
+eps_s_bo_1_1 0
+eps_s_bo_1_2 0
+eps_s_bo_1_3 0
+eps_s_bo_1_4 0
+eps_s_ni_1_0 0
+eps_s_ni_1_1 0
+eps_s_ni_1_2 0
+eps_s_ni_1_3 0
+eps_s_ni_1_4 0
+eps_s_dc_2_0 0.018019
+eps_s_dc_2_1 -0.00269383
+eps_s_dc_2_2 -0.00151482
+eps_s_dc_2_3 -0.0011819
+eps_s_dc_2_4 0.00108321
+eps_s_li_2_0 0.00134332
+eps_s_li_2_1 -0.000125485
+eps_s_li_2_2 -8.69546e-05
+eps_s_li_2_3 -8.8715e-05
+eps_s_li_2_4 -7.46896e-05
+eps_s_bo_2_0 0
+eps_s_bo_2_1 0
+eps_s_bo_2_2 0
+eps_s_bo_2_3 0
+eps_s_bo_2_4 0
+eps_s_ni_2_0 0
+eps_s_ni_2_1 0
+eps_s_ni_2_2 0
+eps_s_ni_2_3 0
+eps_s_ni_2_4 0
+eps_s_dc_3_0 -0.606593
+eps_s_dc_3_1 -0.408917
+eps_s_dc_3_2 -0.320577
+eps_s_dc_3_3 5.36759
+eps_s_dc_3_4 -0.296984
+eps_s_li_3_0 0.0052453
+eps_s_li_3_1 -0.00259167
+eps_s_li_3_2 -0.000742687
+eps_s_li_3_3 -0.0784768
+eps_s_li_3_4 -0.000328999
+eps_s_bo_3_0 0
+eps_s_bo_3_1 0
+eps_s_bo_3_2 0
+eps_s_bo_3_3 0
+eps_s_bo_3_4 0
+eps_s_ni_3_0 0
+eps_s_ni_3_1 0
+eps_s_ni_3_2 0
+eps_s_ni_3_3 0
+eps_s_ni_3_4 0
+n_dc 7.6266e-06
+tau_short 0
+Info in <Minuit2>: Minuit2Minimizer::Hesse : Hesse is valid - matrix is accurate
+COV STATUS: 3
+Minuit2Minimizer : Valid minimum - status = 0
+FVAL  = 8447.44097333023092
+Edm   = 2.62656235393128233e-06
+Nfcn  = 1721
+rmu_0	  = 0.00811523	 +/-  3.36491e-06	(limited)
+n_li_0	  = 0.720666	 +/-  0.833877	(limited)
+n_bo_0	  = 0	 (fixed)
+n_ni_0	  = 0	 (fixed)
+rmu_1	  = 0.00712679	 +/-  2.93769e-06	(limited)
+n_li_1	  = 2.678	 +/-  0.809853	(limited)
+n_bo_1	  = 0	 (fixed)
+n_ni_1	  = 0	 (fixed)
+rmu_2	  = 0.000141216	 +/-  1.14301e-07	(limited)
+n_li_2	  = 5.22402	 +/-  0.114031	(limited)
+n_bo_2	  = 0	 (fixed)
+n_ni_2	  = 0	 (fixed)
+eps_s_dc_0_0	  = 1	 (fixed)
+eps_s_dc_0_1	  = 0.608248	 +/-  0.000686621	(limited)
+eps_s_dc_0_2	  = 0.142554	 +/-  0.000502177	(limited)
+eps_s_dc_0_3	  = 0.0040611	 +/-  0.000257853	(limited)
+eps_s_dc_0_4	  = 0.000577331	 +/-  3.91653e-05	(limited)
+eps_s_li_0_0	  = 1	 (fixed)
+eps_s_li_0_1	  = 1.94794	 (fixed)
+eps_s_li_0_2	  = 1.91063	 (fixed)
+eps_s_li_0_3	  = 1.03612	 (fixed)
+eps_s_li_0_4	  = 0.143062	 (fixed)
+eps_s_bo_0_0	  = 1	 (fixed)
+eps_s_bo_0_1	  = 1	 (fixed)
+eps_s_bo_0_2	  = 1	 (fixed)
+eps_s_bo_0_3	  = 1	 (fixed)
+eps_s_bo_0_4	  = 1	 (fixed)
+eps_s_ni_0_0	  = 1	 (fixed)
+eps_s_ni_0_1	  = 1	 (fixed)
+eps_s_ni_0_2	  = 1	 (fixed)
+eps_s_ni_0_3	  = 1	 (fixed)
+eps_s_ni_0_4	  = 1	 (fixed)
+eps_s_dc_1_0	  = 1	 (fixed)
+eps_s_dc_1_1	  = 0.0362993	 +/-  0.000154896	(limited)
+eps_s_dc_1_2	  = 0.203885	 +/-  0.000393557	(limited)
+eps_s_dc_1_3	  = 0.415477	 +/-  0.000656067	(limited)
+eps_s_dc_1_4	  = 3.43613e-05	 +/-  7.38254e-06	(limited)
+eps_s_li_1_0	  = 1	 (fixed)
+eps_s_li_1_1	  = 0.104727	 +/-  0.0230151	(limited)
+eps_s_li_1_2	  = 0.38031	 +/-  0.0616461	(limited)
+eps_s_li_1_3	  = 0.904108	 +/-  0.112799	(limited)
+eps_s_li_1_4	  = 0.00524292	 +/-  0.00144955	(limited)
+eps_s_bo_1_0	  = 1	 (fixed)
+eps_s_bo_1_1	  = 1	 (fixed)
+eps_s_bo_1_2	  = 1	 (fixed)
+eps_s_bo_1_3	  = 1	 (fixed)
+eps_s_bo_1_4	  = 1	 (fixed)
+eps_s_ni_1_0	  = 1	 (fixed)
+eps_s_ni_1_1	  = 1	 (fixed)
+eps_s_ni_1_2	  = 1	 (fixed)
+eps_s_ni_1_3	  = 1	 (fixed)
+eps_s_ni_1_4	  = 1	 (fixed)
+eps_s_dc_2_0	  = 1	 (fixed)
+eps_s_dc_2_1	  = 3.75431	 +/-  0.0107156	(limited)
+eps_s_dc_2_2	  = 4.70282	 +/-  0.0131393	(limited)
+eps_s_dc_2_3	  = 4.40216	 +/-  0.0123813	(limited)
+eps_s_dc_2_4	  = 4.08169	 +/-  0.011662	(limited)
+eps_s_li_2_0	  = 1	 (fixed)
+eps_s_li_2_1	  = 3.78867	 +/-  0.868562	(limited)
+eps_s_li_2_2	  = 4.18137	 +/-  0.960073	(limited)
+eps_s_li_2_3	  = 3.70153	 +/-  0.866446	(limited)
+eps_s_li_2_4	  = 2.35549	 +/-  0.624185	(limited)
+eps_s_bo_2_0	  = 1	 (fixed)
+eps_s_bo_2_1	  = 1	 (fixed)
+eps_s_bo_2_2	  = 1	 (fixed)
+eps_s_bo_2_3	  = 1	 (fixed)
+eps_s_bo_2_4	  = 1	 (fixed)
+eps_s_ni_2_0	  = 1	 (fixed)
+eps_s_ni_2_1	  = 1	 (fixed)
+eps_s_ni_2_2	  = 1	 (fixed)
+eps_s_ni_2_3	  = 1	 (fixed)
+eps_s_ni_2_4	  = 1	 (fixed)
+eps_s_dc_3_0	  = 1	 (fixed)
+eps_s_dc_3_1	  = 0.274585	 +/-  0.000474967	(limited)
+eps_s_dc_3_2	  = 0.185004	 +/-  0.000378711	(limited)
+eps_s_dc_3_3	  = 0.15224	 +/-  0.000342343	(limited)
+eps_s_dc_3_4	  = 0.131249	 +/-  0.000309855	(limited)
+eps_s_li_3_0	  = 1	 (fixed)
+eps_s_li_3_1	  = 0.186018	 +/-  0.0336129	(limited)
+eps_s_li_3_2	  = 0.0982258	 +/-  0.0264586	(limited)
+eps_s_li_3_3	  = 0.0594944	 +/-  0.0233469	(limited)
+eps_s_li_3_4	  = 0.0648053	 +/-  0.022075	(limited)
+eps_s_bo_3_0	  = 1	 (fixed)
+eps_s_bo_3_1	  = 1	 (fixed)
+eps_s_bo_3_2	  = 1	 (fixed)
+eps_s_bo_3_3	  = 1	 (fixed)
+eps_s_bo_3_4	  = 1	 (fixed)
+eps_s_ni_3_0	  = 1	 (fixed)
+eps_s_ni_3_1	  = 1	 (fixed)
+eps_s_ni_3_2	  = 1	 (fixed)
+eps_s_ni_3_3	  = 1	 (fixed)
+eps_s_ni_3_4	  = 1	 (fixed)
+n_dc	  = 1439.02	 +/-  1.2756	(limited)
+tau_short	  = 15.9	 (fixed)
+CHI2/NDF: 15031.5/14971
+Warning in <TROOT::Append>: Replacing existing TH1: h_cov (Potential memory leak).
+Info in <TCanvas::Print>: png file h_cov_1.png has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_0_0_0_0.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_0_0_0_0.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_0_0_0_1.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_0_0_0_1.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_0_0_0_2.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_0_0_0_2.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_0_0_0_3.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_0_0_0_3.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_0_0_0_4.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_0_0_0_4.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_0_0_1_0.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_0_0_1_0.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_0_0_1_1.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_0_0_1_1.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_0_0_1_2.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_0_0_1_2.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_0_0_1_3.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_0_0_1_3.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_0_0_1_4.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_0_0_1_4.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_0_0_2_0.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_0_0_2_0.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_0_0_2_1.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_0_0_2_1.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_0_0_2_2.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_0_0_2_2.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_0_0_2_3.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_0_0_2_3.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_0_0_2_4.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_0_0_2_4.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_0_0_3_0.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_0_0_3_0.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_0_0_3_1.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_0_0_3_1.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_0_0_3_2.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_0_0_3_2.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_0_0_3_3.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_0_0_3_3.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_0_0_3_4.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_0_0_3_4.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_1_0_0_0.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_1_0_0_0.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_1_0_0_1.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_1_0_0_1.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_1_0_0_2.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_1_0_0_2.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_1_0_0_3.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_1_0_0_3.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_1_0_0_4.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_1_0_0_4.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_1_0_1_0.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_1_0_1_0.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_1_0_1_1.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_1_0_1_1.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_1_0_1_2.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_1_0_1_2.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_1_0_1_3.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_1_0_1_3.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_1_0_1_4.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_1_0_1_4.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_1_0_2_0.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_1_0_2_0.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_1_0_2_1.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_1_0_2_1.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_1_0_2_2.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_1_0_2_2.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_1_0_2_3.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_1_0_2_3.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_1_0_2_4.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_1_0_2_4.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_1_0_3_0.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_1_0_3_0.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_1_0_3_1.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_1_0_3_1.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_1_0_3_2.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_1_0_3_2.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_1_0_3_3.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_1_0_3_3.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_1_0_3_4.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_1_0_3_4.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_2_0_0_0.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_2_0_0_0.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_2_0_0_1.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_2_0_0_1.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_2_0_0_2.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_2_0_0_2.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_2_0_0_3.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_2_0_0_3.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_2_0_0_4.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_2_0_0_4.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_2_0_1_0.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_2_0_1_0.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_2_0_1_1.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_2_0_1_1.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_2_0_1_2.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_2_0_1_2.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_2_0_1_3.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_2_0_1_3.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_2_0_1_4.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_2_0_1_4.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_2_0_2_0.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_2_0_2_0.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_2_0_2_1.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_2_0_2_1.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_2_0_2_2.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_2_0_2_2.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_2_0_2_3.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_2_0_2_3.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_2_0_2_4.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_2_0_2_4.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_2_0_3_0.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_2_0_3_0.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_2_0_3_1.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_2_0_3_1.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_2_0_3_2.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_2_0_3_2.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_2_0_3_3.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_2_0_3_3.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_1_2_0_3_4.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_1_2_0_3_4.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits_slice/cfit_ep_1.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits_slice/cfit_ep_1.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits_slice/cfit_ed_1.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits_slice/cfit_ed_1.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits_slice/cfit_dist_1.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits_slice/cfit_dist_1.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits_slice/cfit_dt_1.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits_slice/cfit_dt_1.pdf has been created
+READING FILE:./hists/EH3_dtlSH_0_0_0.root
+READING FILE:./hists/EH3_dtlSH_0_0_1.root
+READING FILE:./hists/EH3_dtlSH_0_0_2.root
+READING FILE:./hists/EH3_dtlSH_0_0_3.root
+READING FILE:./hists/EH3_dtlSH_0_0_4.root
+READING FILE:./hists/EH3_dtlSH_0_1_0.root
+READING FILE:./hists/EH3_dtlSH_0_1_1.root
+READING FILE:./hists/EH3_dtlSH_0_1_2.root
+READING FILE:./hists/EH3_dtlSH_0_1_3.root
+READING FILE:./hists/EH3_dtlSH_0_1_4.root
+READING FILE:./hists/EH3_dtlSH_0_2_0.root
+READING FILE:./hists/EH3_dtlSH_0_2_1.root
+READING FILE:./hists/EH3_dtlSH_0_2_2.root
+READING FILE:./hists/EH3_dtlSH_0_2_3.root
+READING FILE:./hists/EH3_dtlSH_0_2_4.root
+READING FILE:./hists/EH3_dtlSH_0_3_0.root
+READING FILE:./hists/EH3_dtlSH_0_3_1.root
+READING FILE:./hists/EH3_dtlSH_0_3_2.root
+READING FILE:./hists/EH3_dtlSH_0_3_3.root
+READING FILE:./hists/EH3_dtlSH_0_3_4.root
+READING FILE:./hists/EH3_dtlSH_1_0_0.root
+READING FILE:./hists/EH3_dtlSH_1_0_1.root
+READING FILE:./hists/EH3_dtlSH_1_0_2.root
+READING FILE:./hists/EH3_dtlSH_1_0_3.root
+READING FILE:./hists/EH3_dtlSH_1_0_4.root
+READING FILE:./hists/EH3_dtlSH_1_1_0.root
+READING FILE:./hists/EH3_dtlSH_1_1_1.root
+READING FILE:./hists/EH3_dtlSH_1_1_2.root
+READING FILE:./hists/EH3_dtlSH_1_1_3.root
+READING FILE:./hists/EH3_dtlSH_1_1_4.root
+READING FILE:./hists/EH3_dtlSH_1_2_0.root
+READING FILE:./hists/EH3_dtlSH_1_2_1.root
+READING FILE:./hists/EH3_dtlSH_1_2_2.root
+READING FILE:./hists/EH3_dtlSH_1_2_3.root
+READING FILE:./hists/EH3_dtlSH_1_2_4.root
+READING FILE:./hists/EH3_dtlSH_1_3_0.root
+READING FILE:./hists/EH3_dtlSH_1_3_1.root
+READING FILE:./hists/EH3_dtlSH_1_3_2.root
+READING FILE:./hists/EH3_dtlSH_1_3_3.root
+READING FILE:./hists/EH3_dtlSH_1_3_4.root
+READING FILE:./hists/EH3_dtlSH_2_0_0.root
+READING FILE:./hists/EH3_dtlSH_2_0_1.root
+READING FILE:./hists/EH3_dtlSH_2_0_2.root
+READING FILE:./hists/EH3_dtlSH_2_0_3.root
+READING FILE:./hists/EH3_dtlSH_2_0_4.root
+READING FILE:./hists/EH3_dtlSH_2_1_0.root
+READING FILE:./hists/EH3_dtlSH_2_1_1.root
+READING FILE:./hists/EH3_dtlSH_2_1_2.root
+READING FILE:./hists/EH3_dtlSH_2_1_3.root
+READING FILE:./hists/EH3_dtlSH_2_1_4.root
+READING FILE:./hists/EH3_dtlSH_2_2_0.root
+READING FILE:./hists/EH3_dtlSH_2_2_1.root
+READING FILE:./hists/EH3_dtlSH_2_2_2.root
+READING FILE:./hists/EH3_dtlSH_2_2_3.root
+READING FILE:./hists/EH3_dtlSH_2_2_4.root
+READING FILE:./hists/EH3_dtlSH_2_3_0.root
+READING FILE:./hists/EH3_dtlSH_2_3_1.root
+READING FILE:./hists/EH3_dtlSH_2_3_2.root
+READING FILE:./hists/EH3_dtlSH_2_3_3.root
+READING FILE:./hists/EH3_dtlSH_2_3_4.root
+INITIALIZING MINIMIZER
+Initializing parameter  0                rmu_0   5.83e-04   5.83e-06
+Initializing parameter  1               n_li_0   1.00e-02   1.00e-04
+Initializing parameter  2               n_bo_0   0.00e+00   0.00e+00
+Initializing parameter  3               n_ni_0   0.00e+00   0.00e+00
+Initializing parameter  4                rmu_1   4.61e-04   4.61e-06
+Initializing parameter  5               n_li_1   1.50e-01   1.50e-03
+Initializing parameter  6               n_bo_1   0.00e+00   0.00e+00
+Initializing parameter  7               n_ni_1   0.00e+00   0.00e+00
+Initializing parameter  8                rmu_2   1.37e-05   1.37e-07
+Initializing parameter  9               n_li_2   4.50e-01   4.50e-03
+Initializing parameter 10               n_bo_2   0.00e+00   0.00e+00
+Initializing parameter 11               n_ni_2   0.00e+00   0.00e+00
+Initializing parameter 12         eps_s_dc_0_0   1.00e+00   0.00e+00
+Initializing parameter 13         eps_s_dc_0_1   1.50e-01   1.50e-03
+Initializing parameter 14         eps_s_dc_0_2   3.40e-02   3.40e-04
+Initializing parameter 15         eps_s_dc_0_3   1.36e-03   1.36e-05
+Initializing parameter 16         eps_s_dc_0_4   1.61e-04   1.61e-06
+Initializing parameter 17         eps_s_li_0_0   1.00e+00   0.00e+00
+Initializing parameter 18         eps_s_li_0_1   1.95e+00   0.00e+00
+Initializing parameter 19         eps_s_li_0_2   1.91e+00   0.00e+00
+Initializing parameter 20         eps_s_li_0_3   1.04e+00   0.00e+00
+Initializing parameter 21         eps_s_li_0_4   1.43e-01   0.00e+00
+Initializing parameter 22         eps_s_bo_0_0   1.00e+00   0.00e+00
+Initializing parameter 23         eps_s_bo_0_1   1.00e+00   0.00e+00
+Initializing parameter 24         eps_s_bo_0_2   1.00e+00   0.00e+00
+Initializing parameter 25         eps_s_bo_0_3   1.00e+00   0.00e+00
+Initializing parameter 26         eps_s_bo_0_4   1.00e+00   0.00e+00
+Initializing parameter 27         eps_s_ni_0_0   1.00e+00   0.00e+00
+Initializing parameter 28         eps_s_ni_0_1   1.00e+00   0.00e+00
+Initializing parameter 29         eps_s_ni_0_2   1.00e+00   0.00e+00
+Initializing parameter 30         eps_s_ni_0_3   1.00e+00   0.00e+00
+Initializing parameter 31         eps_s_ni_0_4   1.00e+00   0.00e+00
+Initializing parameter 32         eps_s_dc_1_0   1.00e+00   0.00e+00
+Initializing parameter 33         eps_s_dc_1_1   1.00e-02   1.00e-04
+Initializing parameter 34         eps_s_dc_1_2   5.05e-02   5.05e-04
+Initializing parameter 35         eps_s_dc_1_3   9.73e-02   9.73e-04
+Initializing parameter 36         eps_s_dc_1_4   2.00e-05   2.00e-07
+Initializing parameter 37         eps_s_li_1_0   1.00e+00   0.00e+00
+Initializing parameter 38         eps_s_li_1_1   1.00e-02   1.00e-04
+Initializing parameter 39         eps_s_li_1_2   5.05e-02   5.05e-04
+Initializing parameter 40         eps_s_li_1_3   9.73e-02   9.73e-04
+Initializing parameter 41         eps_s_li_1_4   2.00e-05   2.00e-07
+Initializing parameter 42         eps_s_bo_1_0   1.00e+00   0.00e+00
+Initializing parameter 43         eps_s_bo_1_1   1.00e+00   0.00e+00
+Initializing parameter 44         eps_s_bo_1_2   1.00e+00   0.00e+00
+Initializing parameter 45         eps_s_bo_1_3   1.00e+00   0.00e+00
+Initializing parameter 46         eps_s_bo_1_4   1.00e+00   0.00e+00
+Initializing parameter 47         eps_s_ni_1_0   1.00e+00   0.00e+00
+Initializing parameter 48         eps_s_ni_1_1   1.00e+00   0.00e+00
+Initializing parameter 49         eps_s_ni_1_2   1.00e+00   0.00e+00
+Initializing parameter 50         eps_s_ni_1_3   1.00e+00   0.00e+00
+Initializing parameter 51         eps_s_ni_1_4   1.00e+00   0.00e+00
+Initializing parameter 52         eps_s_dc_2_0   1.00e+00   0.00e+00
+Initializing parameter 53         eps_s_dc_2_1   4.33e+00   4.33e-02
+Initializing parameter 54         eps_s_dc_2_2   7.09e+00   7.09e-02
+Initializing parameter 55         eps_s_dc_2_3   9.45e+00   9.45e-02
+Initializing parameter 56         eps_s_dc_2_4   1.23e+01   1.23e-01
+Initializing parameter 57         eps_s_li_2_0   1.00e+00   0.00e+00
+Initializing parameter 58         eps_s_li_2_1   4.33e+00   4.33e-02
+Initializing parameter 59         eps_s_li_2_2   7.09e+00   7.09e-02
+Initializing parameter 60         eps_s_li_2_3   9.45e+00   9.45e-02
+Initializing parameter 61         eps_s_li_2_4   1.23e+01   1.23e-01
+Initializing parameter 62         eps_s_bo_2_0   1.00e+00   0.00e+00
+Initializing parameter 63         eps_s_bo_2_1   1.00e+00   0.00e+00
+Initializing parameter 64         eps_s_bo_2_2   1.00e+00   0.00e+00
+Initializing parameter 65         eps_s_bo_2_3   1.00e+00   0.00e+00
+Initializing parameter 66         eps_s_bo_2_4   1.00e+00   0.00e+00
+Initializing parameter 67         eps_s_ni_2_0   1.00e+00   0.00e+00
+Initializing parameter 68         eps_s_ni_2_1   1.00e+00   0.00e+00
+Initializing parameter 69         eps_s_ni_2_2   1.00e+00   0.00e+00
+Initializing parameter 70         eps_s_ni_2_3   1.00e+00   0.00e+00
+Initializing parameter 71         eps_s_ni_2_4   1.00e+00   0.00e+00
+Initializing parameter 72         eps_s_dc_3_0   1.00e+00   0.00e+00
+Initializing parameter 73         eps_s_dc_3_1   5.65e-01   5.65e-03
+Initializing parameter 74         eps_s_dc_3_2   5.13e-01   5.13e-03
+Initializing parameter 75         eps_s_dc_3_3   4.92e-01   4.92e-03
+Initializing parameter 76         eps_s_dc_3_4   4.79e-01   4.79e-03
+Initializing parameter 77         eps_s_li_3_0   1.00e+00   0.00e+00
+Initializing parameter 78         eps_s_li_3_1   5.65e-01   5.65e-03
+Initializing parameter 79         eps_s_li_3_2   5.13e-01   5.13e-03
+Initializing parameter 80         eps_s_li_3_3   4.92e-01   4.92e-03
+Initializing parameter 81         eps_s_li_3_4   4.79e-01   4.79e-03
+Initializing parameter 82         eps_s_bo_3_0   1.00e+00   0.00e+00
+Initializing parameter 83         eps_s_bo_3_1   1.00e+00   0.00e+00
+Initializing parameter 84         eps_s_bo_3_2   1.00e+00   0.00e+00
+Initializing parameter 85         eps_s_bo_3_3   1.00e+00   0.00e+00
+Initializing parameter 86         eps_s_bo_3_4   1.00e+00   0.00e+00
+Initializing parameter 87         eps_s_ni_3_0   1.00e+00   0.00e+00
+Initializing parameter 88         eps_s_ni_3_1   1.00e+00   0.00e+00
+Initializing parameter 89         eps_s_ni_3_2   1.00e+00   0.00e+00
+Initializing parameter 90         eps_s_ni_3_3   1.00e+00   0.00e+00
+Initializing parameter 91         eps_s_ni_3_4   1.00e+00   0.00e+00
+Initializing parameter 92                 n_dc   4.74e+02   4.74e+00
+Initializing parameter 93            tau_short   1.59e+01   0.00e+00
+
+Minuit2Minimizer: Minimize with max-calls 1000000 convergence for edm < 0.01 strategy 1
+VariableMetric: start iterating until Edm is < 2e-05
+VariableMetric: Initial state   - FCN =   51942.16103223 Edm =  4.32747e+07 NCalls =      1
+VariableMetric: Iteration #   0 - FCN =   51942.16103223 Edm =  4.32747e+07 NCalls =      1
+VariableMetric: Iteration #   1 - FCN =   15909.55705693 Edm =       125212 NCalls =      5
+VariableMetric: Iteration #   2 - FCN =   15750.85242729 Edm =      4770.34 NCalls =      8
+VariableMetric: Iteration #   3 - FCN =   15703.08998095 Edm =       4442.2 NCalls =     11
+VariableMetric: Iteration #   4 - FCN =   15657.82447595 Edm =      178.212 NCalls =     14
+VariableMetric: Iteration #   5 - FCN =   15621.51743674 Edm =      391.882 NCalls =     16
+VariableMetric: Iteration #   6 - FCN =   15608.20724275 Edm =      560.392 NCalls =     18
+VariableMetric: Iteration #   7 - FCN =   15579.94352774 Edm =      711.581 NCalls =     20
+VariableMetric: Iteration #   8 - FCN =   15542.08748217 Edm =      728.866 NCalls =     22
+VariableMetric: Iteration #   9 - FCN =    15504.2391243 Edm =      649.359 NCalls =     24
+VariableMetric: Iteration #  10 - FCN =   15485.52843442 Edm =      116.142 NCalls =     26
+VariableMetric: Iteration #  11 - FCN =   15478.36561396 Edm =      73.7216 NCalls =     28
+VariableMetric: Iteration #  12 - FCN =   15469.17602772 Edm =      185.989 NCalls =     30
+VariableMetric: Iteration #  13 - FCN =   15439.01242322 Edm =      848.706 NCalls =     32
+VariableMetric: Iteration #  14 - FCN =   15376.05010978 Edm =      304.936 NCalls =     34
+VariableMetric: Iteration #  15 - FCN =   15362.92069885 Edm =      185.753 NCalls =     36
+VariableMetric: Iteration #  16 - FCN =   15348.98308534 Edm =      68.1952 NCalls =     38
+VariableMetric: Iteration #  17 - FCN =   15337.83927377 Edm =      253.314 NCalls =     40
+VariableMetric: Iteration #  18 - FCN =   15325.52883097 Edm =       10.838 NCalls =     42
+VariableMetric: Iteration #  19 - FCN =   15264.52364064 Edm =      4.17585 NCalls =     45
+VariableMetric: Iteration #  20 - FCN =   15251.26378877 Edm =      17.2183 NCalls =     47
+VariableMetric: Iteration #  21 - FCN =   15199.49997014 Edm =      48.1684 NCalls =     50
+VariableMetric: Iteration #  22 - FCN =    15051.8821482 Edm =      43.0865 NCalls =     54
+VariableMetric: Iteration #  23 - FCN =   14997.93026577 Edm =      3.76979 NCalls =     56
+VariableMetric: Iteration #  24 - FCN =   14986.35339732 Edm =      11.1537 NCalls =     58
+VariableMetric: Iteration #  25 - FCN =   14863.73806246 Edm =      67.3607 NCalls =     62
+VariableMetric: Iteration #  26 - FCN =   14731.82983531 Edm =      23.3304 NCalls =     64
+VariableMetric: Iteration #  27 - FCN =   14685.74675256 Edm =      12.7538 NCalls =     65
+VariableMetric: Iteration #  28 - FCN =    14676.2769102 Edm =     0.536643 NCalls =     67
+VariableMetric: Iteration #  29 - FCN =   14675.06310168 Edm =     0.726786 NCalls =     69
+VariableMetric: Iteration #  30 - FCN =    14659.4614235 Edm =      8.19589 NCalls =     74
+VariableMetric: Iteration #  31 - FCN =   14640.03714288 Edm =     0.963695 NCalls =     77
+VariableMetric: Iteration #  32 - FCN =   14638.44156578 Edm =     0.210054 NCalls =     79
+VariableMetric: Iteration #  33 - FCN =   14637.38311617 Edm =     0.492247 NCalls =     81
+VariableMetric: Iteration #  34 - FCN =   14626.84959239 Edm =      5.77028 NCalls =     85
+VariableMetric: Iteration #  35 - FCN =   14602.29659787 Edm =     0.778013 NCalls =     88
+VariableMetric: Iteration #  36 - FCN =    14601.3938418 Edm =     0.100905 NCalls =     90
+VariableMetric: Iteration #  37 - FCN =    14600.5595487 Edm =     0.851363 NCalls =     93
+VariableMetric: Iteration #  38 - FCN =    14595.6938405 Edm =      2.41984 NCalls =     98
+VariableMetric: Iteration #  39 - FCN =   14590.44349812 Edm =      0.35058 NCalls =    100
+VariableMetric: Iteration #  40 - FCN =   14590.05091447 Edm =      0.02968 NCalls =    102
+VariableMetric: Iteration #  41 - FCN =    14589.9575447 Edm =    0.0488056 NCalls =    104
+VariableMetric: Iteration #  42 - FCN =   14588.79922857 Edm =      1.07005 NCalls =    108
+VariableMetric: Iteration #  43 - FCN =   14581.63450744 Edm =     0.574354 NCalls =    112
+VariableMetric: Iteration #  44 - FCN =   14581.04216333 Edm =    0.0397659 NCalls =    113
+VariableMetric: Iteration #  45 - FCN =     14580.988758 Edm =    0.0247664 NCalls =    115
+VariableMetric: Iteration #  46 - FCN =   14580.78906577 Edm =     0.183226 NCalls =    118
+VariableMetric: Iteration #  47 - FCN =   14578.90958687 Edm =      0.91609 NCalls =    123
+VariableMetric: Iteration #  48 - FCN =   14576.68926026 Edm =      0.11943 NCalls =    125
+VariableMetric: Iteration #  49 - FCN =   14576.57058224 Edm =    0.0326835 NCalls =    127
+VariableMetric: Iteration #  50 - FCN =   14576.33496974 Edm =     0.225682 NCalls =    130
+VariableMetric: Iteration #  51 - FCN =   14571.70282418 Edm =      4.93973 NCalls =    137
+VariableMetric: Iteration #  52 - FCN =   14570.88692951 Edm =     0.916407 NCalls =    141
+VariableMetric: Iteration #  53 - FCN =   14569.93007051 Edm =     0.994839 NCalls =    145
+VariableMetric: Iteration #  54 - FCN =   14559.28649049 Edm =      3.07586 NCalls =    151
+VariableMetric: Iteration #  55 - FCN =   14558.11041216 Edm =     0.682665 NCalls =    153
+VariableMetric: Iteration #  56 - FCN =   14557.73759349 Edm =    0.0883627 NCalls =    155
+VariableMetric: Iteration #  57 - FCN =   14557.68350109 Edm =    0.0501559 NCalls =    157
+VariableMetric: Iteration #  58 - FCN =   14557.60983725 Edm =    0.0666531 NCalls =    159
+VariableMetric: Iteration #  59 - FCN =   14557.52535886 Edm =     0.113759 NCalls =    161
+VariableMetric: Iteration #  60 - FCN =    14557.0963227 Edm =     0.219266 NCalls =    165
+VariableMetric: Iteration #  61 - FCN =    14555.7001196 Edm =     0.368369 NCalls =    168
+VariableMetric: Iteration #  62 - FCN =   14555.19730229 Edm =    0.0283339 NCalls =    171
+VariableMetric: Iteration #  63 - FCN =   14555.14128145 Edm =    0.0319443 NCalls =    173
+VariableMetric: Iteration #  64 - FCN =   14554.75563339 Edm =     0.380425 NCalls =    177
+VariableMetric: Iteration #  65 - FCN =   14554.00943802 Edm =     0.046298 NCalls =    179
+VariableMetric: Iteration #  66 - FCN =   14553.95957725 Edm =   0.00740089 NCalls =    181
+VariableMetric: Iteration #  67 - FCN =   14553.91951527 Edm =    0.0390395 NCalls =    184
+VariableMetric: Iteration #  68 - FCN =   14553.34402888 Edm =     0.414415 NCalls =    189
+VariableMetric: Iteration #  69 - FCN =   14552.53829279 Edm =    0.0569847 NCalls =    191
+VariableMetric: Iteration #  70 - FCN =   14552.49038146 Edm =   0.00288757 NCalls =    193
+VariableMetric: Iteration #  71 - FCN =   14552.48472238 Edm =   0.00346963 NCalls =    195
+VariableMetric: Iteration #  72 - FCN =   14552.40327001 Edm =    0.0776387 NCalls =    200
+VariableMetric: Iteration #  73 - FCN =   14551.00011734 Edm =     0.213609 NCalls =    204
+VariableMetric: Iteration #  74 - FCN =   14550.74094134 Edm =   0.00182772 NCalls =    206
+VariableMetric: Iteration #  75 - FCN =   14550.73685504 Edm =   0.00213918 NCalls =    208
+VariableMetric: Iteration #  76 - FCN =   14550.57922743 Edm =    0.0666029 NCalls =    213
+VariableMetric: Iteration #  77 - FCN =   14550.42573023 Edm =   0.00405016 NCalls =    215
+VariableMetric: Iteration #  78 - FCN =   14550.42088102 Edm =  0.000505216 NCalls =    217
+VariableMetric: Iteration #  79 - FCN =   14550.40394122 Edm =    0.0153794 NCalls =    221
+VariableMetric: Iteration #  80 - FCN =   14549.88392525 Edm =    0.0498374 NCalls =    225
+VariableMetric: Iteration #  81 - FCN =   14549.83196092 Edm =  0.000631658 NCalls =    227
+VariableMetric: Iteration #  82 - FCN =   14549.82978217 Edm =   0.00155018 NCalls =    229
+VariableMetric: Iteration #  83 - FCN =   14549.29185442 Edm =     0.352243 NCalls =    236
+VariableMetric: Iteration #  84 - FCN =   14540.75260463 Edm =       5.3364 NCalls =    240
+VariableMetric: Iteration #  85 - FCN =    14523.2576025 Edm =       2.2616 NCalls =    244
+VariableMetric: Iteration #  86 - FCN =   14516.45409927 Edm =      3.60943 NCalls =    247
+VariableMetric: Iteration #  87 - FCN =   14508.33815557 Edm =      1.43794 NCalls =    253
+VariableMetric: Iteration #  88 - FCN =    14506.7080445 Edm =    0.0974694 NCalls =    255
+VariableMetric: Iteration #  89 - FCN =    14506.6581526 Edm =    0.0538059 NCalls =    257
+VariableMetric: Iteration #  90 - FCN =    14506.6239185 Edm =   0.00196632 NCalls =    258
+VariableMetric: Iteration #  91 - FCN =   14506.62083089 Edm =  0.000219242 NCalls =    260
+VariableMetric: Iteration #  92 - FCN =   14506.62052607 Edm =  7.17553e-05 NCalls =    262
+VariableMetric: Iteration #  93 - FCN =   14506.61919178 Edm =   0.00131277 NCalls =    266
+VariableMetric: Iteration #  94 - FCN =   14506.52476215 Edm =    0.0386965 NCalls =    273
+VariableMetric: Iteration #  95 - FCN =     14505.986264 Edm =     0.214843 NCalls =    275
+VariableMetric: Iteration #  96 - FCN =   14505.31276574 Edm =    0.0174191 NCalls =    277
+VariableMetric: Iteration #  97 - FCN =   14505.28002135 Edm =   0.00114051 NCalls =    279
+VariableMetric: Iteration #  98 - FCN =   14505.27858214 Edm =   3.6315e-05 NCalls =    281
+VariableMetric: Iteration #  99 - FCN =   14505.27853788 Edm =  9.58402e-08 NCalls =    283
+Minuit2Minimizer : Valid minimum - status = 0
+FVAL  = 14505.27853788014
+Edm   = 9.58401706275134513e-08
+Nfcn  = 283
+rmu_0	  = 0.000581992	 +/-  3.4346e-07	(limited)
+n_li_0	  = 0.029931	 +/-  0.0362477	(limited)
+n_bo_0	  = 0	 (fixed)
+n_ni_0	  = 0	 (fixed)
+rmu_1	  = 0.000461887	 +/-  3.20237e-07	(limited)
+n_li_1	  = 0.261034	 +/-  0.0365335	(limited)
+n_bo_1	  = 0	 (fixed)
+n_ni_1	  = 0	 (fixed)
+rmu_2	  = 1.34634e-05	 +/-  2.27481e-08	(limited)
+n_li_2	  = 0.637225	 +/-  0.0151823	(limited)
+n_bo_2	  = 0	 (fixed)
+n_ni_2	  = 0	 (fixed)
+eps_s_dc_0_0	  = 1	 (fixed)
+eps_s_dc_0_1	  = 0.148946	 +/-  0.000262333	(limited)
+eps_s_dc_0_2	  = 0.03327	 +/-  0.000124201	(limited)
+eps_s_dc_0_3	  = 0.000998589	 +/-  3.16672e-05	(limited)
+eps_s_dc_0_4	  = 0.000104675	 +/-  8.30686e-06	(limited)
+eps_s_li_0_0	  = 1	 (fixed)
+eps_s_li_0_1	  = 1.94794	 (fixed)
+eps_s_li_0_2	  = 1.91063	 (fixed)
+eps_s_li_0_3	  = 1.03612	 (fixed)
+eps_s_li_0_4	  = 0.143062	 (fixed)
+eps_s_bo_0_0	  = 1	 (fixed)
+eps_s_bo_0_1	  = 1	 (fixed)
+eps_s_bo_0_2	  = 1	 (fixed)
+eps_s_bo_0_3	  = 1	 (fixed)
+eps_s_bo_0_4	  = 1	 (fixed)
+eps_s_ni_0_0	  = 1	 (fixed)
+eps_s_ni_0_1	  = 1	 (fixed)
+eps_s_ni_0_2	  = 1	 (fixed)
+eps_s_ni_0_3	  = 1	 (fixed)
+eps_s_ni_0_4	  = 1	 (fixed)
+eps_s_dc_1_0	  = 1	 (fixed)
+eps_s_dc_1_1	  = 0.00995135	 +/-  6.40585e-05	(limited)
+eps_s_dc_1_2	  = 0.0500035	 +/-  0.0001493	(limited)
+eps_s_dc_1_3	  = 0.0967364	 +/-  0.000213611	(limited)
+eps_s_dc_1_4	  = 1.3386e-05	 +/-  3.59081e-06	(limited)
+eps_s_li_1_0	  = 1	 (fixed)
+eps_s_li_1_1	  = 0.0784878	 +/-  0.0173501	(limited)
+eps_s_li_1_2	  = 0.49776	 +/-  0.0606498	(limited)
+eps_s_li_1_3	  = 0.887085	 +/-  0.0995297	(limited)
+eps_s_li_1_4	  = 0.0087946	 +/-  0.00304553	(limited)
+eps_s_bo_1_0	  = 1	 (fixed)
+eps_s_bo_1_1	  = 1	 (fixed)
+eps_s_bo_1_2	  = 1	 (fixed)
+eps_s_bo_1_3	  = 1	 (fixed)
+eps_s_bo_1_4	  = 1	 (fixed)
+eps_s_ni_1_0	  = 1	 (fixed)
+eps_s_ni_1_1	  = 1	 (fixed)
+eps_s_ni_1_2	  = 1	 (fixed)
+eps_s_ni_1_3	  = 1	 (fixed)
+eps_s_ni_1_4	  = 1	 (fixed)
+eps_s_dc_2_0	  = 1	 (fixed)
+eps_s_dc_2_1	  = 4.33962	 +/-  0.0168063	(limited)
+eps_s_dc_2_2	  = 7.11077	 +/-  0.0264425	(limited)
+eps_s_dc_2_3	  = 9.48542	 +/-  0.0348016	(limited)
+eps_s_dc_2_4	  = 12.3344	 +/-  0.0447828	(limited)
+eps_s_li_2_0	  = 1	 (fixed)
+eps_s_li_2_1	  = 3.57487	 +/-  0.638439	(limited)
+eps_s_li_2_2	  = 4.04529	 +/-  0.732482	(limited)
+eps_s_li_2_3	  = 3.59373	 +/-  0.698003	(limited)
+eps_s_li_2_4	  = 1.79856	 +/-  0.500389	(limited)
+eps_s_bo_2_0	  = 1	 (fixed)
+eps_s_bo_2_1	  = 1	 (fixed)
+eps_s_bo_2_2	  = 1	 (fixed)
+eps_s_bo_2_3	  = 1	 (fixed)
+eps_s_bo_2_4	  = 1	 (fixed)
+eps_s_ni_2_0	  = 1	 (fixed)
+eps_s_ni_2_1	  = 1	 (fixed)
+eps_s_ni_2_2	  = 1	 (fixed)
+eps_s_ni_2_3	  = 1	 (fixed)
+eps_s_ni_2_4	  = 1	 (fixed)
+eps_s_dc_3_0	  = 1	 (fixed)
+eps_s_dc_3_1	  = 0.56646	 +/-  0.000975847	(limited)
+eps_s_dc_3_2	  = 0.514561	 +/-  0.000913796	(limited)
+eps_s_dc_3_3	  = 0.492868	 +/-  0.000887742	(limited)
+eps_s_dc_3_4	  = 0.479955	 +/-  0.000869492	(limited)
+eps_s_li_3_0	  = 1	 (fixed)
+eps_s_li_3_1	  = 0.198472	 +/-  0.0360087	(limited)
+eps_s_li_3_2	  = 0.0977457	 +/-  0.0316954	(limited)
+eps_s_li_3_3	  = 0.0908825	 +/-  0.0314597	(limited)
+eps_s_li_3_4	  = 0.0511234	 +/-  0.0283497	(limited)
+eps_s_bo_3_0	  = 1	 (fixed)
+eps_s_bo_3_1	  = 1	 (fixed)
+eps_s_bo_3_2	  = 1	 (fixed)
+eps_s_bo_3_3	  = 1	 (fixed)
+eps_s_bo_3_4	  = 1	 (fixed)
+eps_s_ni_3_0	  = 1	 (fixed)
+eps_s_ni_3_1	  = 1	 (fixed)
+eps_s_ni_3_2	  = 1	 (fixed)
+eps_s_ni_3_3	  = 1	 (fixed)
+eps_s_ni_3_4	  = 1	 (fixed)
+n_dc	  = 500.693	 +/-  0.161438	(limited)
+tau_short	  = 15.9	 (fixed)
+Info in <Minuit2>: Minuit2Minimizer::Hesse : Hesse is valid - matrix is accurate
+Minuit2Minimizer: Minimize with max-calls 1000000 convergence for edm < 0.01 strategy 2
+VariableMetric: start iterating until Edm is < 2e-05
+VariableMetric: Initial state   - FCN =   14505.27853788 Edm =  9.83818e-08 NCalls =      1
+VariableMetric: Iteration #   0 - FCN =   14505.27853788 Edm =  9.83818e-08 NCalls =      1
+VariableMetric: Iteration #   1 - FCN =   14505.27853778 Edm =  4.02894e-09 NCalls =      2
+VariableMetric: After Hessian   - FCN =   14505.27853778 Edm =  1.71098e-09 NCalls =    990
+VariableMetric: Iteration #   2 - FCN =   14505.27853778 Edm =  1.71098e-09 NCalls =    990
+Minuit2Minimizer : Valid minimum - status = 0
+FVAL  = 14505.2785377832734
+Edm   = 1.7109826671918452e-09
+Nfcn  = 990
+rmu_0	  = 0.000581992	 +/-  3.43534e-07	(limited)
+n_li_0	  = 0.0299288	 +/-  0.0372003	(limited)
+n_bo_0	  = 0	 (fixed)
+n_ni_0	  = 0	 (fixed)
+rmu_1	  = 0.000461887	 +/-  3.20067e-07	(limited)
+n_li_1	  = 0.261031	 +/-  0.0365609	(limited)
+n_bo_1	  = 0	 (fixed)
+n_ni_1	  = 0	 (fixed)
+rmu_2	  = 1.34634e-05	 +/-  2.27586e-08	(limited)
+n_li_2	  = 0.637225	 +/-  0.0151806	(limited)
+n_bo_2	  = 0	 (fixed)
+n_ni_2	  = 0	 (fixed)
+eps_s_dc_0_0	  = 1	 (fixed)
+eps_s_dc_0_1	  = 0.148946	 +/-  0.000262426	(limited)
+eps_s_dc_0_2	  = 0.03327	 +/-  0.000124526	(limited)
+eps_s_dc_0_3	  = 0.000998592	 +/-  3.17349e-05	(limited)
+eps_s_dc_0_4	  = 0.000104676	 +/-  8.33023e-06	(limited)
+eps_s_li_0_0	  = 1	 (fixed)
+eps_s_li_0_1	  = 1.94794	 (fixed)
+eps_s_li_0_2	  = 1.91063	 (fixed)
+eps_s_li_0_3	  = 1.03612	 (fixed)
+eps_s_li_0_4	  = 0.143062	 (fixed)
+eps_s_bo_0_0	  = 1	 (fixed)
+eps_s_bo_0_1	  = 1	 (fixed)
+eps_s_bo_0_2	  = 1	 (fixed)
+eps_s_bo_0_3	  = 1	 (fixed)
+eps_s_bo_0_4	  = 1	 (fixed)
+eps_s_ni_0_0	  = 1	 (fixed)
+eps_s_ni_0_1	  = 1	 (fixed)
+eps_s_ni_0_2	  = 1	 (fixed)
+eps_s_ni_0_3	  = 1	 (fixed)
+eps_s_ni_0_4	  = 1	 (fixed)
+eps_s_dc_1_0	  = 1	 (fixed)
+eps_s_dc_1_1	  = 0.00995135	 +/-  6.44791e-05	(limited)
+eps_s_dc_1_2	  = 0.0500035	 +/-  0.000149507	(limited)
+eps_s_dc_1_3	  = 0.0967364	 +/-  0.000213635	(limited)
+eps_s_dc_1_4	  = 1.33862e-05	 +/-  3.74282e-06	(limited)
+eps_s_li_1_0	  = 1	 (fixed)
+eps_s_li_1_1	  = 0.078486	 +/-  0.0175817	(limited)
+eps_s_li_1_2	  = 0.497761	 +/-  0.0612066	(limited)
+eps_s_li_1_3	  = 0.887077	 +/-  0.100835	(limited)
+eps_s_li_1_4	  = 0.0087946	 +/-  0.0031364	(limited)
+eps_s_bo_1_0	  = 1	 (fixed)
+eps_s_bo_1_1	  = 1	 (fixed)
+eps_s_bo_1_2	  = 1	 (fixed)
+eps_s_bo_1_3	  = 1	 (fixed)
+eps_s_bo_1_4	  = 1	 (fixed)
+eps_s_ni_1_0	  = 1	 (fixed)
+eps_s_ni_1_1	  = 1	 (fixed)
+eps_s_ni_1_2	  = 1	 (fixed)
+eps_s_ni_1_3	  = 1	 (fixed)
+eps_s_ni_1_4	  = 1	 (fixed)
+eps_s_dc_2_0	  = 1	 (fixed)
+eps_s_dc_2_1	  = 4.33962	 +/-  0.0167718	(limited)
+eps_s_dc_2_2	  = 7.11077	 +/-  0.0264629	(limited)
+eps_s_dc_2_3	  = 9.48542	 +/-  0.0347692	(limited)
+eps_s_dc_2_4	  = 12.3344	 +/-  0.0447523	(limited)
+eps_s_li_2_0	  = 1	 (fixed)
+eps_s_li_2_1	  = 3.57486	 +/-  0.643826	(limited)
+eps_s_li_2_2	  = 4.04527	 +/-  0.740582	(limited)
+eps_s_li_2_3	  = 3.59371	 +/-  0.699845	(limited)
+eps_s_li_2_4	  = 1.79858	 +/-  0.505698	(limited)
+eps_s_bo_2_0	  = 1	 (fixed)
+eps_s_bo_2_1	  = 1	 (fixed)
+eps_s_bo_2_2	  = 1	 (fixed)
+eps_s_bo_2_3	  = 1	 (fixed)
+eps_s_bo_2_4	  = 1	 (fixed)
+eps_s_ni_2_0	  = 1	 (fixed)
+eps_s_ni_2_1	  = 1	 (fixed)
+eps_s_ni_2_2	  = 1	 (fixed)
+eps_s_ni_2_3	  = 1	 (fixed)
+eps_s_ni_2_4	  = 1	 (fixed)
+eps_s_dc_3_0	  = 1	 (fixed)
+eps_s_dc_3_1	  = 0.56646	 +/-  0.000979129	(limited)
+eps_s_dc_3_2	  = 0.514561	 +/-  0.000918076	(limited)
+eps_s_dc_3_3	  = 0.492868	 +/-  0.000891955	(limited)
+eps_s_dc_3_4	  = 0.479955	 +/-  0.000876638	(limited)
+eps_s_li_3_0	  = 1	 (fixed)
+eps_s_li_3_1	  = 0.198471	 +/-  0.0358966	(limited)
+eps_s_li_3_2	  = 0.0977444	 +/-  0.0315951	(limited)
+eps_s_li_3_3	  = 0.0908834	 +/-  0.0308681	(limited)
+eps_s_li_3_4	  = 0.0511276	 +/-  0.0293483	(limited)
+eps_s_bo_3_0	  = 1	 (fixed)
+eps_s_bo_3_1	  = 1	 (fixed)
+eps_s_bo_3_2	  = 1	 (fixed)
+eps_s_bo_3_3	  = 1	 (fixed)
+eps_s_bo_3_4	  = 1	 (fixed)
+eps_s_ni_3_0	  = 1	 (fixed)
+eps_s_ni_3_1	  = 1	 (fixed)
+eps_s_ni_3_2	  = 1	 (fixed)
+eps_s_ni_3_3	  = 1	 (fixed)
+eps_s_ni_3_4	  = 1	 (fixed)
+n_dc	  = 500.693	 +/-  0.161862	(limited)
+tau_short	  = 15.9	 (fixed)
+rmu_0 5280.94 1.10479
+n_li_0 -0.000243109 -0.000192827
+n_bo_0 -nan -583.77
+n_ni_0 -nan -933.034
+rmu_1 5090.02 0.458247
+n_li_1 0.000564446 1.89165e-05
+n_bo_1 -nan -840.815
+n_ni_1 -nan -882.249
+rmu_2 28363.5 83.9769
+n_li_2 0.00230362 -0.00171235
+n_bo_2 -nan -10069
+n_ni_2 -nan -14569.9
+eps_s_dc_0_0 0.392902 -0.000230242
+eps_s_dc_0_1 2.22712 0.000548684
+eps_s_dc_0_2 2.43598 0.00323979
+eps_s_dc_0_3 1.90717 0.0375107
+eps_s_dc_0_4 1.72036 0.0312604
+eps_s_li_0_0 8.45828 8.45823
+eps_s_li_0_1 8.01615 8.01605
+eps_s_li_0_2 0.7148 0.714656
+eps_s_li_0_3 10.5821 10.5817
+eps_s_li_0_4 -254.452 -254.452
+eps_s_bo_0_0 0 0
+eps_s_bo_0_1 0 0
+eps_s_bo_0_2 0 0
+eps_s_bo_0_3 0 0
+eps_s_bo_0_4 0 0
+eps_s_ni_0_0 0 0
+eps_s_ni_0_1 0 0
+eps_s_ni_0_2 0 0
+eps_s_ni_0_3 0 0
+eps_s_ni_0_4 0 0
+eps_s_dc_1_0 0.351762 -0.000147936
+eps_s_dc_1_1 2.57933 0.00215679
+eps_s_dc_1_2 2.48326 0.00144528
+eps_s_dc_1_3 2.37997 0.000553231
+eps_s_dc_1_4 2.44593 0.0512873
+eps_s_li_1_0 0.000109139 1.14937e-06
+eps_s_li_1_1 0.000533047 -1.03558e-05
+eps_s_li_1_2 0.000347162 -1.54674e-06
+eps_s_li_1_3 0.000219408 -3.37329e-06
+eps_s_li_1_4 0.00723906 0.000389522
+eps_s_bo_1_0 0 0
+eps_s_bo_1_1 0 0
+eps_s_bo_1_2 0 0
+eps_s_bo_1_3 0 0
+eps_s_bo_1_4 0 0
+eps_s_ni_1_0 0 0
+eps_s_ni_1_1 0 0
+eps_s_ni_1_2 0 0
+eps_s_ni_1_3 0 0
+eps_s_ni_1_4 0 0
+eps_s_dc_2_0 0.0831897 -0.0021967
+eps_s_dc_2_1 0.0750617 -0.00182972
+eps_s_dc_2_2 0.0685598 -0.001302
+eps_s_dc_2_3 0.062907 -0.0008956
+eps_s_dc_2_4 0.0587621 0.00226117
+eps_s_li_2_0 0.000411092 0.000366291
+eps_s_li_2_1 -5.19004e-05 -8.46089e-05
+eps_s_li_2_2 -2.24829e-05 -4.47048e-05
+eps_s_li_2_3 1.16416e-05 -9.70601e-06
+eps_s_li_2_4 0.00010518 8.44545e-05
+eps_s_bo_2_0 0 0
+eps_s_bo_2_1 0 0
+eps_s_bo_2_2 0 0
+eps_s_bo_2_3 0 0
+eps_s_bo_2_4 0 0
+eps_s_ni_2_0 0 0
+eps_s_ni_2_1 0 0
+eps_s_ni_2_2 0 0
+eps_s_ni_2_3 0 0
+eps_s_ni_2_4 0 0
+eps_s_dc_3_0 0.66521 0.000321557
+eps_s_dc_3_1 0.806697 3.97613e-05
+eps_s_dc_3_2 0.824062 2.39221e-05
+eps_s_dc_3_3 0.831032 -9.55545e-05
+eps_s_dc_3_4 0.834953 -0.000644423
+eps_s_li_3_0 6.54836e-05 -4.46449e-06
+eps_s_li_3_1 0.000247456 1.61728e-05
+eps_s_li_3_2 0.000148877 1.2353e-05
+eps_s_li_3_3 0.000240175 3.02819e-06
+eps_s_li_3_4 0.000462507 -4.45932e-06
+eps_s_bo_3_0 0 0
+eps_s_bo_3_1 0 0
+eps_s_bo_3_2 0 0
+eps_s_bo_3_3 0 0
+eps_s_bo_3_4 0 0
+eps_s_ni_3_0 0 0
+eps_s_ni_3_1 0 0
+eps_s_ni_3_2 0 0
+eps_s_ni_3_3 0 0
+eps_s_ni_3_4 0 0
+n_dc 0.0241586 5.28012e-06
+tau_short 0 0
+rmu_0 1.10479
+n_li_0 -0.000192827
+n_bo_0 -583.77
+n_ni_0 -933.034
+rmu_1 0.458247
+n_li_1 1.89165e-05
+n_bo_1 -840.815
+n_ni_1 -882.249
+rmu_2 83.9769
+n_li_2 -0.00171235
+n_bo_2 -10069
+n_ni_2 -14569.9
+eps_s_dc_0_0 -0.000230242
+eps_s_dc_0_1 0.000548682
+eps_s_dc_0_2 0.00323979
+eps_s_dc_0_3 0.0375107
+eps_s_dc_0_4 0.0312604
+eps_s_li_0_0 8.45823
+eps_s_li_0_1 8.01605
+eps_s_li_0_2 0.714656
+eps_s_li_0_3 10.5817
+eps_s_li_0_4 -254.452
+eps_s_bo_0_0 0
+eps_s_bo_0_1 0
+eps_s_bo_0_2 0
+eps_s_bo_0_3 0
+eps_s_bo_0_4 0
+eps_s_ni_0_0 0
+eps_s_ni_0_1 0
+eps_s_ni_0_2 0
+eps_s_ni_0_3 0
+eps_s_ni_0_4 0
+eps_s_dc_1_0 -0.000147936
+eps_s_dc_1_1 0.00215679
+eps_s_dc_1_2 0.00144528
+eps_s_dc_1_3 0.000553231
+eps_s_dc_1_4 0.0512873
+eps_s_li_1_0 1.14937e-06
+eps_s_li_1_1 -1.03558e-05
+eps_s_li_1_2 -1.54674e-06
+eps_s_li_1_3 -3.37329e-06
+eps_s_li_1_4 0.000389522
+eps_s_bo_1_0 0
+eps_s_bo_1_1 0
+eps_s_bo_1_2 0
+eps_s_bo_1_3 0
+eps_s_bo_1_4 0
+eps_s_ni_1_0 0
+eps_s_ni_1_1 0
+eps_s_ni_1_2 0
+eps_s_ni_1_3 0
+eps_s_ni_1_4 0
+eps_s_dc_2_0 -0.0021967
+eps_s_dc_2_1 -0.00182972
+eps_s_dc_2_2 -0.001302
+eps_s_dc_2_3 -0.0008956
+eps_s_dc_2_4 0.00226117
+eps_s_li_2_0 0.000366291
+eps_s_li_2_1 -8.46089e-05
+eps_s_li_2_2 -4.47048e-05
+eps_s_li_2_3 -9.70601e-06
+eps_s_li_2_4 8.44545e-05
+eps_s_bo_2_0 0
+eps_s_bo_2_1 0
+eps_s_bo_2_2 0
+eps_s_bo_2_3 0
+eps_s_bo_2_4 0
+eps_s_ni_2_0 0
+eps_s_ni_2_1 0
+eps_s_ni_2_2 0
+eps_s_ni_2_3 0
+eps_s_ni_2_4 0
+eps_s_dc_3_0 0.000321557
+eps_s_dc_3_1 3.97613e-05
+eps_s_dc_3_2 2.39221e-05
+eps_s_dc_3_3 -9.55545e-05
+eps_s_dc_3_4 -0.000644423
+eps_s_li_3_0 -4.46449e-06
+eps_s_li_3_1 1.61728e-05
+eps_s_li_3_2 1.2353e-05
+eps_s_li_3_3 3.02819e-06
+eps_s_li_3_4 -4.45932e-06
+eps_s_bo_3_0 0
+eps_s_bo_3_1 0
+eps_s_bo_3_2 0
+eps_s_bo_3_3 0
+eps_s_bo_3_4 0
+eps_s_ni_3_0 0
+eps_s_ni_3_1 0
+eps_s_ni_3_2 0
+eps_s_ni_3_3 0
+eps_s_ni_3_4 0
+n_dc 5.28012e-06
+tau_short 0
+Info in <Minuit2>: Minuit2Minimizer::Hesse : Hesse is valid - matrix is accurate
+COV STATUS: 3
+Minuit2Minimizer : Valid minimum - status = 0
+FVAL  = 14505.2785377832734
+Edm   = 1.70253334942492289e-09
+Nfcn  = 1726
+rmu_0	  = 0.000581992	 +/-  3.43261e-07	(limited)
+n_li_0	  = 0.0299288	 +/-  0.0368578	(limited)
+n_bo_0	  = 0	 (fixed)
+n_ni_0	  = 0	 (fixed)
+rmu_1	  = 0.000461887	 +/-  3.2005e-07	(limited)
+n_li_1	  = 0.261031	 +/-  0.0365548	(limited)
+n_bo_1	  = 0	 (fixed)
+n_ni_1	  = 0	 (fixed)
+rmu_2	  = 1.34634e-05	 +/-  2.27579e-08	(limited)
+n_li_2	  = 0.637225	 +/-  0.0151719	(limited)
+n_bo_2	  = 0	 (fixed)
+n_ni_2	  = 0	 (fixed)
+eps_s_dc_0_0	  = 1	 (fixed)
+eps_s_dc_0_1	  = 0.148946	 +/-  0.000262339	(limited)
+eps_s_dc_0_2	  = 0.03327	 +/-  0.000124363	(limited)
+eps_s_dc_0_3	  = 0.000998592	 +/-  3.1583e-05	(limited)
+eps_s_dc_0_4	  = 0.000104676	 +/-  8.32131e-06	(limited)
+eps_s_li_0_0	  = 1	 (fixed)
+eps_s_li_0_1	  = 1.94794	 (fixed)
+eps_s_li_0_2	  = 1.91063	 (fixed)
+eps_s_li_0_3	  = 1.03612	 (fixed)
+eps_s_li_0_4	  = 0.143062	 (fixed)
+eps_s_bo_0_0	  = 1	 (fixed)
+eps_s_bo_0_1	  = 1	 (fixed)
+eps_s_bo_0_2	  = 1	 (fixed)
+eps_s_bo_0_3	  = 1	 (fixed)
+eps_s_bo_0_4	  = 1	 (fixed)
+eps_s_ni_0_0	  = 1	 (fixed)
+eps_s_ni_0_1	  = 1	 (fixed)
+eps_s_ni_0_2	  = 1	 (fixed)
+eps_s_ni_0_3	  = 1	 (fixed)
+eps_s_ni_0_4	  = 1	 (fixed)
+eps_s_dc_1_0	  = 1	 (fixed)
+eps_s_dc_1_1	  = 0.00995135	 +/-  6.44648e-05	(limited)
+eps_s_dc_1_2	  = 0.0500035	 +/-  0.00014946	(limited)
+eps_s_dc_1_3	  = 0.0967364	 +/-  0.0002136	(limited)
+eps_s_dc_1_4	  = 1.33862e-05	 +/-  3.76062e-06	(limited)
+eps_s_li_1_0	  = 1	 (fixed)
+eps_s_li_1_1	  = 0.078486	 +/-  0.0175487	(limited)
+eps_s_li_1_2	  = 0.497761	 +/-  0.0610345	(limited)
+eps_s_li_1_3	  = 0.887077	 +/-  0.10068	(limited)
+eps_s_li_1_4	  = 0.0087946	 +/-  0.00314895	(limited)
+eps_s_bo_1_0	  = 1	 (fixed)
+eps_s_bo_1_1	  = 1	 (fixed)
+eps_s_bo_1_2	  = 1	 (fixed)
+eps_s_bo_1_3	  = 1	 (fixed)
+eps_s_bo_1_4	  = 1	 (fixed)
+eps_s_ni_1_0	  = 1	 (fixed)
+eps_s_ni_1_1	  = 1	 (fixed)
+eps_s_ni_1_2	  = 1	 (fixed)
+eps_s_ni_1_3	  = 1	 (fixed)
+eps_s_ni_1_4	  = 1	 (fixed)
+eps_s_dc_2_0	  = 1	 (fixed)
+eps_s_dc_2_1	  = 4.33962	 +/-  0.0167715	(limited)
+eps_s_dc_2_2	  = 7.11077	 +/-  0.0264618	(limited)
+eps_s_dc_2_3	  = 9.48542	 +/-  0.0347655	(limited)
+eps_s_dc_2_4	  = 12.3344	 +/-  0.0447424	(limited)
+eps_s_li_2_0	  = 1	 (fixed)
+eps_s_li_2_1	  = 3.57486	 +/-  0.639875	(limited)
+eps_s_li_2_2	  = 4.04527	 +/-  0.736102	(limited)
+eps_s_li_2_3	  = 3.59371	 +/-  0.695534	(limited)
+eps_s_li_2_4	  = 1.79858	 +/-  0.502968	(limited)
+eps_s_bo_2_0	  = 1	 (fixed)
+eps_s_bo_2_1	  = 1	 (fixed)
+eps_s_bo_2_2	  = 1	 (fixed)
+eps_s_bo_2_3	  = 1	 (fixed)
+eps_s_bo_2_4	  = 1	 (fixed)
+eps_s_ni_2_0	  = 1	 (fixed)
+eps_s_ni_2_1	  = 1	 (fixed)
+eps_s_ni_2_2	  = 1	 (fixed)
+eps_s_ni_2_3	  = 1	 (fixed)
+eps_s_ni_2_4	  = 1	 (fixed)
+eps_s_dc_3_0	  = 1	 (fixed)
+eps_s_dc_3_1	  = 0.56646	 +/-  0.000978893	(limited)
+eps_s_dc_3_2	  = 0.514561	 +/-  0.000917502	(limited)
+eps_s_dc_3_3	  = 0.492868	 +/-  0.000891511	(limited)
+eps_s_dc_3_4	  = 0.479955	 +/-  0.000876142	(limited)
+eps_s_li_3_0	  = 1	 (fixed)
+eps_s_li_3_1	  = 0.198471	 +/-  0.0359023	(limited)
+eps_s_li_3_2	  = 0.0977444	 +/-  0.0315673	(limited)
+eps_s_li_3_3	  = 0.0908834	 +/-  0.0308383	(limited)
+eps_s_li_3_4	  = 0.0511276	 +/-  0.0293481	(limited)
+eps_s_bo_3_0	  = 1	 (fixed)
+eps_s_bo_3_1	  = 1	 (fixed)
+eps_s_bo_3_2	  = 1	 (fixed)
+eps_s_bo_3_3	  = 1	 (fixed)
+eps_s_bo_3_4	  = 1	 (fixed)
+eps_s_ni_3_0	  = 1	 (fixed)
+eps_s_ni_3_1	  = 1	 (fixed)
+eps_s_ni_3_2	  = 1	 (fixed)
+eps_s_ni_3_3	  = 1	 (fixed)
+eps_s_ni_3_4	  = 1	 (fixed)
+n_dc	  = 500.693	 +/-  0.16171	(limited)
+tau_short	  = 15.9	 (fixed)
+CHI2/NDF: 28042.6/27293
+Warning in <TROOT::Append>: Replacing existing TH1: h_cov (Potential memory leak).
+Info in <TCanvas::Print>: png file h_cov_2.png has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_0_0_0_0.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_0_0_0_0.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_0_0_0_1.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_0_0_0_1.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_0_0_0_2.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_0_0_0_2.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_0_0_0_3.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_0_0_0_3.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_0_0_0_4.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_0_0_0_4.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_0_0_1_0.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_0_0_1_0.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_0_0_1_1.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_0_0_1_1.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_0_0_1_2.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_0_0_1_2.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_0_0_1_3.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_0_0_1_3.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_0_0_1_4.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_0_0_1_4.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_0_0_2_0.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_0_0_2_0.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_0_0_2_1.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_0_0_2_1.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_0_0_2_2.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_0_0_2_2.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_0_0_2_3.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_0_0_2_3.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_0_0_2_4.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_0_0_2_4.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_0_0_3_0.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_0_0_3_0.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_0_0_3_1.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_0_0_3_1.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_0_0_3_2.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_0_0_3_2.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_0_0_3_3.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_0_0_3_3.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_0_0_3_4.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_0_0_3_4.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_1_0_0_0.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_1_0_0_0.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_1_0_0_1.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_1_0_0_1.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_1_0_0_2.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_1_0_0_2.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_1_0_0_3.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_1_0_0_3.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_1_0_0_4.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_1_0_0_4.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_1_0_1_0.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_1_0_1_0.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_1_0_1_1.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_1_0_1_1.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_1_0_1_2.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_1_0_1_2.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_1_0_1_3.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_1_0_1_3.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_1_0_1_4.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_1_0_1_4.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_1_0_2_0.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_1_0_2_0.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_1_0_2_1.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_1_0_2_1.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_1_0_2_2.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_1_0_2_2.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_1_0_2_3.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_1_0_2_3.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_1_0_2_4.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_1_0_2_4.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_1_0_3_0.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_1_0_3_0.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_1_0_3_1.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_1_0_3_1.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_1_0_3_2.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_1_0_3_2.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_1_0_3_3.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_1_0_3_3.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_1_0_3_4.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_1_0_3_4.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_2_0_0_0.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_2_0_0_0.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_2_0_0_1.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_2_0_0_1.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_2_0_0_2.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_2_0_0_2.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_2_0_0_3.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_2_0_0_3.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_2_0_0_4.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_2_0_0_4.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_2_0_1_0.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_2_0_1_0.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_2_0_1_1.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_2_0_1_1.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_2_0_1_2.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_2_0_1_2.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_2_0_1_3.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_2_0_1_3.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_2_0_1_4.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_2_0_1_4.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_2_0_2_0.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_2_0_2_0.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_2_0_2_1.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_2_0_2_1.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_2_0_2_2.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_2_0_2_2.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_2_0_2_3.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_2_0_2_3.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_2_0_2_4.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_2_0_2_4.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_2_0_3_0.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_2_0_3_0.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_2_0_3_1.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_2_0_3_1.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_2_0_3_2.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_2_0_3_2.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_2_0_3_3.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_2_0_3_3.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits/cfit_2_2_0_3_4.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits/cfit_2_2_0_3_4.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits_slice/cfit_ep_2.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits_slice/cfit_ep_2.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits_slice/cfit_ed_2.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits_slice/cfit_ed_2.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits_slice/cfit_dist_2.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits_slice/cfit_dist_2.pdf has been created
+Info in <TCanvas::Print>: png file ./plots/cfits_slice/cfit_dt_2.png has been created
+Info in <TCanvas::Print>: pdf file ./plots/cfits_slice/cfit_dt_2.pdf has been created
+           site                   EH1                   EH2                   EH3
+          rmu_0  1.178e-02/ 4.820e-06  8.115e-03/ 3.365e-06  5.820e-04/ 3.433e-07
+         n_li_0  2.707e+00/ 1.351e+00  7.207e-01/ 8.339e-01  2.993e-02/ 3.686e-02
+         n_bo_0  0.000e+00/ 0.000e+00  0.000e+00/ 0.000e+00  0.000e+00/ 0.000e+00
+         n_ni_0  0.000e+00/ 0.000e+00  0.000e+00/ 0.000e+00  0.000e+00/ 0.000e+00
+          rmu_1  8.616e-03/ 3.491e-06  7.127e-03/ 2.938e-06  4.619e-04/ 3.201e-07
+         n_li_1  3.049e+00/ 1.043e+00  2.678e+00/ 8.099e-01  2.610e-01/ 3.655e-02
+         n_bo_1  0.000e+00/ 0.000e+00  0.000e+00/ 0.000e+00  0.000e+00/ 0.000e+00
+         n_ni_1  0.000e+00/ 0.000e+00  0.000e+00/ 0.000e+00  0.000e+00/ 0.000e+00
+          rmu_2  1.437e-04/ 1.130e-07  1.412e-04/ 1.143e-07  1.346e-05/ 2.276e-08
+         n_li_2  6.480e+00/ 1.264e-01  5.224e+00/ 1.140e-01  6.372e-01/ 1.517e-02
+         n_bo_2  0.000e+00/ 0.000e+00  0.000e+00/ 0.000e+00  0.000e+00/ 0.000e+00
+         n_ni_2  0.000e+00/ 0.000e+00  0.000e+00/ 0.000e+00  0.000e+00/ 0.000e+00
+   eps_s_dc_0_0  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00
+   eps_s_dc_0_1  6.154e-01/ 7.238e-04  6.082e-01/ 6.866e-04  1.489e-01/ 2.623e-04
+   eps_s_dc_0_2  1.431e-01/ 6.064e-04  1.426e-01/ 5.022e-04  3.327e-02/ 1.244e-04
+   eps_s_dc_0_3  4.120e-03/ 3.267e-04  4.061e-03/ 2.579e-04  9.986e-04/ 3.158e-05
+   eps_s_dc_0_4  7.406e-04/ 4.851e-05  5.773e-04/ 3.917e-05  1.047e-04/ 8.321e-06
+   eps_s_li_0_0  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00
+   eps_s_li_0_1  1.948e+00/ 0.000e+00  1.948e+00/ 0.000e+00  1.948e+00/ 0.000e+00
+   eps_s_li_0_2  1.911e+00/ 0.000e+00  1.911e+00/ 0.000e+00  1.911e+00/ 0.000e+00
+   eps_s_li_0_3  1.036e+00/ 0.000e+00  1.036e+00/ 0.000e+00  1.036e+00/ 0.000e+00
+   eps_s_li_0_4  1.431e-01/ 0.000e+00  1.431e-01/ 0.000e+00  1.431e-01/ 0.000e+00
+   eps_s_bo_0_0  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00
+   eps_s_bo_0_1  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00
+   eps_s_bo_0_2  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00
+   eps_s_bo_0_3  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00
+   eps_s_bo_0_4  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00
+   eps_s_ni_0_0  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00
+   eps_s_ni_0_1  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00
+   eps_s_ni_0_2  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00
+   eps_s_ni_0_3  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00
+   eps_s_ni_0_4  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00
+   eps_s_dc_1_0  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00
+   eps_s_dc_1_1  3.697e-02/ 1.715e-04  3.630e-02/ 1.549e-04  9.951e-03/ 6.446e-05
+   eps_s_dc_1_2  2.159e-01/ 4.398e-04  2.039e-01/ 3.936e-04  5.000e-02/ 1.495e-04
+   eps_s_dc_1_3  4.148e-01/ 7.187e-04  4.155e-01/ 6.561e-04  9.674e-02/ 2.136e-04
+   eps_s_dc_1_4  2.452e-05/ 1.084e-05  3.436e-05/ 7.383e-06  1.339e-05/ 3.761e-06
+   eps_s_li_1_0  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00
+   eps_s_li_1_1  1.335e-01/ 2.302e-02  1.047e-01/ 2.302e-02  7.849e-02/ 1.755e-02
+   eps_s_li_1_2  4.618e-01/ 6.337e-02  3.803e-01/ 6.165e-02  4.978e-01/ 6.103e-02
+   eps_s_li_1_3  9.545e-01/ 1.088e-01  9.041e-01/ 1.128e-01  8.871e-01/ 1.007e-01
+   eps_s_li_1_4  8.369e-03/ 1.837e-03  5.243e-03/ 1.450e-03  8.795e-03/ 3.149e-03
+   eps_s_bo_1_0  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00
+   eps_s_bo_1_1  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00
+   eps_s_bo_1_2  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00
+   eps_s_bo_1_3  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00
+   eps_s_bo_1_4  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00
+   eps_s_ni_1_0  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00
+   eps_s_ni_1_1  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00
+   eps_s_ni_1_2  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00
+   eps_s_ni_1_3  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00
+   eps_s_ni_1_4  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00
+   eps_s_dc_2_0  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00
+   eps_s_dc_2_1  3.752e+00/ 1.108e-02  3.754e+00/ 1.072e-02  4.340e+00/ 1.677e-02
+   eps_s_dc_2_2  4.714e+00/ 1.368e-02  4.703e+00/ 1.314e-02  7.111e+00/ 2.646e-02
+   eps_s_dc_2_3  4.399e+00/ 1.288e-02  4.402e+00/ 1.238e-02  9.485e+00/ 3.477e-02
+   eps_s_dc_2_4  4.043e+00/ 1.214e-02  4.082e+00/ 1.166e-02  1.233e+01/ 4.474e-02
+   eps_s_li_2_0  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00
+   eps_s_li_2_1  3.825e+00/ 7.098e-01  3.789e+00/ 8.686e-01  3.575e+00/ 6.399e-01
+   eps_s_li_2_2  3.645e+00/ 7.000e-01  4.181e+00/ 9.601e-01  4.045e+00/ 7.361e-01
+   eps_s_li_2_3  3.072e+00/ 6.099e-01  3.702e+00/ 8.664e-01  3.594e+00/ 6.955e-01
+   eps_s_li_2_4  2.057e+00/ 4.658e-01  2.355e+00/ 6.242e-01  1.799e+00/ 5.030e-01
+   eps_s_bo_2_0  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00
+   eps_s_bo_2_1  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00
+   eps_s_bo_2_2  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00
+   eps_s_bo_2_3  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00
+   eps_s_bo_2_4  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00
+   eps_s_ni_2_0  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00
+   eps_s_ni_2_1  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00
+   eps_s_ni_2_2  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00
+   eps_s_ni_2_3  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00
+   eps_s_ni_2_4  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00
+   eps_s_dc_3_0  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00
+   eps_s_dc_3_1  2.713e-01/ 4.893e-04  2.746e-01/ 4.750e-04  5.665e-01/ 9.789e-04
+   eps_s_dc_3_2  1.821e-01/ 3.911e-04  1.850e-01/ 3.787e-04  5.146e-01/ 9.175e-04
+   eps_s_dc_3_3  1.482e-01/ 3.435e-04  1.522e-01/ 3.423e-04  4.929e-01/ 8.915e-04
+   eps_s_dc_3_4  1.273e-01/ 3.177e-04  1.312e-01/ 3.099e-04  4.800e-01/ 8.761e-04
+   eps_s_li_3_0  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00
+   eps_s_li_3_1  1.838e-01/ 2.951e-02  1.860e-01/ 3.361e-02  1.985e-01/ 3.590e-02
+   eps_s_li_3_2  8.868e-02/ 2.291e-02  9.823e-02/ 2.646e-02  9.774e-02/ 3.157e-02
+   eps_s_li_3_3  8.223e-02/ 2.090e-02  5.949e-02/ 2.335e-02  9.088e-02/ 3.084e-02
+   eps_s_li_3_4  5.510e-02/ 1.901e-02  6.481e-02/ 2.208e-02  5.113e-02/ 2.935e-02
+   eps_s_bo_3_0  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00
+   eps_s_bo_3_1  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00
+   eps_s_bo_3_2  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00
+   eps_s_bo_3_3  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00
+   eps_s_bo_3_4  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00
+   eps_s_ni_3_0  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00
+   eps_s_ni_3_1  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00
+   eps_s_ni_3_2  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00
+   eps_s_ni_3_3  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00
+   eps_s_ni_3_4  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00  1.000e+00/ 0.000e+00
+           n_dc  1.596e+03/ 1.764e+00  1.439e+03/ 1.276e+00  5.007e+02/ 1.617e-01
+      tau_short  1.590e+01/ 0.000e+00  1.590e+01/ 0.000e+00  1.590e+01/ 0.000e+00
+EH1:  7.123e+00  1.717e+00
+EH2:  4.501e+00  1.219e+00
+EH3:  4.254e-01  5.229e-02
+
