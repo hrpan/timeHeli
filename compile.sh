@@ -1,0 +1,1 @@
+ g++ script/combinedFit.C -I /media/rick/Data/pdsf_backup/project/unified/timeHeli/CppNumericalSolvers/CppNumericalSolvers-master/include -I /home/rick/Eigen/eigen-eigen-323c052e1731 -I /media/rick/Data/pdsf_backup/project/unified/timeHeli/lbfgs/LBFGSpp-master/include -o combinedFit `root-config --cflags --glibs --libs` -fopenmp -O2 -Wall 

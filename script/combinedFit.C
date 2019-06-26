@@ -27,6 +27,8 @@
 
 using namespace std;
 
+const bool debug = false;
+
 const char *hists_prefix = "./hists";
 
 const double tau_li9 = 256.366;
@@ -49,11 +51,14 @@ double fitMax = 5000;
 
 const int npars_max = 200;
 int npars;
+
 const bool use_tagging = false;
 const bool fix_tau_short = true;
+
 bool use_predicted_li9 = true;
 
-const bool use_isotope[3] = { 1, 1, 1 };
+bool use_isotope[3] = { 1, 1, 1 };
+
 const bool use_slice[4] = { 1, 1, 1, 1 };
 
 char par_names[npars_max][255]; 
@@ -116,10 +121,10 @@ void func_gradient(double x, double *par, double *grad){
     double lambda3 = rmu + 1.0 / tau_ni;
     double term4 = n_ni * lambda3 * exp( -lambda3 * x);
 
-    grad[0] = norm * ( n_dc * ( (1 - rmu * x) * exp(-rmu *x)) + 
-        n_li * ( (1 - lambda1 * x) * exp(-lambda1 * x) ) +
-        n_bo * ( (1 - lambda2 * x) * exp(-lambda2 * x) ) +
-        n_ni * ( (1 - lambda3 * x) * exp(-lambda3 * x) ));
+    grad[0] = norm * ( n_dc * (1 - rmu * x) * exp(-rmu *x) + 
+        n_li * (1 - lambda1 * x) * exp(-lambda1 * x) +
+        n_bo * (1 - lambda2 * x) * exp(-lambda2 * x) +
+        n_ni * (1 - lambda3 * x) * exp(-lambda3 * x) );
     grad[1] = norm * rmu * exp(-rmu * x);
     grad[2] = norm * lambda1 * exp(-lambda1 * x);
     grad[3] = 0;
@@ -130,22 +135,27 @@ void func_gradient(double x, double *par, double *grad){
     grad[8] = 0;
 
 }
-
+double max_diff = 0;
 double likelihood_single(vector<double> n, vector<double> x, double *par){
     double r = 0;
     for(size_t b=0; b<n.size(); ++b){
         double _f = c_func(x[b], par);
         //cout << n[b] << " " << _f << endl;
         
+        if(debug)
         if(_f < 0 || isnan(_f)){
             for(int i=0;i<npars_single;++i)
                 cout << par[i] << endl;
             throw std::invalid_argument("NAN");
         }
+        if(n[b] > 0){
+            r += _f - n[b] * (1 + log(_f / n[b]));
+        }else{
+            r += _f;
+        }
         //cout << "logf: " << log(_f) << " lgamma: " << lgamma(n[b]+1) << endl; 
-        r += (-n[b] * log(_f) + _f + lgamma(n[b]+1));
+        //r += (-n[b] * log(_f) + _f + lgamma(n[b]+1));
     }
-    //cout << r << endl;
     return r;
 }
 
@@ -157,7 +167,7 @@ void likelihood_gradient_single(vector<double> n, vector<double> x, double *par,
         double _f = c_func(x[b], par);
         func_gradient(x[b], par, _g);
         for(int i=0;i<npars_single;++i)
-            g[i] += (1 - n[b] / (_f ) ) * _g[i];
+            g[i] += (1 - n[b] / _f) * _g[i];
     } 
 }
 
@@ -212,6 +222,15 @@ vector<double> hist_center[n_range][3][slice_types][slice_max];
 //double _par[n_range][3][slice_types][slice_max][npars_single];
 
 void parTrans(const double *par, double _par[n_range][3][slice_types][slice_max][npars_single]){
+
+    if(debug)
+    for(int i=0;i<npars;++i){
+        if(isnan(par[i])){
+            for(int j=0;j<npars;++j)
+                cout << par_names[j] << " " << par[j] << endl;
+            throw std::invalid_argument("NAN");
+        }
+    }
 
 	double scale = h[0][0][0][0]->GetBinWidth(1);
 
@@ -348,7 +367,6 @@ void parTrans(const double *par, double _par[n_range][3][slice_types][slice_max]
 
 double likelihood(const double *par){
 
-//double likelihood_single(vector<double> n, vector<double> x, double *par){
     static double _par[n_range][3][slice_types][slice_max][npars_single];
 
 	parTrans(par, _par);
@@ -448,7 +466,6 @@ double likelihood_derivative(const double *par, int coord){
                     _g += g[0]; 
                 }
             }
-            _g;
         }
         
     }else if(strncmp(par_names[coord], "eps_s", 5) == 0){
@@ -511,7 +528,6 @@ double likelihood_derivative(const double *par, int coord){
     return _g;
     
 }
-
 
 double chi2(const double *par){
 
@@ -584,14 +600,18 @@ void plotHists(int site, const double *par){
 				if(!use_slice[type]) continue;
 				for(int s=0;s<slices[type];++s){
                     TCanvas *c1 = new TCanvas("c1");
-					sprintf(buf, "%s/cfit_%d_%d_%d_%d_%d.png", dir, site, r, t, type, s);
+                    h[r][t][type][s]->SetTitle("Time-since-last-muon;[ms]");
 					h[r][t][type][s]->Draw("E1");
 					func[r][t][type][s]->Draw("same");
 					for(int f=0;f<n_pdfs;++f){
+                        if(f > 0 && !use_isotope[f-1]) continue;
 						_tf1s[f]->SetParameters(_par[r][t][type][s]);
 						_tf1s[f]->Draw("same");
 					}
 					gPad->SetLogx();
+					sprintf(buf, "%s/cfit_%d_%d_%d_%d_%d.png", dir, site, r, t, type, s);
+					c1->SaveAs(buf);
+					sprintf(buf, "%s/cfit_%d_%d_%d_%d_%d.pdf", dir, site, r, t, type, s);
 					c1->SaveAs(buf);
                     delete c1;
 				}
@@ -604,7 +624,7 @@ void plotHists(int site, const double *par){
 void initialize_minimizer(int site, ROOT::Math::Minimizer *minim, bool verbose){
 	cout << "INITIALIZING MINIMIZER" << endl;
 	minim->SetErrorDef(0.5);
-	minim->SetTolerance(0.1);
+	minim->SetTolerance(.01);
     if(verbose)
     	minim->SetPrintLevel(2);
     else
@@ -694,7 +714,8 @@ void initialize_minimizer(int site, ROOT::Math::Minimizer *minim, bool verbose){
 		}else{
 			sprintf(buf, "rmu_%d",r);
 			sprintf(par_names[p_idx], "%s", buf);
-			minim->SetVariable(p_idx++, buf, rmu_init[site][r], rmu_init[site][r] * step_ratio);
+			//minim->SetVariable(p_idx++, buf, rmu_init[site][r], rmu_init[site][r] * step_ratio);
+			minim->SetLowerLimitedVariable(p_idx++, buf, rmu_init[site][r], rmu_init[site][r] * step_ratio, 0);
 
 			for(int i=1;i<n_pdfs;++i){
 				sprintf(buf, "n_%s_%d",_pre[i], r);
@@ -729,8 +750,7 @@ void initialize_minimizer(int site, ROOT::Math::Minimizer *minim, bool verbose){
                     sprintf(buf, "eps_s_%s_%d_%d", _pre[i], type, s);
 				    sprintf(par_names[p_idx], "%s", buf);
                     double _tmp = h_spec_rebin->GetBinContent(s+1);
-                    //if(use_predicted_li9 || s==0)
-                    if(use_predicted_li9)
+                    if(use_predicted_li9 || s == 0)
         				minim->SetFixedVariable(p_idx++, buf, _tmp);
                     else
         				minim->SetLowerLimitedVariable(p_idx++, buf, _tmp, _tmp * step_ratio, 0);
@@ -756,7 +776,6 @@ void initialize_minimizer(int site, ROOT::Math::Minimizer *minim, bool verbose){
                     
                     if(s==0)
                         minim->SetFixedVariable(p_idx++, buf, 1);
-                        //minim->SetFixedVariable(p_idx++, buf, 0);
                     else
                         minim->SetLowerLimitedVariable(p_idx++, buf, eps_init, eps_init * step_ratio, 0);
                         //minim->SetLimitedVariable(p_idx++, buf, log(eps_init), 0.1, -10, 10);
@@ -793,11 +812,23 @@ void initialize_minimizer(int site, ROOT::Math::Minimizer *minim, bool verbose){
 
 int main(int argc, char **argv){
 
-    if(argc < 2 || strcmp(argv[1],"fix") == 0)
+    if(argc < 2 || strcmp(argv[1], "fix") == 0)
         use_predicted_li9 = true;
-    else if(strcmp(argv[1],"free") == 0)
+    else if(strcmp(argv[1], "free") == 0)
         use_predicted_li9 = false;
-        
+    
+    if(argc < 3 || strcmp(argv[2], "nGd") == 0){ 
+        use_isotope[0] = true;
+        use_isotope[1] = true;
+        use_isotope[2] = true;
+    }else if(strcmp(argv[2], "nH") == 0){
+        use_isotope[1] = false;
+        use_isotope[2] = false;
+    }else if(strcmp(argv[2], "unified") == 0){
+        use_isotope[1] = false;
+        use_isotope[2] = false;
+    }
+    
 	gStyle->SetOptFit(1);
     
 	char _f_sum[512] = "";
@@ -845,8 +876,8 @@ int main(int argc, char **argv){
 
 void gradient_descent(const double x[1000]){
 
-    double alpha = 1e-7;
-    double beta = 0.0;
+    double alpha = 1e-10;
+    double beta = 0.95;
 
     double _x[1000];
     for(int i=0;i<npars;++i)
@@ -855,7 +886,7 @@ void gradient_descent(const double x[1000]){
     double _g[1000], _m[1000];
     for(int i=0;i<npars;++i)
         _m[i] = 0;
-    for(int iter=0;iter<1000;++iter){
+    for(int iter=0;iter<100000;++iter){
         for(int i=0;i<npars;++i)
             _g[i] = likelihood_derivative(_x, i);
         double g2 = 0;
@@ -879,6 +910,68 @@ void gradient_descent(const double x[1000]){
         cout << par_names[i] << " " << _x[i] << endl;
 
 }
+
+void adam(const double x[1000], double *x_r){
+    int printIter = 10;
+    bool amsgrad = false;
+    double alpha0 = 1e-7;
+    double beta1 = 0.9;
+    double beta2 = 0.999;
+
+    double m[1000], v[1000];
+    double m_hat[1000], v_hat[1000];
+
+    double _x[1000], _x_best[1000];
+    for(int i=0;i<npars;++i){
+        _x[i] = x[i];
+        m[i] = 0;
+        v[i] = 0;
+        m_hat[i] = 0;
+        v_hat[i] = 0;
+    }
+    double v_best = 1e9;
+    double _g[1000];
+    for(int iter=0;iter<100000;++iter){
+        //double alpha = alpha0 / sqrt(1+iter);
+        double alpha = alpha0;
+        double g2 = 0;
+        for(int i=0;i<npars;++i){
+            _g[i] = likelihood_derivative(_x, i);
+            m[i] = beta1 * m[i] + (1-beta1) * _g[i];
+            v[i] = beta2 * v[i] + (1-beta2) * _g[i] * _g[i];
+            m_hat[i] = m[i] / (1 - pow(beta1, double(iter+1)));
+            if(amsgrad)
+                v_hat[i] = max(v_hat[i], v[i]);        
+            else
+                v_hat[i] = v[i] / (1 - pow(beta2, double(iter+1)));
+            g2 += _g[i] * _g[i];
+        }
+        for(int i=0;i<npars;++i){
+            if(amsgrad)
+                _x[i] = _x[i] - alpha * m[i] / sqrt(v_hat[i]);
+            else
+                _x[i] = _x[i] - alpha * m_hat[i] / (sqrt(v_hat[i]) + 1e-8);
+            _x[i] = max(_x[i], 0);
+
+        }
+        double v = likelihood(_x);
+        if(v < v_best){
+            for(int i=0;i<npars;++i)
+                _x_best[i] = _x[i];
+            v_best = v;
+        }
+        g2 = sqrt(g2);
+        if(iter%printIter == 0){
+            printf("Iter %d %.10f g2: %.10f x[5]: %.10f\n", iter, v, g2, _x[5]);
+            fflush(stdout);
+        }
+    }
+    //for(int i=0;i<npars;++i)
+    //    cout << par_names[i] << " " << _x[i] << endl;
+    for(int i=0;i<npars;++i)
+        x_r[i] = _x_best[i];
+}
+
 
 void do_fit(int site, ROOT::Fit::DataOptions &opt, double results[3][npars_max][2], double daily_rates[3][2]){
 
@@ -908,11 +1001,15 @@ void do_fit(int site, ROOT::Fit::DataOptions &opt, double results[3][npars_max][
 					fPNLL[r][t][type][s] = new ROOT::Fit::PoissonLikelihoodFCN<ROOT::Math::IBaseFunctionMultiDim>(*data[r][t][type][s], *wf[r][t][type][s]);	
 					fChi2[r][t][type][s] = new ROOT::Fit::Chi2FCN<ROOT::Math::IBaseFunctionMultiDim>(*data_chi2[r][t][type][s], *wf[r][t][type][s]);	
                     size_t bins = h[r][t][type][s]->GetNbinsX();
-                    hist_content[r][t][type][s].resize(bins);
-                    hist_center[r][t][type][s].resize(bins);
+                    hist_content[r][t][type][s].clear();
+                    hist_content[r][t][type][s].reserve(bins);
+                    hist_center[r][t][type][s].clear();
+                    hist_center[r][t][type][s].reserve(bins);
                     for(size_t b=1;b<=h[r][t][type][s]->GetNbinsX();++b){
-                        hist_content[r][t][type][s][b-1] = h[r][t][type][s]->GetBinContent(b);
-                        hist_center[r][t][type][s][b-1] = h[r][t][type][s]->GetBinCenter(b);
+                        double _center = h[r][t][type][s]->GetBinCenter(b);
+                        if(_center < fitMin || _center > fitMax) continue;
+                        hist_content[r][t][type][s].push_back(h[r][t][type][s]->GetBinContent(b));
+                        hist_center[r][t][type][s].push_back(h[r][t][type][s]->GetBinCenter(b));
                     }
 				}
 			}
@@ -937,19 +1034,19 @@ void do_fit(int site, ROOT::Fit::DataOptions &opt, double results[3][npars_max][
 	minim->SetFunction(f_tmp);
 	minim_simplex->SetFunction(f_tmp);
 	initialize_minimizer(site, minim, true);
-	initialize_minimizer(site, minim_simplex, false);
+	//initialize_minimizer(site, minim_simplex, false);
     //minim_simplex->SetTolerance(1);
 	//minim_simplex->Minimize();
 	//minim->SetVariableValues(minim_simplex->X());
 	//minim->Hesse();
+
+    double _x[1000];
 	minim->Minimize();
 	minim->SetStrategy(2);
     minim->Hesse();
     minim->Minimize();
-
-    //gradient_descent(minim->X());
         
-    double _x[1000];
+    //double _x[1000];
     for(int i=0;i<npars;++i){
         _x[i] = minim->X()[i];
     }
@@ -987,7 +1084,8 @@ void do_fit(int site, ROOT::Fit::DataOptions &opt, double results[3][npars_max][
 			int r_idx = int(par_names[idx][5]) - 48;
 			indices[r_idx] = idx;
 			if(r_idx==n_range-1)
-				daily_rates[site][0] += 0.211 * x[idx];
+				//daily_rates[site][0] += 0.211 * x[idx];
+				daily_rates[site][0] += x[idx];
 			else
 				daily_rates[site][0] += x[idx];
 		}
@@ -995,10 +1093,12 @@ void do_fit(int site, ROOT::Fit::DataOptions &opt, double results[3][npars_max][
 	for(int i=0;i<n_range;++i){
 		for(int j=0;j<n_range;++j){
 			double _cov = minim->CovMatrix(indices[i], indices[j]);
+            /*
 			if(i == n_range-1)
 				_cov *= 0.211;
 			if(j == n_range-1)
 				_cov *= 0.211;
+            */
 			daily_rates[site][1] += _cov;
 		}
 	}
@@ -1088,7 +1188,14 @@ void plotSlice(int site, ROOT::Math::Minimizer *minim){
 			mg->Add(gr[i]);
 		}
 		char buf[255];
-		sprintf(buf, "EH%d %s distribution", site+1, slice_vars[type]);	
+        if(type == 0)
+    		sprintf(buf, "EH%d prompt energy distribution;[MeV]", site+1);	
+        else if(type == 1)
+    		sprintf(buf, "EH%d delayed energy distribution;[MeV]", site+1);	
+        else if(type == 2)
+    		sprintf(buf, "EH%d p-d distance distribution;[mm]", site+1);	
+        else if(type == 3)
+    		sprintf(buf, "EH%d capture time distribution;[us]", site+1);	
 		mg->SetTitle(buf);
 		mg->SetMinimum(0);
 		//mg->SetMaximum(0.55);
@@ -1110,9 +1217,11 @@ void plotSlice(int site, ROOT::Math::Minimizer *minim){
 			h_spec_rebin->DrawNormalized("same");
 		}
 		const char *dir = "./plots/cfits_slice";
-		sprintf(buf,"%s/cfit_%s_%d.png",dir,slice_vars[type],site);
 		gPad->SetLogx(0);
 		gPad->SetLogy(0);
+		sprintf(buf,"%s/cfit_%s_%d.png",dir,slice_vars[type],site);
+		c1->SaveAs(buf);
+		sprintf(buf,"%s/cfit_%s_%d.pdf",dir,slice_vars[type],site);
 		c1->SaveAs(buf);
         delete c1;
 		//offset += n_pdfs * (slices[type] - 1);

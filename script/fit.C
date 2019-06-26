@@ -5,6 +5,7 @@ const char *hists_prefix = "./hists";
 const double tau_li = 257.23;
 const double tau_he = 171.68;
 const double tau_b12 = 29.142;
+const double tau_n12 = 15.9;
 
 const double fitMin = 1.5;
 const double fitMax = 5000;
@@ -55,7 +56,7 @@ void fit(){
 
 	gStyle->SetOptFit(1);
 	gStyle->SetStatX(0.9);
-	gStyle->SetStatY(0.4);
+	gStyle->SetStatY(0.9);
 	//[0]:mu rate
 	//[1]:n_ibd
 	//[2]:n_li9
@@ -66,21 +67,28 @@ void fit(){
 	char _f_dc[255] = "[1] * [0] * exp(-[0] * x )";
 	char _f_li[255] = "[2] * ([0] + 1 / [3]) * exp(-([0] + 1/[3]) * x)";
 	char _f_he[255] = "[4] * ([0] + 1 / [5]) * exp(-([0] + 1/[5]) * x)";
-	char _f_bo[255] = "[6] * ([0] + 2 / [7]) * exp(-([0] + 2/[7]) * x)";
+	char _f_bo[255] = "[6] * ([0] + 1 / [7]) * exp(-([0] + 1/[7]) * x)";
+	char _f_ni[255] = "[8] * ([0] + 1 / [9]) * exp(-([0] + 1/[9]) * x)";
 	char _f_sum[255];
-	sprintf(_f_sum,"%s+%s+%s+%s",_f_dc,_f_li,_f_he,_f_bo);
+	sprintf(_f_sum,"%s+%s+%s+%s+%s",_f_dc,_f_li,_f_he,_f_bo,_f_ni);
 	TF1 *func = new TF1("func",_f_sum,0,5000);
 
 	func->SetParName(0,"mu rate");
-	func->SetParName(1,"n_dc");
-	func->SetParName(2,"n_li9");
+	func->SetParName(1,"N_uncorr");
+	func->SetParName(2,"N_Li9");
 	func->SetParName(3,"li9 lifetime");
-	func->SetParName(4,"n_he8");
-	func->SetParName(5,"he8 lifetime");
-	func->SetParName(6,"n_b12");
+	func->SetParName(4,"N_He8");
+	func->SetParName(5,"He8 lifetime");
+	func->SetParName(6,"N_B12");
 	func->SetParName(7,"b12 lifetime");
+	func->SetParName(8,"N_N12");
+	func->SetParName(9,"N12 lifetime");
 
 	func->SetParLimits(0,0,0.1);
+	func->SetParLimits(2,0,1e6);
+	func->SetParLimits(4,0,1e6);
+	func->SetParLimits(6,0,1e6);
+	func->SetParLimits(8,0,1e6);
 	func->SetParameter(1, 1e5);
 	func->SetParameter(2, 1e3);
 	//func->SetParLimits(1,0,1e8);
@@ -92,6 +100,7 @@ void fit(){
 	//func->FixParameter(6,0);
 	//func->SetParLimits(6,0,1e5);
 	func->FixParameter(7,tau_b12);
+	func->FixParameter(9,tau_n12);
 	func->SetLineColor(kRed);
 
 	TF1 *funcDC = new TF1("funcDC",_f_dc,0,5000);
@@ -105,6 +114,7 @@ void fit(){
 			cout << "Fitting: " << buf << endl;
 			TFile *f = new TFile(buf,"READ");
 			TH1 *h = f->Get("h");
+            h->SetTitle("Time since last muon;[ms]");
 			h->Draw("E");
 
 //			func->SetParameter(1,h->GetEntries());
@@ -125,7 +135,7 @@ void fit(){
 			results[site][range][0][1] = func->GetParError(2);
 			results[site][range][0][2] = func->GetParameter(0);
 			results[site][range][0][3] = func->GetParError(0);
-		
+/*	
 			sprintf(buf,"%s/EH%d_dtlSH_%d_tag.root", hists_prefix, site+1, range);
 			cout << "Fitting: " << buf << endl;
 			f = new TFile(buf,"READ");
@@ -165,6 +175,7 @@ void fit(){
 			funcDC->Draw("same");
 			sprintf(buf,"./plots/fits/EH%d_%d_atag_fit.png",site+1,range);
 			c1->SaveAs(buf);
+*/
 			f->Close();
 
 		

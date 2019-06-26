@@ -1,5 +1,5 @@
 
-const size_t n_range = 3;
+const int n_range = 3;
 double range[3] = {
 	3e3, 1.0e5, 3e5
 };

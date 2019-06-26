@@ -15,7 +15,8 @@ const char *suffix[3] = {
 
 //const char *gdCut = "ed>6&&dt<200";
 const char *defCut = "ed>4";
-//const char *unifiedCut = "dist<500";
+const char *nHCut = "ep>1.5&&ep<12&&ed>1.9&&ed<2.7";
+const char *unifiedCut = "dist<500";
 
 void drawHists(){
 	string filename;
@@ -25,9 +26,11 @@ void drawHists(){
 	TTree *tr = f->Get("tr");
 
     TFile *dump = new TFile("dump.root","RECREATE");
-
-    //TTree *tr_pre = tr->CopyTree(defCut);
-    //cout << "pre selection complete" << endl;
+    
+    //TTree *tr_pre = tr;
+    //TTree *tr_pre = tr->CopyTree(nHCut);
+    TTree *tr_pre = tr->CopyTree(unifiedCut);
+    cout << "pre selection complete" << endl;
 
 	char shCut[255] = "";
 	for(int i=0;i<n_range;++i)
@@ -41,7 +44,8 @@ void drawHists(){
 		else
 			sprintf(siteCut,"site==4");
 
-        TTree *tr_site = tr->CopyTree(siteCut);
+        TTree *tr_site = tr_pre->CopyTree(siteCut);
+        //TTree *tr_site = tr->CopyTree(siteCut);
         cout << "site selection complete" << endl;
 
 		for(int r=0;r<n_range;++r){
