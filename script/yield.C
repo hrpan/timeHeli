@@ -72,7 +72,7 @@ void yield(){
     TGraphErrors *ge_boxerino = new TGraphErrors(1, boxerino_emu, boxerino, (boxerino_emu+1), (boxerino+1));
     ge_boxerino->SetMarkerStyle(23);
     ge_boxerino->SetFillStyle(0);
-    ge_boxerino->SetTitle("Boxerino");
+    ge_boxerino->SetTitle("Borexino");
 
 
     double yields[3];
@@ -124,6 +124,7 @@ void yield(){
     mg->GetXaxis()->SetTitle("Mean Muon Energy [GeV]");
 //    mg->GetYaxis()->SetTitle("\\text{Yield} [10^{-8}\\mu^{-1}\\text{g}^{-1}\\text{cm}^2]");
     mg->GetYaxis()->SetTitle("Yield [10^{-8}#mu^{-1}g^{-1}cm^{2}]");
+    mg->GetYaxis()->SetMoreLogLabels();
     gPad->SetLogy();
     power->Draw("same");
     leg->AddEntry(ge_dc_nd, "", "p");
@@ -134,4 +135,65 @@ void yield(){
     leg->SetBorderSize(0);
     leg->Draw("same");
     c1->SaveAs("yield.pdf");
+
+
+
+//B12
+    mg = new TMultiGraph();
+    leg = new TLegend(0.6, 0.15, 0.88, 0.5);
+    leg->SetBorderSize(0);
+
+    kamland[0] = 42.9;
+    kamland[1] = 3.3;
+    ge_kamland = new TGraphErrors(1, kamland_emu, kamland, (kamland_emu+1), (kamland+1));
+    ge_kamland->SetMarkerStyle(22);
+    ge_kamland->SetFillStyle(0);
+    ge_kamland->SetTitle("KamLAND");
+
+    boxerino[0] = 56;
+    boxerino[1] = 3;
+    ge_boxerino = new TGraphErrors(1, boxerino_emu, boxerino, (boxerino_emu+1), (boxerino+1));
+    ge_boxerino->SetMarkerStyle(23);
+    ge_boxerino->SetFillStyle(0);
+    ge_boxerino->SetTitle("Borexino");
+
+
+
+    double rates_b12[3][2] = {
+        { 4.24, 0.20 },
+        { 3.54, 0.24 },
+        { 0.39, 0.03 }
+    };
+
+    double rp[3] = {57, 54, 53};
+    double eps_mult = 0.97;
+    
+    for(int i=0;i<3;++i){
+        double _poisson_p = exp(-rp[i] * 200e-6) * rp[i] * 200e-6;
+        yields[i] = (rates_b12[i][0] / 86400) / (eps_mult * dyb_rmu[i][0] * 0.54 * rho * l_avg_unified[0] * _poisson_p ) * 1e7; 
+        yields_err[i] = yields[i] * sqrt( pow(rates_b12[i][1] / rates_b12[i][0], 2.) + pow(dyb_rmu[i][1] / dyb_rmu[i][0], 2.) + 0.01); 
+        cout << yields[i] << " " << yields_err[i] << endl;
+        ge_dyb[i] = new TGraphErrors(1, x+i, yields+i, x_err+i, yields_err+i);
+        ge_dyb[i]->SetMarkerStyle(24+i);
+        ge_dyb[i]->SetFillStyle(0);
+        ge_dyb[i]->SetTitle(TString::Format("DYB EH%d",i+1));
+        mg->Add(ge_dyb[i]);
+        leg->AddEntry(ge_dyb[i], "", "p");
+    }
+
+    power->SetParameter(0, 1);    
+    power->SetParameter(1, 1);    
+    mg->Add(ge_kamland);
+    mg->Add(ge_boxerino);
+    leg->AddEntry(ge_kamland, "", "p");
+    leg->AddEntry(ge_boxerino, "", "p");
+    mg->Fit(power);
+    mg->Draw("AP");
+    power->Draw("same");
+    leg->Draw("same");
+    mg->GetHistogram()->SetTitle("Boron-12 Yield");
+    mg->GetXaxis()->SetTitle("Mean Muon Energy [GeV]");
+    mg->GetYaxis()->SetTitle("Yield [10^{-7}#mu^{-1}g^{-1}cm^{2}]");
+    mg->GetYaxis()->SetMoreLogLabels();
+    c1->SaveAs("yield_b12.pdf");
 }
